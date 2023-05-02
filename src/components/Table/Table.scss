@@ -1,0 +1,45 @@
+.MuiTableContainer-root {
+  margin-top: 1.2em;
+}
+
+.MuiTableHead {
+  &-root {
+    display: table-header-group !important;
+    background-color: gray !important;
+  }
+
+  &-custom-button {
+    color: white !important;
+  }
+}
+
+.muiTableHeadCell div {
+  align-items: flex-end !important;
+}
+
+.table {
+  &-toolbar {
+    background-color: transparent !important;
+    &-buttons {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 1em;
+    }
+
+    &-button {
+      color: white !important;
+      margin-right: 1em !important;
+    }
+  }
+  &-icon {
+    margin-right: 0.5em;
+  }
+}
+
+table {
+  border-radius: 10px;
+}
+
+tbody {
+  background-color: white;
+}

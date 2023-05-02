@@ -1,0 +1,38 @@
+.breadcrumbs {
+  margin-bottom: 4em;
+  display:flex;
+  justify-content: space-between;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1.5em;
+    margin-top: 0.5em;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.0075em;
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+      color: #344767;
+
+      &__icon {
+        margin-right: 0.5em;
+      }
+
+      &__link {
+        text-decoration-thickness: none;
+        color: #344767;
+      }
+
+      &__text {
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+      }
+    }
+  }
+}

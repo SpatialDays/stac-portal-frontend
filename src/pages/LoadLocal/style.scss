@@ -1,0 +1,44 @@
+.uploader {
+  &-dash {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: row !important;
+    align-items: stretch;
+    min-height: 20em;
+    flex-wrap: nowrap;
+  }
+
+  &-left {
+    width: 25%;
+    height: auto;
+    margin-right: 5%;
+  }
+
+  &-file {
+    padding-left: 5%;
+    width: 100%;
+    height: 3em;
+    margin-right: 5%;
+    border-bottom: solid 1px rgba(128, 128, 128, 0.159);
+    display: flex;
+    align-items: center;
+
+    &-name {
+      font-weight: bold;
+      color: #3690ed;
+    }
+  }
+
+  &-right {
+    width: 70%;
+    height: auto;
+  }
+}
+
+
+.uploady {
+  &__dropzone {
+    height: 5em;
+    border: 1px dashed #ccc;
+  }
+}

@@ -1,0 +1,19 @@
+# build a docker image using github actions and publish it to docker registry
+name: Docker-build-stage
+on:
+  push:
+    branches: ["stage"]
+  pull_request:
+    branches: ["stage"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile_stage --tag stacpdadev.azurecr.io/stac-portal-frontend:stage
+      - name: Log in to the Docker Hub registry
+        run: echo "${{ secrets.DOCKERPASSWORD }}" | docker login stacpdadev.azurecr.io -u "${{ secrets.DOCKERUSERNAME }}" --password-stdin
+      - name: Push the Docker image to Docker Hub
+        run: docker push stacpdadev.azurecr.io/stac-portal-frontend:stage
+

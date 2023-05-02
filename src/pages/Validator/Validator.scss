@@ -1,0 +1,14 @@
+.valid {
+  border: 3px solid rgba(0, 128, 0, 0.483) !important;
+  border-radius: 5px;
+}
+
+.invalid {
+  border: 3px solid rgba(255, 0, 0, 0.5) !important;
+  border-radius: 5px;
+
+}
+
+.hide {
+  display: none !important;
+}

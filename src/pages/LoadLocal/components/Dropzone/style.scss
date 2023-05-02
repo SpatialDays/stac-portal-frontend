@@ -1,0 +1,16 @@
+// Media query 1250px
+@media (max-width: 1250px) {
+  #processing {
+    width: 100% !important;
+  }
+
+  #completed {
+    width: 100% !important;
+  }
+}
+
+.dropzone {
+  &:hover {
+    border: "1px dashed black";
+  }
+}

@@ -1,0 +1,112 @@
+.sidenav {
+  &-collapse {
+    padding: 0 !important;
+    &-item {
+      padding: 0.6em 0.75em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1em;
+      color: white;
+      width: 100%;
+      text-decoration: none;
+      // Big white border
+      border-radius: 15px;
+
+      &__text {
+        color: rgb(208, 208, 208);
+
+        & span {
+          font-size: 0.9rem;
+          font-weight: 400;
+        }
+
+        &-active {
+          color: white;
+
+          & span {
+            font-weight: 900;
+          }
+        }
+      }
+
+      &__icon {
+        color: rgb(208, 208, 208);
+        font-size: 0.5em;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 2em;
+
+        & svg {
+          font-size: 1.2rem;
+        }
+      }
+
+      &:hover {
+        transition: all 0.2s ease-in-out;
+        background-color: #54a19a1f;
+        color: white;
+        text-decoration: none;
+      }
+    }
+  }
+
+  &-active {
+    transition: all 0.3s;
+    background-color: #555555;
+    border-radius: 15px;
+  }
+
+  &-current {
+    transition: all 0.3s;
+    background-color: #54a19a!important;
+    color: white !important;
+    border-radius: 15px;
+
+    &:hover {
+      // Make background bit darker
+      background-color: #417d78!important;
+    }
+
+    & .sidenav-collapse-item__icon {
+      color: white;
+    }
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em !important;
+    font-weight: 700;
+    letter-spacing: 0.0075em;
+    text-align: center;
+    width: 100%;
+    margin-top: 0;
+    color: white;
+  }
+
+  &-divider {
+    margin: 0.5em 0;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  &-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25em;
+    font-weight: 700;
+    letter-spacing: 0.0075em;
+    text-align: center;
+    width: 100%;
+    color: white;
+    text-decoration: none;
+    height: 3.5em;
+    object-fit: contain;
+  }
+}
