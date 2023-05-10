@@ -1,6 +1,6 @@
-ARG REACT_APP_PORTAL_BACKEND_URL=https://ctplt-pda-rg-dev-stac-portal-backend.azurewebsites.net
-ARG REACT_APP_PORTAL_STAC_API_BROWSER_URL=https://ctplt-pda-rg-dev-stac-api-browser.azurewebsites.net
-ARG REACT_APP_BLOB_URL=https://ctpltstacstrgdev.blob.core.windows.net/stac-items/
+ARG REACT_APP_PORTAL_BACKEND_URL=
+ARG REACT_APP_PORTAL_STAC_API_BROWSER_URL=
+ARG REACT_APP_BLOB_URL=
 FROM node:16 as build-step
 WORKDIR /usr/src/app
 COPY package*.json ./
