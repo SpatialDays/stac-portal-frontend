@@ -64,8 +64,9 @@ export const uploadFile = async (file: FileProps) => {
   const sasToken = await axios.get(
     `${process.env.REACT_APP_PORTAL_BACKEND_URL}/file/sas_token/${file.name}/`
   );
-
   const endpoint = sasToken.data.endpoint;
+  const endpointWithoutSasToken = sasToken.data.endpoint_without_sas_token;
+  file.endpointWithoutSasToken = endpointWithoutSasToken;
   
   // Upload the file
   const uploaderInstance = axios.create();
@@ -82,8 +83,8 @@ export const uploadFile = async (file: FileProps) => {
 
 export const processTiff = async (file: FileProps) => {
   let url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/gdal_info/`;
-  const fileName = process.env.REACT_APP_BLOB_URL + file.name;
-
+  //const fileName = process.env.REACT_APP_BLOB_URL + file.name;
+  const fileName = file.endpointWithoutSasToken;
   const response = await axios.post(
     url,
     {
@@ -163,7 +164,7 @@ export const generateSTAC = async (item) => {
   // Assets
   const assets = filesWithGdalInfo.map((file) => {
     const asset = {
-      href: file.GDALInfo.description,
+      href: file.endpointWithoutSasToken, // this is the line
       transform: file.GDALInfo.geoTransform,
       shape: file.GDALInfo.size,
       type: file.GDALInfo.driverLongName,

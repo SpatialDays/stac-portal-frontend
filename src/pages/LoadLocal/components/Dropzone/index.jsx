@@ -29,6 +29,8 @@ const Dropzone = ({ files, setFiles }) => {
         error: false,
         errorMessage: "",
         sasToken: "",
+        endpoint: "",
+        endpointWithoutSasToken:"",
         blob: file,
         data: null,
         provider: "",

@@ -400,6 +400,8 @@ export type FileProps = {
   // Data attributes
   itemID: string,
   sasToken: string,
+  endpoint: string,
+  endpointWithoutSasToken: string,
   blob?: Blob,
   data?: any,
   provider?: string,
