@@ -45,7 +45,7 @@
 
       &:hover {
         transition: all 0.2s ease-in-out;
-        background-color: #54a19a1f;
+        background-color: var(--osweb-color-secondary)1f;
         color: white;
         text-decoration: none;
       }
@@ -60,13 +60,13 @@
 
   &-current {
     transition: all 0.3s;
-    background-color: #54a19a!important;
+    background-color: var(--osweb-color-secondary)!important;
     color: white !important;
     border-radius: 15px;
 
     &:hover {
       // Make background bit darker
-      background-color: #417d78!important;
+      background-color: #FF5F00!important;
     }
 
     & .sidenav-collapse-item__icon {

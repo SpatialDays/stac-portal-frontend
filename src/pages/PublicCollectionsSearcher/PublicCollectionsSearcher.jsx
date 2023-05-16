@@ -21,7 +21,7 @@ const PublicCollectionsSearcher = () => {
 
   return (
     <DashboardLayout>
-      <MDBox>
+      <MDBox className="searcher">
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <MDTypography variant="overline" gutterBottom>
