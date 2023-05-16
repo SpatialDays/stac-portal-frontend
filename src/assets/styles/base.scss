@@ -155,14 +155,13 @@ overline {
     color: #fff;
     cursor: pointer;
 
-    // deeper blue on hover
     &:hover {
       background-color: #FF5F00;
     }
   }
 
   &-delete {
-    background-color:   #22A7F0;
+    background-color:  red;
     color: #fff;
     cursor: pointer;
 
@@ -172,9 +171,13 @@ overline {
   }
 
   &-info {
-    background-color: #cccccc;
-    color: black;
+    background-color: #22A7F0;
+    color: white;
     cursor: pointer;
+
+    &:hover {
+      background-color: #FF5F00;
+    }
   }
 
   &-full-width {
