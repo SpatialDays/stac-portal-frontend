@@ -1,6 +1,9 @@
 // React
 import { useEffect, useState } from "react";
 
+// Modules
+import path from 'path-browserify';
+
 // Components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -32,6 +35,9 @@ import {
   generateSTAC,
 } from "./utils";
 import { addItemsToCollection } from "interface/collections";
+
+// Url paths
+import { stacApiBrowserUrl, collectionsPath } from '../../utils/paths.jsx'
 
 const LoadLocal = () => {
   const [files, setFiles] = useState([]);
@@ -169,9 +175,10 @@ const LoadLocal = () => {
     await addItemsToCollection(selectedCollection, stac);
 
     // Wait for 2 seconds and then redirect to collection
+    const url = new URL(path.join(collectionsPath, selectedCollection.id), stacApiBrowserUrl).toString();
     setTimeout(() => {
       window.open(
-        `${process.env.REACT_APP_PORTAL_STAC_API_BROWSER_URL}/collections/${selectedCollection.id}`,
+        url,
         "_blank"
       );
     }, 2000);

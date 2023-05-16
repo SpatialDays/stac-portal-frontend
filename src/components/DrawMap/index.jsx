@@ -3,6 +3,7 @@ import { useState } from "react";
 
 // Modules
 import axios from "axios";
+import path from 'path-browserify';
 
 // Leaflet
 import * as L from "leaflet"; // This must be imported for use by react-leaflet
@@ -23,8 +24,11 @@ import { Stack, Box } from "@mui/system";
 // Styles
 import "./map.scss";
 
+// Url paths
+import { backendUrl, publicCatalogsPath, collectionsPath, searchPath } from '../../utils/paths.jsx'
+
 const searchCollections = async (bbox, datetime) => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/public_catalogs/collections/search/`;
+  const url = new URL(path.join(publicCatalogsPath, collectionsPath, searchPath), backendUrl).toString();
   const collections = await axios({
     method: "POST",
     url: url,

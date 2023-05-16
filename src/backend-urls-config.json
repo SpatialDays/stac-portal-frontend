@@ -1,0 +1,21 @@
+{
+    "backendUrl": "process.env.REACT_APP_PORTAL_BACKEND_URL.toString()",
+    "stacApiBrowserUrl": "process.env.REACT_APP_PORTAL_STAC_API_BROWSER_URL.toString()",
+    "stacPath": "/stac/",
+    "publicCatalogsPath": "/public_catalogs/",
+    "privateCatalogPath": "/private_catalog/",
+    "collectionsPath": "/collections/",
+    "itemsPath": "/items/",
+    "getPath": "/get/",
+    "runSearchParametersPath": "/run_search_parameters/",
+    "searchPath": "/search/",
+    "syncPath": "/sync/",
+    "statusReportingPath": "/status_reporting/",
+    "loadingPublicStacRecordsPath": "/loading_public_stac_records/",
+    "validatePath": "/validate/",
+    "jsonPath": "/json/",
+    "filePath": "/file/",
+    "sasTokenPath": "/sas_token/",
+    "gdalinfoPath": "/gdal_info/",
+    "stacGeneratorPath": "/stac_generator/"
+}

@@ -1,9 +1,13 @@
 import {retrieveAllPublicCatalogs} from "../catalogs";
 import axios from "axios";
+import path from 'path-browserify';
+
+// Url paths
+import { backendUrl, statusReportingPath, loadingPublicStacRecordsPath } from '../../utils/paths.jsx'
 
 export const retrieveAllLoadStatuses = async () => {
   const catalogs = await retrieveAllPublicCatalogs();
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/status_reporting/loading_public_stac_records/`;
+  const url = new URL(path.join(statusReportingPath, loadingPublicStacRecordsPath), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   let dataToReturn = [];

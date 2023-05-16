@@ -1,5 +1,6 @@
 // Modules
 import axios from "axios";
+import path from 'path-browserify';
 
 // Types
 import { FileProps } from "./LoadLocal";
@@ -8,6 +9,9 @@ import { FileProps } from "./LoadLocal";
 import { manifestToProvider, providerToManifest } from "./consts";
 
 import {findProvider} from "./providers/providers"
+
+// Url paths
+import { backendUrl, filePath, sasTokenPath, gdalinfoPath, stacGeneratorPath } from '../../utils/paths.jsx'
 
 export const readManifest = async (file: FileProps) => {
   // Async function to read the manifest file
@@ -61,9 +65,8 @@ export const processManifest = async (file: FileProps, files: []) => {
 };
 
 export const uploadFile = async (file: FileProps) => {
-  const sasToken = await axios.get(
-    `${process.env.REACT_APP_PORTAL_BACKEND_URL}/file/sas_token/${file.name}/`
-  );
+  const url = new URL(path.join(filePath, sasTokenPath, file.name), backendUrl).toString();
+  const sasToken = await axios.get(url);
   const endpoint = sasToken.data.endpoint;
   const endpointWithoutSasToken = sasToken.data.endpoint_without_sas_token;
   file.endpointWithoutSasToken = endpointWithoutSasToken;
@@ -82,7 +85,7 @@ export const uploadFile = async (file: FileProps) => {
 };
 
 export const processTiff = async (file: FileProps) => {
-  let url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/gdal_info/`;
+  let url = new URL(path.join(gdalinfoPath), backendUrl).toString();
   //const fileName = process.env.REACT_APP_BLOB_URL + file.name;
   const fileName = file.endpointWithoutSasToken;
   const response = await axios.post(
@@ -213,12 +216,13 @@ export const generateSTAC = async (item) => {
     additional: additional,
   };
 
-  let backend_url = process.env.REACT_APP_PORTAL_BACKEND_URL;
+  // let backend_url = process.env.REACT_APP_PORTAL_BACKEND_URL;
   let body = {
     metadata: payload,
   };
+  const stac_generator_url = new URL(path.join(stacGeneratorPath), backendUrl).toString();
   const response = await axios.post(
-    backend_url + "/stac_generator/",
+    stac_generator_url,
 
     body,
     {

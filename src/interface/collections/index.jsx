@@ -4,9 +4,13 @@ import { retrieveAllPublicCatalogs } from "../catalogs";
 // Modules
 import format from "date-fns/format";
 import axios from "axios";
+import path from 'path-browserify';
+
+// Url paths
+import { backendUrl, stacPath, publicCatalogsPath, privateCatalogPath, collectionsPath, itemsPath, getPath, runSearchParametersPath } from '../../utils/paths.jsx'
 
 export const retrieveAllCollections = async () => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/stac/`;
+  const url = new URL(path.join(stacPath), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
@@ -14,7 +18,7 @@ export const retrieveAllCollections = async () => {
 
 export const retrieveAllPublicCollections = async () => {
   const catalogs = await retrieveAllPublicCatalogs();
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/public_catalogs/collections/`;
+  const url = new URL(path.join(publicCatalogsPath, collectionsPath), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   let newData = [];
@@ -30,7 +34,7 @@ export const retrieveAllPublicCollections = async () => {
 };
 
 export const retrieveAllPrivateCollections = async () => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/private_catalog/collections/`;
+  const url = new URL(path.join(privateCatalogPath, collectionsPath), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
@@ -40,14 +44,14 @@ export const deletePublicCollection = async (
   publicCatalogId,
   publicCollectionId
 ) => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/public_catalogs/${publicCatalogId}/collections/${publicCollectionId}/`;
+  const url = new URL(path.join(publicCatalogsPath, publicCatalogId, collectionsPath, publicCollectionId), backendUrl).toString();
   const response = await axios({ method: "DELETE", url: url });
   const data = await response.data;
   return data;
 };
 
 export const deletePrivateCollection = async (privateCollectionId) => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/private_catalog/collections/${privateCollectionId}/`;
+  const url = new URL(path.join(privateCatalogPath, collectionsPath, privateCollectionId), backendUrl).toString();
   const response = await axios({ method: "DELETE", url: url });
   const data = await response.data;
   return data;
@@ -74,8 +78,7 @@ export const callSelectiveIngester = async (
     endDateString = endDateString + "T00:00:00Z";
     // TODO: upgrade date picker to datetime picker and use it here
   }
-
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/public_catalogs/${parentCatalogId}/items/get/`;
+  const url = new URL(path.join(publicCatalogsPath, parentCatalogId, itemsPath, getPath), backendUrl).toString();
   const req_body = {
     update: true,
     bbox: aoi,
@@ -89,7 +92,7 @@ export const callSelectiveIngester = async (
 };
 
 export const getAllStoredSearchParameters = async () => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/public_catalogs/`;
+  const url = new URL(path.join(publicCatalogsPath), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   let storedSearchParameters = [];
@@ -111,14 +114,14 @@ export const getAllStoredSearchParameters = async () => {
 };
 
 export const runStoredSearchParamUpdate = async (storedSearchParamId) => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/public_catalogs/run_search_parameters/${storedSearchParamId}/`;
+  const url = new URL(path.join(publicCatalogsPath, runSearchParametersPath, storedSearchParamId), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
 };
 
 export const createNewCollection = async (collection) => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/private_catalog/collections/`;
+  const url = new URL(path.join(privateCatalogPath, collectionsPath), backendUrl).toString();
 
   const collection_json = {
     type: "Collection",
@@ -147,7 +150,7 @@ export const createNewCollection = async (collection) => {
 
 export const addItemsToCollection = async (collection, items) => {
   // POST /private_catalog/collections/{collection_id}/items/
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/private_catalog/collections/${collection.id}/items/`;
+  const url = new URL(path.join(privateCatalogPath, collectionsPath, collection.id, itemsPath), backendUrl).toString();
 
   // Loop through items object
   Object.keys(items).forEach(async (key) => {
@@ -191,7 +194,7 @@ export const addPrivateCollection = async (
   description,
   stacVersion
 ) => {
-  const url = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/private_catalog/collections/`;
+  const url = new URL(path.join(privateCatalogPath, collectionsPath), backendUrl).toString();
   const body = {
     type: "Collection",
     id: collectionId,
