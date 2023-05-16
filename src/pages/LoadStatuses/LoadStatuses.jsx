@@ -1,6 +1,9 @@
 // React
 import React, { useEffect, useMemo, useState } from "react";
 
+//Modules
+import path from 'path-browserify';
+
 // Components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -15,6 +18,9 @@ import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
 
 // Interface
 import { retrieveAllLoadStatuses } from "interface/loadstatuses";
+
+// Url paths
+import { backendUrl, statusReportingPath, loadingPublicStacRecordsPath } from '../../utils/paths.jsx'
 
 const LoadStatuses = () => {
   const [statuses, setStatuses] = useState([]);
@@ -90,7 +96,7 @@ const LoadStatuses = () => {
     {
       accessorFn: (row) => {
         if (row.error_message) {
-          const errorUrl = `${process.env.REACT_APP_PORTAL_BACKEND_URL}/status_reporting/loading_public_stac_records/${row.id}/`;
+          const errorUrl = new URL(path.join(statusReportingPath, loadingPublicStacRecordsPath, row.id), backendUrl).toString();
           return (
             <>
               <a href={errorUrl} target="_blank" rel="noreferrer">

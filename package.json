@@ -34,6 +34,7 @@
     "material-react-table": "^1.0.0-beta.7",
     "moment": "^2.29.4",
     "npm": "^8.19.2",
+    "path-browserify": "^1.0.1",
     "prop-types": "15.8.1",
     "rc-progress": "^3.4.0",
     "react": "^18.2.0",

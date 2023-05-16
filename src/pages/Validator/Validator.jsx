@@ -1,6 +1,9 @@
 // React
 import { useState } from "react";
 
+// Modules
+import path from 'path-browserify';
+
 // Components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -25,6 +28,9 @@ import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
 // Styles
 import "./Validator.scss";
 
+// Url paths
+import { backendUrl, validatePath, jsonPath } from '../../utils/paths.jsx'
+
 const Validator = () => {
   const [validJSON, setValidJSON] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,8 +51,9 @@ const Validator = () => {
     setAlertBox({ display: false, message: "", severity: "error" });
     setIsLoading(true);
     let textField = document.getElementById("text-field");
+    const url = new URL(path.join(validatePath, jsonPath), backendUrl).toString();
 
-    axios(`${process.env.REACT_APP_PORTAL_BACKEND_URL}/validate/json/`, {
+    axios(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
