@@ -1,5 +1,7 @@
 * {
-  font-family: Roboto, Helvetica, Arial, sans-serif !important;
+  --font-primary: "OS Gill Light", sans-serif;
+  --font-secondary: "OS Gill Regular", sans-serif;
+  font-family: var(--font-secondary)!important;
 }
 
 body {
@@ -68,7 +70,6 @@ hr {
 
 overline {
   margin: 0px 0px 0.35em;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 2.66;

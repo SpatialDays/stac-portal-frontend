@@ -3,6 +3,10 @@
   display:flex;
   justify-content: space-between;
 
+  & svg {
+    color:  #453C90!important;
+  }
+
   &__container {
     display: flex;
     align-items: center;

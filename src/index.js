@@ -8,6 +8,10 @@ import App from "./App";
 
 // Auth
 import { auth } from "auth/auth";
+
+// Styles
+import './index.scss';
+
 auth();
 
 ReactDOM.render(
