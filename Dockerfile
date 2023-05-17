@@ -8,7 +8,7 @@ RUN npm install
 COPY . .
 # TODO: use ARG and pass this in from the github action
 ENV REACT_APP_PORTAL_BACKEND_URL=https://os-eo-platform-rg-staging-stac-portal-backend.azurewebsites.net
-ENV REACT_APP_PORTAL_STAC_API_BROWSER_URL=https://os-eo-plaform-stac-api-browser.azurewebsites.net
+ENV REACT_APP_PORTAL_STAC_API_BROWSER_URL=https://os-eo-platform-rg-staging-stac-browser.azurewebsites.net
 ENV REACT_APP_BLOB_URL=https://oseoinfrastagingstrgacc.blob.core.windows.net/manual-upload-storage-container/
 RUN npm run build
 
