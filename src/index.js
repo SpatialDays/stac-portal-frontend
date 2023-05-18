@@ -6,13 +6,14 @@ import { BrowserRouter } from "react-router-dom";
 // App
 import App from "./App";
 
-// Auth
-import { auth } from "auth/auth";
-
 // Styles
 import './index.scss';
 
-auth();
+// Auth
+import { auth } from "auth/auth";
+if (process.env.NODE_ENV === 'production') {
+  auth();
+}
 
 ReactDOM.render(
   <BrowserRouter>
