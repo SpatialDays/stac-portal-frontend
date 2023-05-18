@@ -43,7 +43,7 @@ const STACTable = ({ files, stac }) => {
           justifyContent: "space-between",
           width: "100%",
           height: "100%",
-          border: "1px solid #54A19A60",
+          border: "1px solid var(--osweb-color-secondary)60",
           borderRadius: "2px",
         }}
       >
@@ -68,7 +68,7 @@ const STACTable = ({ files, stac }) => {
               height: "100%",
               boxSizing: "border-box",
               padding: "0.4em 1em",
-              borderBottom: "1px solid #54A19A60",
+              borderBottom: "1px solid var(--osweb-color-secondary)60",
             }}
           >
             <MDTypography
@@ -113,7 +113,7 @@ const STACTable = ({ files, stac }) => {
                         size={20}
                         style={{
                           // Color white if selected, otherwise color blue
-                          color: selectedId === row.itemID ? "#fff" : "#54A19A",
+                          color: selectedId === row.itemID ? "#fff" : "var(--osweb-color-secondary)",
                         }}
                       />
                     ) : (
@@ -135,7 +135,7 @@ const STACTable = ({ files, stac }) => {
             width: "70%",
             height: "100%",
             boxSizing: "border-box",
-            borderLeft: "1px solid #54A19A60",
+            borderLeft: "1px solid var(--osweb-color-secondary)60",
           }}
         >
           <MDBox
@@ -148,7 +148,7 @@ const STACTable = ({ files, stac }) => {
               height: "100%",
               boxSizing: "border-box",
               padding: "0.4em 1em",
-              borderBottom: "1px solid #54A19A60",
+              borderBottom: "1px solid var(--osweb-color-secondary)60",
             }}
           >
             <MDTypography
@@ -193,7 +193,7 @@ const STACTable = ({ files, stac }) => {
                     height: "100%",
                     overflowY: "scroll",
                     maxHeight: "200px",
-                    border: "1px solid #54A19A60",
+                    border: "1px solid var(--osweb-color-secondary)60",
                     borderRadius: "5px",
                   }}
                 >
@@ -216,7 +216,7 @@ const STACTable = ({ files, stac }) => {
                             width: "100%",
                             height: "100%",
                             boxSizing: "border-box",
-                            borderBottom: "0.2px solid #54A19A30",
+                            borderBottom: "0.2px solid var(--osweb-color-secondary)30",
                             padding: "0 2.5em",
                           }}
                           className="stac-table-asset-row"
@@ -267,7 +267,7 @@ const STACTable = ({ files, stac }) => {
                       height: "100%",
                       boxSizing: "border-box",
                       padding: "1em",
-                      border: "1px solid #54A19A",
+                      border: "1px solid var(--osweb-color-secondary)",
                       borderRadius: "5px",
                     }}
                   >
@@ -303,7 +303,7 @@ const STACTable = ({ files, stac }) => {
                       >
                         <CircularProgress
                           style={{
-                            color: "#54A19A",
+                            color: "var(--osweb-color-secondary)",
                             marginBottom: "1em",
                           }}
                         />

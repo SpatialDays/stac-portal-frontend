@@ -68,7 +68,7 @@ const Table = ({
       }}
       muiTableHeadRowProps={{
         sx: {
-          backgroundColor: "#2C2C2F",
+          backgroundColor: "#453C90",
           color: "white",
         },
       }}
