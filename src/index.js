@@ -8,8 +8,9 @@ import App from "./App";
 
 // Auth
 import { auth } from "auth/auth";
-auth();
-
+if (process.env.NODE_ENV === 'production') {
+  auth();
+}
 ReactDOM.render(
   <BrowserRouter>
     <App />
