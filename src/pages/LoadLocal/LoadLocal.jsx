@@ -175,7 +175,7 @@ const LoadLocal = () => {
     await addItemsToCollection(selectedCollection, stac);
 
     // url to the updated collection
-    const url = new URL(path.join(collectionsPath, selectedCollection.id), stacApiBrowserUrl).toString();
+    const url = new URL(path.join(collectionsPath, selectedCollection.id, '/'), stacApiBrowserUrl).toString();
 
     // checks the status of the items being published to the collection and redirects once the items are published
     await checkResponseStatus(selectedCollection.id, stac, url)

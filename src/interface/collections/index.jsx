@@ -10,7 +10,7 @@ import path from 'path-browserify';
 import { backendUrl, stacPath, publicCatalogsPath, privateCatalogPath, collectionsPath, itemsPath, getPath, runSearchParametersPath } from '../../utils/paths.jsx'
 
 export const retrieveAllCollections = async () => {
-  const url = new URL(path.join(stacPath), backendUrl).toString();
+  const url = new URL(path.join(stacPath, '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
@@ -18,7 +18,7 @@ export const retrieveAllCollections = async () => {
 
 export const retrieveAllPublicCollections = async () => {
   const catalogs = await retrieveAllPublicCatalogs();
-  const url = new URL(path.join(publicCatalogsPath, collectionsPath), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, collectionsPath, '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   let newData = [];
@@ -34,7 +34,7 @@ export const retrieveAllPublicCollections = async () => {
 };
 
 export const retrieveAllPrivateCollections = async () => {
-  const url = new URL(path.join(privateCatalogPath, collectionsPath), backendUrl).toString();
+  const url = new URL(path.join(privateCatalogPath, collectionsPath, '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
@@ -44,14 +44,14 @@ export const deletePublicCollection = async (
   publicCatalogId,
   publicCollectionId
 ) => {
-  const url = new URL(path.join(publicCatalogsPath, publicCatalogId, collectionsPath, publicCollectionId), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, publicCatalogId, collectionsPath, publicCollectionId, '/'), backendUrl).toString();
   const response = await axios({ method: "DELETE", url: url });
   const data = await response.data;
   return data;
 };
 
 export const deletePrivateCollection = async (privateCollectionId) => {
-  const url = new URL(path.join(privateCatalogPath, collectionsPath, privateCollectionId), backendUrl).toString();
+  const url = new URL(path.join(privateCatalogPath, collectionsPath, privateCollectionId, '/'), backendUrl).toString();
   const response = await axios({ method: "DELETE", url: url });
   const data = await response.data;
   return data;
@@ -78,7 +78,7 @@ export const callSelectiveIngester = async (
     endDateString = endDateString + "T00:00:00Z";
     // TODO: upgrade date picker to datetime picker and use it here
   }
-  const url = new URL(path.join(publicCatalogsPath, parentCatalogId, itemsPath, getPath), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, parentCatalogId, itemsPath, getPath, '/'), backendUrl).toString();
   const req_body = {
     update: true,
     bbox: aoi,
@@ -92,7 +92,7 @@ export const callSelectiveIngester = async (
 };
 
 export const getAllStoredSearchParameters = async () => {
-  const url = new URL(path.join(publicCatalogsPath), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   let storedSearchParameters = [];
@@ -114,14 +114,14 @@ export const getAllStoredSearchParameters = async () => {
 };
 
 export const runStoredSearchParamUpdate = async (storedSearchParamId) => {
-  const url = new URL(path.join(publicCatalogsPath, runSearchParametersPath, storedSearchParamId.toString()), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, runSearchParametersPath, storedSearchParamId.toString(), '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
 };
 
 export const createNewCollection = async (collection) => {
-  const url = new URL(path.join(privateCatalogPath, collectionsPath), backendUrl).toString();
+  const url = new URL(path.join(privateCatalogPath, collectionsPath, '/'), backendUrl).toString();
 
   const collection_json = {
     type: "Collection",
@@ -150,7 +150,7 @@ export const createNewCollection = async (collection) => {
 
 export const addItemsToCollection = async (collection, items) => {
   // POST /private_catalog/collections/{collection_id}/items/
-  const url = new URL(path.join(privateCatalogPath, collectionsPath, collection.id, itemsPath), backendUrl).toString();
+  const url = new URL(path.join(privateCatalogPath, collectionsPath, collection.id, itemsPath, '/'), backendUrl).toString();
 
   // Loop through items object
   Object.keys(items).forEach(async (key) => {
@@ -194,7 +194,7 @@ export const addPrivateCollection = async (
   description,
   stacVersion
 ) => {
-  const url = new URL(path.join(privateCatalogPath, collectionsPath), backendUrl).toString();
+  const url = new URL(path.join(privateCatalogPath, collectionsPath, '/'), backendUrl).toString();
   const body = {
     type: "Collection",
     id: collectionId,
@@ -225,7 +225,7 @@ export const addPrivateCollection = async (
 export const checkResponseStatus = async (collectionId, items, url, counter=0) => {
   // get the item id from the first item to check if it exists on the backend
   const itemId = Object.keys(items)[0];
-  const itemUrl = new URL(path.join(stacPath, collectionId, itemsPath, itemId), backendUrl).toString();
+  const itemUrl = new URL(path.join(stacPath, collectionId, itemsPath, itemId, '/'), backendUrl).toString();
 
   // tries to fetch the item by id, with a 1 second pause, 10 times before timingout 
   try {

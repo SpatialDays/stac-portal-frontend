@@ -51,7 +51,7 @@ const Validator = () => {
     setAlertBox({ display: false, message: "", severity: "error" });
     setIsLoading(true);
     let textField = document.getElementById("text-field");
-    const url = new URL(path.join(validatePath, jsonPath), backendUrl).toString();
+    const url = new URL(path.join(validatePath, jsonPath, '/'), backendUrl).toString();
 
     axios(url, {
       method: "POST",

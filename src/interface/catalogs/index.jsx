@@ -5,14 +5,14 @@ import path from 'path-browserify';
 import { backendUrl, publicCatalogsPath, syncPath } from '../../utils/paths.jsx'
 
 export const retrieveAllPublicCatalogs = async () => {
-  const url = new URL(path.join(publicCatalogsPath), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
 };
 
 export const syncAllPublicCatalogs = async () => {
-  const url = new URL(path.join(publicCatalogsPath, syncPath), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, syncPath, '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
@@ -24,7 +24,7 @@ export const addPublicCatalog = async (
   catalogDescription,
   catalogVersion
 ) => {
-  const url = new URL(path.join(publicCatalogsPath), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, '/'), backendUrl).toString();
   const body = {
     name: catalogName,
     url: catalogURL,
@@ -42,7 +42,7 @@ export const addPublicCatalog = async (
 };
 
 export const deleteAllPublicCatalogs = async () => {
-  const url = new URL(path.join(publicCatalogsPath), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, '/'), backendUrl).toString();
   const response = await axios({ method: "DELETE", url: url });
   const data = await response.data;
   return data;
