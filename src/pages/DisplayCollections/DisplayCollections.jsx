@@ -33,7 +33,10 @@ const DisplayCollections = () => {
       <MDBox>
         <Grid container spacing={6}>
           <Grid item xs={12}>
-            <PageHeader title="Local Catalog"></PageHeader>
+            <PageHeader
+              title="Local Catalog"
+              subtitle="View and manage collections downloaded from the STAC server"
+            ></PageHeader>
           </Grid>
           <Grid item xs={12}>
             <DownloadedCollections
