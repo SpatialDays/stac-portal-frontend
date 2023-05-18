@@ -114,7 +114,7 @@ export const getAllStoredSearchParameters = async () => {
 };
 
 export const runStoredSearchParamUpdate = async (storedSearchParamId) => {
-  const url = new URL(path.join(publicCatalogsPath, runSearchParametersPath, storedSearchParamId), backendUrl).toString();
+  const url = new URL(path.join(publicCatalogsPath, runSearchParametersPath, storedSearchParamId.toString()), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   return data;
