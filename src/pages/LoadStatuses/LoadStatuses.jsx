@@ -96,7 +96,7 @@ const LoadStatuses = () => {
     {
       accessorFn: (row) => {
         if (row.error_message) {
-          const errorUrl = new URL(path.join(statusReportingPath, loadingPublicStacRecordsPath, row.id), backendUrl).toString();
+          const errorUrl = new URL(path.join(statusReportingPath, loadingPublicStacRecordsPath, row.id, '/'), backendUrl).toString();
           return (
             <>
               <a href={errorUrl} target="_blank" rel="noreferrer">

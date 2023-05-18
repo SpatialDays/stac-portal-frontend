@@ -7,7 +7,7 @@ import { backendUrl, statusReportingPath, loadingPublicStacRecordsPath } from '.
 
 export const retrieveAllLoadStatuses = async () => {
   const catalogs = await retrieveAllPublicCatalogs();
-  const url = new URL(path.join(statusReportingPath, loadingPublicStacRecordsPath), backendUrl).toString();
+  const url = new URL(path.join(statusReportingPath, loadingPublicStacRecordsPath, '/'), backendUrl).toString();
   const response = await axios({ method: "GET", url: url });
   const data = await response.data;
   let dataToReturn = [];

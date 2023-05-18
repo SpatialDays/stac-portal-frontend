@@ -65,7 +65,7 @@ export const processManifest = async (file: FileProps, files: []) => {
 };
 
 export const uploadFile = async (file: FileProps) => {
-  const url = new URL(path.join(filePath, sasTokenPath, file.name), backendUrl).toString();
+  const url = new URL(path.join(filePath, sasTokenPath, file.name, '/'), backendUrl).toString();
   const sasToken = await axios.get(url);
   const endpoint = sasToken.data.endpoint;
   const endpointWithoutSasToken = sasToken.data.endpoint_without_sas_token;
@@ -85,7 +85,7 @@ export const uploadFile = async (file: FileProps) => {
 };
 
 export const processTiff = async (file: FileProps) => {
-  let url = new URL(path.join(gdalinfoPath), backendUrl).toString();
+  let url = new URL(path.join(gdalinfoPath, '/'), backendUrl).toString();
   //const fileName = process.env.REACT_APP_BLOB_URL + file.name;
   const fileName = file.endpointWithoutSasToken;
   const response = await axios.post(
@@ -220,7 +220,7 @@ export const generateSTAC = async (item) => {
   let body = {
     metadata: payload,
   };
-  const stac_generator_url = new URL(path.join(stacGeneratorPath), backendUrl).toString();
+  const stac_generator_url = new URL(path.join(stacGeneratorPath, '/'), backendUrl).toString();
   const response = await axios.post(
     stac_generator_url,
 
