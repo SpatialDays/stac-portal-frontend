@@ -221,3 +221,25 @@ export const addPrivateCollection = async (
   const data = await response.data;
   return data;
 };
+
+export const checkResponseStatus = async (collectionId, items, url, counter=0) => {
+  // get the item id from the first item to check if it exists on the backend
+  const itemId = Object.keys(items)[0];
+  const itemUrl = new URL(path.join(stacPath, collectionId, itemsPath, itemId), backendUrl).toString();
+
+  // tries to fetch the item by id, with a 1 second pause, 10 times before timingout 
+  try {
+    const response = await fetch(itemUrl);
+    if (response.status === 200) {
+      window.open(url, "_blank");
+    } else if (counter < 10) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      counter += 1;
+      await checkResponseStatus(collectionId, items, url, counter);
+    } else {
+      throw new Error('Timeout error');
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};

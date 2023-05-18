@@ -34,7 +34,7 @@ import {
   groupFilesByID,
   generateSTAC,
 } from "./utils";
-import { addItemsToCollection } from "interface/collections";
+import { addItemsToCollection, checkResponseStatus } from "interface/collections";
 
 // Url paths
 import { stacApiBrowserUrl, collectionsPath } from '../../utils/paths.jsx'
@@ -174,14 +174,11 @@ const LoadLocal = () => {
     }
     await addItemsToCollection(selectedCollection, stac);
 
-    // Wait for 2 seconds and then redirect to collection
+    // url to the updated collection
     const url = new URL(path.join(collectionsPath, selectedCollection.id), stacApiBrowserUrl).toString();
-    setTimeout(() => {
-      window.open(
-        url,
-        "_blank"
-      );
-    }, 2000);
+
+    // checks the status of the items being published to the collection and redirects once the items are published
+    await checkResponseStatus(selectedCollection.id, stac, url)
   };
 
   return (
