@@ -101,7 +101,7 @@ const Validator = () => {
       <Box pt={4} display="flex" justifyContent="space-between">
         <Box display="flex" width="100%">
           <MDButton
-            buttonType="update"
+            buttonType="info"
             style={{ marginRight: "10px" }}
             onClick={() => {
               // Remove any existing alert
@@ -137,7 +137,7 @@ const Validator = () => {
           </MDButton>
 
           <MDButton
-            buttonType="update"
+            buttonType="info"
             style={{ marginRight: "10px" }}
             disabled={isLoading}
             sx={{ mr: 4 }}
@@ -166,7 +166,7 @@ const Validator = () => {
           </MDButton>
 
           <MDButton
-            buttonType="delete"
+            buttonType="info"
             style={{ marginRight: "10px" }}
             sx={{ mr: 4 }}
             onClick={() => {

@@ -10,7 +10,6 @@
       color: white;
       width: 100%;
       text-decoration: none;
-      // Big white border
       border-radius: 15px;
 
       &__text {
@@ -46,7 +45,7 @@
 
       &:hover {
         transition: all 0.2s ease-in-out;
-        background-color: #54a19a1f;
+        background-color: var(--osweb-color-secondary)1f;
         color: white;
         text-decoration: none;
       }
@@ -61,13 +60,13 @@
 
   &-current {
     transition: all 0.3s;
-    background-color: #54a19a!important;
+    background-color: var(--osweb-color-secondary)!important;
     color: white !important;
     border-radius: 15px;
 
     &:hover {
       // Make background bit darker
-      background-color: #417d78!important;
+      background-color: #FF5F00!important;
     }
 
     & .sidenav-collapse-item__icon {
@@ -108,5 +107,17 @@
     text-decoration: none;
     height: 3.5em;
     object-fit: contain;
+
+    &-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      & a {
+        width: 80%;
+      }
+    }
   }
 }

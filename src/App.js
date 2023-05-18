@@ -9,7 +9,7 @@ import Sidenav from "components/Sidenav";
 import routes from "routes";
 
 // Images
-import STAClogo from "assets/images/stac.png";
+import STAClogo from "assets/images/logo.png";
 
 // Styles
 import "./assets/styles/base.scss";

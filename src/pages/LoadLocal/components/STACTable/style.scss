@@ -10,15 +10,15 @@
       height: 3em;
       padding: 1em;
       cursor: pointer;
-      border-bottom: 1px solid #54a19a60;
+      border-bottom: 1px solid var(--osweb-color-secondary)60;
 
       &:hover {
-        background-color: #54a19a39;
+        background-color: var(--osweb-color-secondary)39;
         color: rgb(0, 0, 0);
       }
 
       &-selected {
-        background-color: #54a19a;
+        background-color: var(--osweb-color-secondary);
         & h6 {
           color: white;
         }
@@ -30,7 +30,7 @@
   &-asset-row {
 
     &:hover {
-      background-color: #54a19a39;
+      background-color: var(--osweb-color-secondary)39;
       color: rgb(0, 0, 0);
     }
   }

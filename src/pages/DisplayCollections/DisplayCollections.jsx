@@ -9,6 +9,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DownloadedCollections from "./components/DownloadedCollections";
+import PageHeader from "components/PageHeader";
 
 // Layout components
 import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
@@ -32,11 +33,10 @@ const DisplayCollections = () => {
       <MDBox>
         <Grid container spacing={6}>
           <Grid item xs={12}>
-            <Card className="card-title">
-              <MDBox>
-                <MDTypography variant="h4">Local Catalog</MDTypography>
-              </MDBox>
-            </Card>
+            <PageHeader
+              title="Local Catalog"
+              subtitle="View and manage collections downloaded from the STAC server"
+            ></PageHeader>
           </Grid>
           <Grid item xs={12}>
             <DownloadedCollections
