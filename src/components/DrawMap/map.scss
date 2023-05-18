@@ -8,4 +8,9 @@
 
 .date-picker {
   margin: 1em!important;
+
+  & svg {
+    color: #666666;
+  }
 }
+

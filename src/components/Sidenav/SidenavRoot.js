@@ -6,7 +6,7 @@ export default styled(Drawer)(() => {
   return {
     "& .MuiDrawer-paper": {
       border: "none",
-      background: "linear-gradient(180deg, #404047 0%, #1c1c1c 100%)",
+      background: "linear-gradient(180deg, #453C90 0%, #191636 100%)",
       margin: "1em",
       width: "220px",
       height: "calc(90vh)",

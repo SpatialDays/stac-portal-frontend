@@ -25,7 +25,7 @@ import {
 const routes = [
   {
     type: "title",
-    title: "Catapult Catalog",
+    title: "OS Catalog",
   },
   {
     type: "collapse",

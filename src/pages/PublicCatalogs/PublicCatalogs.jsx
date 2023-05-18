@@ -166,7 +166,7 @@ const PublicCatalogs = () => {
               <br></br>
 
               <MDButton
-                buttonType="update"
+                buttonType="create"
                 onClick={async () => {
                   await syncAllPublicCatalogs();
                   window.alert(
@@ -208,7 +208,7 @@ const PublicCatalogs = () => {
                 <a
                   href="/searcher"
                   style={{
-                    color: "#54A19A",
+                    color: "var(--osweb-color-secondary)",
                     textDecoration: "none",
                     fontWeight: "bold",
                   }}
@@ -236,7 +236,7 @@ const PublicCatalogs = () => {
                 <a
                   href="/searcher"
                   style={{
-                    color: "#54A19A",
+                    color: "var(--osweb-color-secondary)",
                     textDecoration: "none",
                     fontWeight: "bold",
                   }}

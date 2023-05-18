@@ -83,7 +83,7 @@ const Progress = ({ files }) => {
                         {file.started ? (
                           <CircularProgress
                             sx={{
-                              color: "#54A19A",
+                              color: "var(--osweb-color-secondary)",
                             }}
                             size={15}
                           />
@@ -162,7 +162,7 @@ const Progress = ({ files }) => {
                       </MDTypography>
                       <DoneIcon
                         sx={{
-                          color: "#54A19A",
+                          color: "var(--osweb-color-secondary)",
                         }}
                       />
                     </MDBox>

@@ -357,7 +357,7 @@ const LoadLocal = () => {
                     disabled={!selectedCollection}
                     // If not selected collection make gray
                     style={{
-                      backgroundColor: selectedCollection ? "#54A19A" : "#ccc",
+                      backgroundColor: selectedCollection ? "var(--osweb-color-secondary)" : "#ccc",
                       cursor: selectedCollection ? "pointer" : "none",
                     }}
                   >

@@ -285,7 +285,7 @@ const CollectionSelect = ({ setSelectedCollection }) => {
                   <CircularProgress
                     // BLue
                     sx={{
-                      color: "#54A19A",
+                      color: "var(--osweb-color-secondary)",
                     }}
                   />
                   <MDTypography variant="h5" mt={2}>

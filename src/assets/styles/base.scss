@@ -1,5 +1,7 @@
 * {
-  font-family: Roboto, Helvetica, Arial, sans-serif !important;
+  --font-primary: "OS Gill Light", sans-serif;
+  --font-secondary: "OS Gill Regular", sans-serif;
+  font-family: var(--font-secondary)!important;
 }
 
 body {
@@ -68,7 +70,6 @@ hr {
 
 overline {
   margin: 0px 0px 0.35em;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 2.66;
@@ -140,44 +141,43 @@ overline {
   }
 
   &-create {
-    // Create is green
-    background-color: #54a19a;
+    background-color: var(--osweb-color-secondary);
     color: #fff;
     cursor: pointer !important;
 
     &:hover {
-      background-color: #13726c;
+      background-color:#FF5F00;
     }
   }
 
   &-update {
-    // Update is blue
-    background-color: #4299e0;
+    background-color: var(--osweb-color-primary);
     color: #fff;
     cursor: pointer;
 
-    // deeper blue on hover
     &:hover {
-      background-color: #2369ac;
+      background-color: #FF5F00;
     }
   }
 
   &-delete {
-    // Delete is red
-    background-color: #e18080fe;
+    background-color:  red;
     color: #fff;
     cursor: pointer;
 
     &:hover {
-      background-color: #cd3232;
+      background-color: #FF5F00;
     }
   }
 
   &-info {
-    // Info is lightgray
-    background-color: #cccccc;
-    color: black;
+    background-color: #22A7F0;
+    color: white;
     cursor: pointer;
+
+    &:hover {
+      background-color: #FF5F00;
+    }
   }
 
   &-full-width {
@@ -215,7 +215,7 @@ overline {
   }
 
   &-success {
-    background-color: #54a19a;
+    background-color: var(--osweb-color-secondary);
     color: #fff;
     padding: 1rem;
     border-radius: 0.25rem;
