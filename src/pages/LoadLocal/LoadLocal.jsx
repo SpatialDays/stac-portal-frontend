@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Modules
-import path from 'path-browserify';
+import path from "path-browserify";
 
 // Components
 import MDBox from "components/MDBox";
@@ -34,10 +34,13 @@ import {
   groupFilesByID,
   generateSTAC,
 } from "./utils";
-import { addItemsToCollection, checkResponseStatus } from "interface/collections";
+import {
+  addItemsToCollection,
+  checkResponseStatus,
+} from "interface/collections";
 
 // Url paths
-import { stacApiBrowserUrl, collectionsPath } from '../../utils/paths.jsx'
+import { stacApiBrowserUrl, collectionsPath } from "../../utils/paths.jsx";
 
 const LoadLocal = () => {
   const [files, setFiles] = useState([]);
@@ -51,9 +54,7 @@ const LoadLocal = () => {
       // Check for unprocessed metadata files
       const metafiles = files.filter(
         (file) =>
-          isMetadata(file.originalName) &&
-          !file.started &&
-          !file.complete
+          isMetadata(file.originalName) && !file.started && !file.complete
       );
 
       if (!metafiles.length) {
@@ -122,15 +123,7 @@ const LoadLocal = () => {
         .map(async (file) => {
           const response = await uploadFile(file);
           // Set complete to true
-
-          // If file not a TIFF, mark as complete
-          if (file.type === "image/tiff") {
-            const response = await processTiff(file);
-            file.complete = true;
-            file.GDALInfo = response;
-          } else {
-            file.complete = true;
-          }
+          file.complete = true;
 
           setFiles([...files]);
           return response;
@@ -148,7 +141,6 @@ const LoadLocal = () => {
         const item = items[itemID];
         // If item not already STAC processed (itemID not in stac state)
         if (item.complete === true && !stac[item.itemID]) {
-          //if (checkItemCount(item)) {
           const stacJSON = await generateSTAC(item);
 
           // Add itemID and stacJSON to stac state
@@ -158,7 +150,6 @@ const LoadLocal = () => {
               [item.itemID]: stacJSON,
             };
           });
-          //}
         }
       });
     };
@@ -175,10 +166,13 @@ const LoadLocal = () => {
     await addItemsToCollection(selectedCollection, stac);
 
     // url to the updated collection
-    const url = new URL(path.join(collectionsPath, selectedCollection.id, '/'), stacApiBrowserUrl).toString();
+    const url = new URL(
+      path.join(collectionsPath, selectedCollection.id, "/"),
+      stacApiBrowserUrl
+    ).toString();
 
     // checks the status of the items being published to the collection and redirects once the items are published
-    await checkResponseStatus(selectedCollection.id, stac, url)
+    await checkResponseStatus(selectedCollection.id, stac, url);
   };
 
   return (
@@ -357,7 +351,9 @@ const LoadLocal = () => {
                     disabled={!selectedCollection}
                     // If not selected collection make gray
                     style={{
-                      backgroundColor: selectedCollection ? "var(--osweb-color-secondary)" : "#ccc",
+                      backgroundColor: selectedCollection
+                        ? "var(--osweb-color-secondary)"
+                        : "#ccc",
                       cursor: selectedCollection ? "pointer" : "none",
                     }}
                   >
