@@ -16,7 +16,6 @@ const validatePath = "/validate/"
 const jsonPath = "/json/"
 const filePath = "/file/"
 const sasTokenPath = "/sas_token/"
-const gdalinfoPath = "/gdal_info/"
 const stacGeneratorPath = "/stac_generator/"
 
 export {
@@ -37,6 +36,5 @@ export {
     jsonPath,
     filePath,
     sasTokenPath,
-    gdalinfoPath,
     stacGeneratorPath
 };

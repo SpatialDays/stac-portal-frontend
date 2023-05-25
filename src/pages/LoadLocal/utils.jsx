@@ -1,6 +1,6 @@
 // Modules
 import axios from "axios";
-import path from 'path-browserify';
+import path from "path-browserify";
 
 // Types
 import { FileProps } from "./LoadLocal";
@@ -8,10 +8,15 @@ import { FileProps } from "./LoadLocal";
 // Functions
 import { manifestToProvider, providerToManifest } from "./consts";
 
-import {findProvider} from "./providers/providers"
+import { findProvider } from "./providers/providers";
 
 // Url paths
-import { backendUrl, filePath, sasTokenPath, gdalinfoPath, stacGeneratorPath } from '../../utils/paths.jsx'
+import {
+  backendUrl,
+  filePath,
+  sasTokenPath,
+  stacGeneratorPath,
+} from "../../utils/paths.jsx";
 
 export const readManifest = async (file: FileProps) => {
   // Async function to read the manifest file
@@ -50,7 +55,10 @@ export const readManifest = async (file: FileProps) => {
 export const processManifest = async (file: FileProps, files: []) => {
   let associatedFiles, itemID;
 
-  [itemID, associatedFiles] = await findProvider(file.provider).getPathsAndId(file, files);
+  [itemID, associatedFiles] = await findProvider(file.provider).getPathsAndId(
+    file,
+    files
+  );
 
   associatedFiles.forEach((associatedFile) => {
     associatedFile.itemID = itemID;
@@ -65,12 +73,15 @@ export const processManifest = async (file: FileProps, files: []) => {
 };
 
 export const uploadFile = async (file: FileProps) => {
-  const url = new URL(path.join(filePath, sasTokenPath, file.name, '/'), backendUrl).toString();
+  const url = new URL(
+    path.join(filePath, sasTokenPath, file.name, "/"),
+    backendUrl
+  ).toString();
   const sasToken = await axios.get(url);
   const endpoint = sasToken.data.endpoint;
   const endpointWithoutSasToken = sasToken.data.endpoint_without_sas_token;
   file.endpointWithoutSasToken = endpointWithoutSasToken;
-  
+
   // Upload the file
   const uploaderInstance = axios.create();
   const response = await uploaderInstance.put(endpoint, file.blob, {
@@ -82,26 +93,6 @@ export const uploadFile = async (file: FileProps) => {
   });
 
   return response;
-};
-
-export const processTiff = async (file: FileProps) => {
-  let url = new URL(path.join(gdalinfoPath, '/'), backendUrl).toString();
-  //const fileName = process.env.REACT_APP_BLOB_URL + file.name;
-  const fileName = file.endpointWithoutSasToken;
-  const response = await axios.post(
-    url,
-    {
-      file_url: fileName,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const data = await response.data;
-  return data;
 };
 
 export const groupFilesByID = (files) => {
@@ -139,24 +130,22 @@ export const groupFilesByID = (files) => {
   }, []);
 };
 
-
 export const generateSTAC = async (item) => {
   const payload = {
-    "files": item.files.map((file) => {
-      return file.endpointWithoutSasToken
+    files: item.files.map((file) => {
+      return file.endpointWithoutSasToken;
     }),
   };
 
-  const stac_generator_url = new URL(path.join(stacGeneratorPath, '/'), backendUrl).toString();
-  const response = await axios.post(
-    stac_generator_url,
-    payload,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const stac_generator_url = new URL(
+    path.join(stacGeneratorPath, "/"),
+    backendUrl
+  ).toString();
+  const response = await axios.post(stac_generator_url, payload, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   const json = await response.data;
   return json;
