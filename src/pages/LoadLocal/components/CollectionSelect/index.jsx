@@ -131,7 +131,7 @@ const CollectionSelect = ({ setSelectedCollection }) => {
           <MDTypography
             variant="h6"
             sx={{
-              color: "#119F9A",
+              color: "#d40058",
             }}
           >
             OR

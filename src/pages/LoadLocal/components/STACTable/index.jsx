@@ -43,7 +43,6 @@ const STACTable = ({ files, stac }) => {
           justifyContent: "space-between",
           width: "100%",
           height: "100%",
-          border: "1px solid var(--osweb-color-secondary)60",
           borderRadius: "2px",
         }}
       >
@@ -68,7 +67,6 @@ const STACTable = ({ files, stac }) => {
               height: "100%",
               boxSizing: "border-box",
               padding: "0.4em 1em",
-              borderBottom: "1px solid var(--osweb-color-secondary)60",
             }}
           >
             <MDTypography
@@ -135,7 +133,6 @@ const STACTable = ({ files, stac }) => {
             width: "70%",
             height: "100%",
             boxSizing: "border-box",
-            borderLeft: "1px solid var(--osweb-color-secondary)60",
           }}
         >
           <MDBox
@@ -148,7 +145,6 @@ const STACTable = ({ files, stac }) => {
               height: "100%",
               boxSizing: "border-box",
               padding: "0.4em 1em",
-              borderBottom: "1px solid var(--osweb-color-secondary)60",
             }}
           >
             <MDTypography
@@ -193,7 +189,6 @@ const STACTable = ({ files, stac }) => {
                     height: "100%",
                     overflowY: "scroll",
                     maxHeight: "200px",
-                    border: "1px solid var(--osweb-color-secondary)60",
                     borderRadius: "5px",
                   }}
                 >
@@ -216,13 +211,12 @@ const STACTable = ({ files, stac }) => {
                             width: "100%",
                             height: "100%",
                             boxSizing: "border-box",
-                            borderBottom: "0.2px solid var(--osweb-color-secondary)30",
                             padding: "0 2.5em",
                           }}
                           className="stac-table-asset-row"
                           key={"a" + row.name}
                           onClick={() => {
-                            console.log(row);
+                            alert(JSON.stringify(row, null, 2));
                           }}
                         >
                           <MDTypography variant="overline">
@@ -267,20 +261,14 @@ const STACTable = ({ files, stac }) => {
                       height: "100%",
                       boxSizing: "border-box",
                       padding: "1em",
-                      border: "1px solid var(--osweb-color-secondary)",
                       borderRadius: "5px",
                     }}
                   >
-                    {/* {JSON.stringify(stac[selectedId], null, 2)} */}
-                    {/* If Stac itemID */}
                     {stac[selectedId] ? (
                       <JSONTree
                         data={stac[selectedId]}
                         theme={{
                           scheme: "apathy",
-                          // full width
-                          // Padding
-                          // Border
                           tree: {
                             width: "100%",
                             padding: "1.5em",

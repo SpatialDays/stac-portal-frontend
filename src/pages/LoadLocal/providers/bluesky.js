@@ -1,5 +1,4 @@
 import {readFromFile} from "../readfromfile"
-import { providerToManifest } from "../consts";
 
 export class BlueskyProvider {
 

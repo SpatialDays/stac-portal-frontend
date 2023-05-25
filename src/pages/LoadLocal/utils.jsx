@@ -1,17 +1,22 @@
 // Modules
 import axios from "axios";
-import path from 'path-browserify';
+import path from "path-browserify";
 
 // Types
 import { FileProps } from "./LoadLocal";
 
 // Functions
-import { manifestToProvider, providerToManifest } from "./consts";
+import { manifestToProvider } from "./consts";
 
-import {findProvider} from "./providers/providers"
+import { findProvider } from "./providers/providers";
 
 // Url paths
-import { backendUrl, filePath, sasTokenPath, gdalinfoPath, stacGeneratorPath } from '../../utils/paths.jsx'
+import {
+  backendUrl,
+  filePath,
+  sasTokenPath,
+  stacGeneratorPath,
+} from "../../utils/paths.jsx";
 
 export const readManifest = async (file: FileProps) => {
   // Async function to read the manifest file
@@ -50,7 +55,10 @@ export const readManifest = async (file: FileProps) => {
 export const processManifest = async (file: FileProps, files: []) => {
   let associatedFiles, itemID;
 
-  [itemID, associatedFiles] = await findProvider(file.provider).getPathsAndId(file, files);
+  [itemID, associatedFiles] = await findProvider(file.provider).getPathsAndId(
+    file,
+    files
+  );
 
   associatedFiles.forEach((associatedFile) => {
     associatedFile.itemID = itemID;
@@ -65,12 +73,15 @@ export const processManifest = async (file: FileProps, files: []) => {
 };
 
 export const uploadFile = async (file: FileProps) => {
-  const url = new URL(path.join(filePath, sasTokenPath, file.name, '/'), backendUrl).toString();
+  const url = new URL(
+    path.join(filePath, sasTokenPath, file.name, "/"),
+    backendUrl
+  ).toString();
   const sasToken = await axios.get(url);
   const endpoint = sasToken.data.endpoint;
   const endpointWithoutSasToken = sasToken.data.endpoint_without_sas_token;
   file.endpointWithoutSasToken = endpointWithoutSasToken;
-  
+
   // Upload the file
   const uploaderInstance = axios.create();
   const response = await uploaderInstance.put(endpoint, file.blob, {
@@ -82,26 +93,6 @@ export const uploadFile = async (file: FileProps) => {
   });
 
   return response;
-};
-
-export const processTiff = async (file: FileProps) => {
-  let url = new URL(path.join(gdalinfoPath, '/'), backendUrl).toString();
-  //const fileName = process.env.REACT_APP_BLOB_URL + file.name;
-  const fileName = file.endpointWithoutSasToken;
-  const response = await axios.post(
-    url,
-    {
-      file_url: fileName,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const data = await response.data;
-  return data;
 };
 
 export const groupFilesByID = (files) => {
@@ -139,100 +130,23 @@ export const groupFilesByID = (files) => {
   }, []);
 };
 
-
 export const generateSTAC = async (item) => {
-  // Gather all files that gdalInfo is not null
-  const filesWithGdalInfo = item.files.filter((file) => file.GDALInfo !== null);
+  const payload = {
+    files: item.files.map((file) => {
+      return file.endpointWithoutSasToken;
+    }),
+  };
 
-  // Read the geoms from the Tiffs (can be multiple)
-  const projGeoms = filesWithGdalInfo.map(
-    (file) => file.GDALInfo.cornerCoordinates
-  );
-  const wgs84Geoms = filesWithGdalInfo.map((file) => file.GDALInfo.wgs84Extent);
-
-  // URL
-  const url = filesWithGdalInfo.find(
-    (file) => file.GDALInfo.description !== null
-  ).GDALInfo.description;
-
-  // WKT
-  const with_wkt = filesWithGdalInfo.find(
-    (file) => file.GDALInfo.coordinateSystem && file.GDALInfo.coordinateSystem.wkt !== null
-  )
-  let wkt = "";
-  if (with_wkt) {
-    wkt = with_wkt.GDALInfo.coordinateSystem.wkt;
-  }
-
-  // Assets
-  const assets = filesWithGdalInfo.map((file) => {
-    const asset = {
-      href: file.endpointWithoutSasToken, // this is the line
-      transform: file.GDALInfo.geoTransform,
-      shape: file.GDALInfo.size,
-      type: file.GDALInfo.driverLongName,
-      filename: file.name,
-      bands: file.GDALInfo.bands.map((band) => {
-        return {
-          name: band.colorInterpretation,
-          description: band.description,
-          type: band.type,
-          band: band.band,
-          block: band.block,
-        };
-      }),
-    };
-    return asset;
+  const stac_generator_url = new URL(
+    path.join(stacGeneratorPath, "/"),
+    backendUrl
+  ).toString();
+  const response = await axios.post(stac_generator_url, payload, {
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
-  // All other assets except the Tiffs
-  const otherAssets = item.files.filter((file) => file.GDALInfo === null);
-
-  /**
-   * We can read some files from frontend, without having to make a request to the backend
-   * Dependent on provider
-   */
-  // Time Acquired
-  let timeAcquired;
-  let additional;
-
-  [timeAcquired, additional] = await findProvider(item.provider).getAdditionalInfo(item);
-
-  const payload = {
-    assets: assets,
-    groupedVariables: {
-      proj_geom: projGeoms,
-      wgs84_geom: wgs84Geoms,
-    },
-    staticVariables: {
-      id: item.itemID,
-      url: url,
-      wkt: wkt,
-      time_acquired: timeAcquired,
-      provider: item.provider,
-    },
-
-    otherAssets: otherAssets,
-    additional: additional,
-  };
-
-  // let backend_url = process.env.REACT_APP_PORTAL_BACKEND_URL;
-  let body = {
-    metadata: payload,
-  };
-  const stac_generator_url = new URL(path.join(stacGeneratorPath, '/'), backendUrl).toString();
-  const response = await axios.post(
-    stac_generator_url,
-
-    body,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
   const json = await response.data;
-
   return json;
 };

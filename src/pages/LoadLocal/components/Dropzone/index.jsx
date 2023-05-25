@@ -34,8 +34,6 @@ const Dropzone = ({ files, setFiles }) => {
         blob: file,
         data: null,
         provider: "",
-        GDALInfo: null,
-        GDALProcessing: false,
       };
 
       // Add to files array

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Modules
-import path from 'path-browserify';
+import path from "path-browserify";
 
 // Components
 import MDBox from "components/MDBox";
@@ -15,6 +15,7 @@ import STACTable from "./components/STACTable";
 // @mui components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import { Tooltip } from "@mui/material";
 
 // Layout components
 import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
@@ -30,14 +31,16 @@ import {
   readManifest,
   processManifest,
   uploadFile,
-  processTiff,
   groupFilesByID,
   generateSTAC,
 } from "./utils";
-import { addItemsToCollection, checkResponseStatus } from "interface/collections";
+import {
+  addItemsToCollection,
+  checkResponseStatus,
+} from "interface/collections";
 
 // Url paths
-import { stacApiBrowserUrl, collectionsPath } from '../../utils/paths.jsx'
+import { stacApiBrowserUrl, collectionsPath } from "../../utils/paths.jsx";
 
 const LoadLocal = () => {
   const [files, setFiles] = useState([]);
@@ -51,9 +54,7 @@ const LoadLocal = () => {
       // Check for unprocessed metadata files
       const metafiles = files.filter(
         (file) =>
-          isMetadata(file.originalName) &&
-          !file.started &&
-          !file.complete
+          isMetadata(file.originalName) && !file.started && !file.complete
       );
 
       if (!metafiles.length) {
@@ -122,15 +123,7 @@ const LoadLocal = () => {
         .map(async (file) => {
           const response = await uploadFile(file);
           // Set complete to true
-
-          // If file not a TIFF, mark as complete
-          if (file.type === "image/tiff") {
-            const response = await processTiff(file);
-            file.complete = true;
-            file.GDALInfo = response;
-          } else {
-            file.complete = true;
-          }
+          file.complete = true;
 
           setFiles([...files]);
           return response;
@@ -142,13 +135,10 @@ const LoadLocal = () => {
       // Now to generate the STAC with the items we have
       const items = groupFilesByID(files);
 
-      // TODO: if items.any((item) => item.files.any((file) => file.GDALInfo.error) display an error
-
       Object.keys(items).forEach(async (itemID) => {
         const item = items[itemID];
         // If item not already STAC processed (itemID not in stac state)
         if (item.complete === true && !stac[item.itemID]) {
-          //if (checkItemCount(item)) {
           const stacJSON = await generateSTAC(item);
 
           // Add itemID and stacJSON to stac state
@@ -158,7 +148,6 @@ const LoadLocal = () => {
               [item.itemID]: stacJSON,
             };
           });
-          //}
         }
       });
     };
@@ -175,10 +164,13 @@ const LoadLocal = () => {
     await addItemsToCollection(selectedCollection, stac);
 
     // url to the updated collection
-    const url = new URL(path.join(collectionsPath, selectedCollection.id, '/'), stacApiBrowserUrl).toString();
+    const url = new URL(
+      path.join(collectionsPath, selectedCollection.id, "/"),
+      stacApiBrowserUrl
+    ).toString();
 
     // checks the status of the items being published to the collection and redirects once the items are published
-    await checkResponseStatus(selectedCollection.id, stac, url)
+    await checkResponseStatus(selectedCollection.id, stac, url);
   };
 
   return (
@@ -199,8 +191,8 @@ const LoadLocal = () => {
                 Step 1 - Select Folder(s)
               </MDTypography>
               <MDTypography variant="overline" mb={2}>
-                Drag and drop the folder containing the imagery files from your
-                source provider e.g. Planet, Maxar etc.
+                Click the dropzone to upload the imagery files from your source
+                provider e.g. Planet, Maxar etc.
               </MDTypography>
 
               <MDBox
@@ -351,18 +343,21 @@ const LoadLocal = () => {
                   <MDTypography variant="h5">
                     Step 5 - View STAC Records
                   </MDTypography>
-                  <MDButton
-                    onClick={publish}
-                    buttonType="create"
-                    disabled={!selectedCollection}
-                    // If not selected collection make gray
-                    style={{
-                      backgroundColor: selectedCollection ? "var(--osweb-color-secondary)" : "#ccc",
-                      cursor: selectedCollection ? "pointer" : "none",
-                    }}
-                  >
-                    Publish All
-                  </MDButton>
+                  <Tooltip title="Publish all items to the selected collection">
+                    <MDButton
+                      onClick={publish}
+                      buttonType="create"
+                      disabled={!selectedCollection}
+                      style={{
+                        backgroundColor: selectedCollection
+                          ? "var(--osweb-color-secondary)"
+                          : "#ccc",
+                        cursor: selectedCollection ? "pointer" : "none",
+                      }}
+                    >
+                      Publish All
+                    </MDButton>
+                  </Tooltip>
                 </MDBox>
 
                 <MDTypography
@@ -398,8 +393,6 @@ export type FileProps = {
   complete: boolean,
   error: boolean,
   errorMessage: string,
-  GDALInfo: Object,
-  GDALProcessing: boolean,
 
   // Data attributes
   itemID: string,
