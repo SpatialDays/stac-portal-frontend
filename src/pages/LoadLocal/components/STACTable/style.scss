@@ -10,10 +10,9 @@
       height: 3em;
       padding: 1em;
       cursor: pointer;
-      border-bottom: 1px solid var(--osweb-color-secondary)60;
+      border-bottom: 1px solid var(--osweb-color-secondary);
 
       &:hover {
-        background-color: var(--osweb-color-secondary)39;
         color: rgb(0, 0, 0);
       }
 
@@ -28,10 +27,14 @@
 
 
   &-asset-row {
-
     &:hover {
-      background-color: var(--osweb-color-secondary)39;
-      color: rgb(0, 0, 0);
+      background-color: var(--osweb-color-secondary);
+      color: white!important;
+      cursor: pointer;
+
+      & overline {
+        color: white!important;
+      }
     }
   }
 }

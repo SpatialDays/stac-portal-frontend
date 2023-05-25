@@ -10,7 +10,8 @@
 }
 
 .dropzone {
+  transition: border 0.3s ease-in-out;
   &:hover {
-    border: "1px dashed black";
+    border: 1px dashed var(--osweb-color-secondary)!important;
   }
 }

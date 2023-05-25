@@ -15,6 +15,7 @@ import STACTable from "./components/STACTable";
 // @mui components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import { Tooltip } from "@mui/material";
 
 // Layout components
 import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
@@ -190,8 +191,8 @@ const LoadLocal = () => {
                 Step 1 - Select Folder(s)
               </MDTypography>
               <MDTypography variant="overline" mb={2}>
-                Drag and drop the folder containing the imagery files from your
-                source provider e.g. Planet, Maxar etc.
+                Click the dropzone to upload the imagery files from your source
+                provider e.g. Planet, Maxar etc.
               </MDTypography>
 
               <MDBox
@@ -342,20 +343,21 @@ const LoadLocal = () => {
                   <MDTypography variant="h5">
                     Step 5 - View STAC Records
                   </MDTypography>
-                  <MDButton
-                    onClick={publish}
-                    buttonType="create"
-                    disabled={!selectedCollection}
-                    // If not selected collection make gray
-                    style={{
-                      backgroundColor: selectedCollection
-                        ? "var(--osweb-color-secondary)"
-                        : "#ccc",
-                      cursor: selectedCollection ? "pointer" : "none",
-                    }}
-                  >
-                    Publish All
-                  </MDButton>
+                  <Tooltip title="Publish all items to the selected collection">
+                    <MDButton
+                      onClick={publish}
+                      buttonType="create"
+                      disabled={!selectedCollection}
+                      style={{
+                        backgroundColor: selectedCollection
+                          ? "var(--osweb-color-secondary)"
+                          : "#ccc",
+                        cursor: selectedCollection ? "pointer" : "none",
+                      }}
+                    >
+                      Publish All
+                    </MDButton>
+                  </Tooltip>
                 </MDBox>
 
                 <MDTypography
