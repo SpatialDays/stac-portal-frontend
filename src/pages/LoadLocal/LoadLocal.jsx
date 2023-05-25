@@ -134,8 +134,6 @@ const LoadLocal = () => {
       // Now to generate the STAC with the items we have
       const items = groupFilesByID(files);
 
-      // TODO: if items.any((item) => item.files.any((file) => file.GDALInfo.error) display an error
-
       Object.keys(items).forEach(async (itemID) => {
         const item = items[itemID];
         // If item not already STAC processed (itemID not in stac state)
@@ -393,8 +391,6 @@ export type FileProps = {
   complete: boolean,
   error: boolean,
   errorMessage: string,
-  GDALInfo: Object,
-  GDALProcessing: boolean,
 
   // Data attributes
   itemID: string,

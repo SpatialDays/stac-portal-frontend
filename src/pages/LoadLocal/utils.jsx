@@ -6,7 +6,7 @@ import path from "path-browserify";
 import { FileProps } from "./LoadLocal";
 
 // Functions
-import { manifestToProvider, providerToManifest } from "./consts";
+import { manifestToProvider } from "./consts";
 
 import { findProvider } from "./providers/providers";
 
