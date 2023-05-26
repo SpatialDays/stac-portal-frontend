@@ -35,6 +35,7 @@
     "moment": "^2.29.4",
     "npm": "^8.19.2",
     "path-browserify": "^1.0.1",
+    "proj4": "^2.9.0",
     "prop-types": "15.8.1",
     "rc-progress": "^3.4.0",
     "react": "^18.2.0",
