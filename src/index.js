@@ -9,11 +9,6 @@ import App from "./App";
 // Styles
 import './index.scss';
 
-// Auth
-import { auth } from "auth/auth";
-if (process.env.NODE_ENV === 'production') {
-  auth();
-}
 
 ReactDOM.render(
   <BrowserRouter>

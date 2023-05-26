@@ -4,7 +4,7 @@
   justify-content: space-between;
 
   & svg {
-    color:  #453C90!important;
+    color:  var(--osweb-color-primary) !important;
   }
 
   &__container {
@@ -38,5 +38,17 @@
         margin-left: 0.5em;
       }
     }
-  }
+
+    & .breadcrumbs-button {
+      height: 2.5rem;
+      width: 2.5rem;
+
+      & .breadcrumbs-avatar{
+        background-color: var(--osweb-color-primary) !important;
+        & svg {
+          color:  #fff !important;
+        }
+      }
+    }
+  } 
 }
