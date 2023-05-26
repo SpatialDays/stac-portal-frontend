@@ -12,6 +12,7 @@ import { EditControl } from "react-leaflet-draw";
 
 // Components
 import MDButton from "components/MDButton";
+import ShapefileLoader from "components/ShapefileLoader";
 
 // @mui components
 import { Search } from "@mui/icons-material";
@@ -120,6 +121,9 @@ const DrawMap = ({
                 }
               }}
             />
+            {/* Small button to upload shapefile */}
+            <ShapefileLoader />
+              
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
                 label="Start Date"
