@@ -8,6 +8,7 @@ import LoadStatuses from "pages/LoadStatuses/LoadStatuses";
 import DisplayCollections from "pages/DisplayCollections/DisplayCollections";
 import PublicCatalogs from "pages/PublicCatalogs/PublicCatalogs";
 import AddPrivateCollection from "pages/AddPrivateCollection/AddPrivateCollection";
+import { DisplayMyDetails } from "pages/DisplayMyDetails/DisplayMyDetails";
 
 // @mui icons
 import {
@@ -116,6 +117,15 @@ const routes = [
     key: "stac-browser",
     icon: <Explore />,
     href: process.env.REACT_APP_PORTAL_STAC_API_BROWSER_URL,
+  },
+
+  {
+    type: "hidden",
+    name: "My Details",
+    key: "my-details",
+    route: "/my-details",
+    component: <DisplayMyDetails/>,
+
   },
 ];
 

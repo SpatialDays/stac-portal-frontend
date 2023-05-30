@@ -1,5 +1,5 @@
 // React
-import { useEffect } from "react";
+import { useEffect, useState, createContext } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 // Layout components
@@ -13,8 +13,25 @@ import STAClogo from "assets/images/logo.png";
 
 // Styles
 import "./assets/styles/base.scss";
+import { auth } from "auth/auth";
+
+export const UserDataContext = createContext();
 
 export default function App() {
+
+  const [userData, setUserData] = useState(null);
+
+  // getting the user data and setting it to the state
+  useEffect(() => {
+    async function getUserData() {
+      let userData = await auth();
+      console.log(userData);
+      setUserData(userData);
+      }
+  
+      getUserData();
+  }, []);
+  
   const { pathname } = useLocation();
 
   // Setting page scroll to 0 when changing the route
@@ -44,7 +61,8 @@ export default function App() {
     });
 
   return (
-    <>
+    // passing the userData in the context
+    <UserDataContext.Provider value={[userData, setUserData]}>
       <Sidenav brand={STAClogo} brandName="STAC Portal" routes={routes} />
       <div
         style={{
@@ -68,6 +86,6 @@ export default function App() {
           </Routes>
         </div>
       </div>
-    </>
+    </UserDataContext.Provider >
   );
 }

@@ -1,0 +1,57 @@
+.my-details-container{
+  max-width: 50vw !important;
+  margin: 0 auto !important;
+
+  & .my-details-card {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 2rem;
+    height: 60vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+    & .my-details-grid{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      & .avatar {
+        width: 30vh !important;
+        height: 30vh !important;
+        font-size: 15vh !important;
+        background-color: var(--osweb-color-primary) !important;
+      }
+      
+      & .my-details-list {
+        height: 30vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        & .my-details-item {
+          margin-left: 8px;
+          font-size: 20px;
+        }
+
+        & .copy-api-key-button {
+          &:hover {
+            background-color: #fff !important;
+          }
+          
+          & .copy-api-key-icon {
+            color: var(--osweb-color-primary);
+          
+            &:hover {
+              color: #FF5F00 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
