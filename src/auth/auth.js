@@ -27,7 +27,7 @@ const addProfilePicture = async (userData) => {
 
   } catch (error) {
     console.error(error);
-    throw new Error('Failed to retrieve profile picture');
+    return userData;
   }
 };
 
@@ -89,7 +89,7 @@ const auth = async () => {
   axios.interceptors.request.use(async (config) => {
     
     console.log('prod mode')
-    const userData = await getAADData();
+    let userData = await getAADData();
     userData = addProfilePicture(userData);
 
     const { id_token } = userData;

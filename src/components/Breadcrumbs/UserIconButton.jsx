@@ -31,15 +31,13 @@ export const IconButtonWithDropdown = () => {
   const [userDetails] = useContext(UserDataContext);
 
   useEffect(() => {
-    async function fetchData() {
-      let userPicture = userDetails.picture;
-      let userName = userDetails.user_claims.find(item => item.typ === 'name').val;
+    if (userDetails && userDetails.picture) {
+      const userPicture = userDetails.picture;
+      const userName = userDetails.user_claims.find(item => item.typ === 'name').val;
       setUserName(userName);
       setUserPicture(userPicture);
-      }
-  
-      fetchData();
-  });
+    }
+  }, [userDetails]);
 
   return (
     <div className="breadcrumbs__container">

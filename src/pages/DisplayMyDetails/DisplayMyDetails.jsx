@@ -36,7 +36,7 @@ const DisplayMyDetails = () => {
   
   useEffect(() => {
     // getting the user's name and role from the user_claims array
-    async function getValueByType(list, valueType) {
+    function getValueByType(list, valueType) {
       if (list && list.length > 0){
         const value = list.find(item => item.typ === valueType);
         return value ? value.val : '';
@@ -46,15 +46,10 @@ const DisplayMyDetails = () => {
     async function fetchData() {
       // getting the user's name, role and picture from the userDetails object
       const userDetailsList = userDetails.user_claims;
-      let userName = await getValueByType(userDetailsList, 'name');
-      let userRole = await getValueByType(userDetailsList, 'roles');
-      let userPicture;
-      if (userDetails.picture){
-        userPicture = userDetails.picture;
-      };
-      if (userRole){
-        userRole = userRole.split('.')[1];
-      }
+      const userName = getValueByType(userDetailsList, 'name');
+      let userRole = getValueByType(userDetailsList, 'roles');
+      const userPicture = userDetails.picture ? userDetails.picture : null;
+      userRole = userRole ? userRole.split('.')[1]: userRole;
 
       setUserName(userName);
       setUserRole(userRole);
