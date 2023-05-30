@@ -150,7 +150,7 @@ overline {
     }
   }
 
-  &-update {
+  &-update, &-refresh {
     background-color: var(--osweb-color-primary);
     color: #fff;
     cursor: pointer;
