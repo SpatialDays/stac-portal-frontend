@@ -9,7 +9,7 @@ export default styled(Drawer)(() => {
       background: "linear-gradient(180deg, #453C90 0%, #191636 100%)",
       margin: "1em",
       width: "220px",
-      height: "calc(90vh)",
+      height: "auto",
       borderRadius: "10px",
       overflowX: "hidden",
       transform: "translateX(10px)",

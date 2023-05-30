@@ -52,15 +52,8 @@ export default function App() {
           flexDirection: "column",
         }}
       >
-        {/* The sidenav takes 300px, so use rest of the screen */}
         <div
-          style={{
-            flex: "1 1 auto",
-            marginLeft: "300px",
-            padding: "1rem",
-            width: "calc(100% - 330px)",
-            height: "100%",
-          }}
+          id="content-display"
         >
           <Routes>
             {getRoutes(routes)}

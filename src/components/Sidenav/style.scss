@@ -121,3 +121,12 @@
     }
   }
 }
+
+.mobile-menu-button {
+  background-color: #fff !important;
+  margin: auto;
+
+  & .mobile-menu-icon {
+    color: var(--osweb-color-primary) !important;
+  }
+}

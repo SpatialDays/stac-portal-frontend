@@ -1,9 +1,15 @@
+// React
+import { useState, useEffect } from "react";
+
 // react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
 
 // @mui material components
 import List from "@mui/material/List";
 import Link from "@mui/material/Link";
+
+// material icons
+import MenuIcon from '@mui/icons-material/Menu';
 
 // STAC Portal components
 import MDBox from "components/MDBox";
@@ -14,10 +20,45 @@ import SidenavCollapse from "components/Sidenav/SidenavCollapse";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "components//Sidenav/SidenavRoot";
+import MDButton from "components/MDButton";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
+  // adding in a state for whether the sidenav should be collapsed or not (for mobile)
+  const mobileScreenSize = 768;
+  const [mobileSidenav, setMobileSidenav] = useState(document.documentElement.clientWidth <= mobileScreenSize);
+  const [hideMobileNav, setHideMobileNav] = useState(true);
+
+  // sets mobileSidenav to true/false depending on the window size
+  useEffect(() => {
+    const handleResize = () => {
+      console.log(document.documentElement.clientWidth);
+      setMobileSidenav(document.documentElement.clientWidth <= mobileScreenSize);
+      setHideMobileNav(document.documentElement.clientWidth <= mobileScreenSize);
+    };
+  
+    // Set initial state
+    setMobileSidenav(document.documentElement.clientWidth <= mobileScreenSize); 
+    setHideMobileNav(document.documentElement.clientWidth <= mobileScreenSize);
+  
+    window.addEventListener('resize', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // if the screen is mobile size add the mobile-display class to the element with id="content-display"
+  useEffect(() => {
+    const displayElement = document.getElementById("content-display");
+    if (mobileSidenav) {
+      displayElement.classList.add("mobile-display");
+    } else {
+      displayElement.classList.remove("mobile-display");
+    }
+
+  }, [mobileSidenav]);
 
   const renderRoutes = routes.map(
     ({ type, name, icon, title, key, href, route }) => {
@@ -43,7 +84,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             />
           </Link>
         ) : (
-          <NavLink key={key} to={route}>
+          // when a link is clicked the link list is hidden if the screen is mobile size
+          <NavLink key={key} to={route} onClick={() => setHideMobileNav=mobileSidenav}>
             <SidenavCollapse
               name={name}
               icon={icon}
@@ -82,20 +124,29 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     }
   );
 
-  return (
-    <SidenavRoot {...rest} variant="permanent">
-      <MDBox>
-        <MDBox to="/" className="sidenav-brand-container">
-          {brand && (
+  return(
+      <SidenavRoot variant="permanent" className="root-sidenav">
+        <MDBox>
+          <MDBox to="/" className="sidenav-brand-container">  
             <a href="/">
               <img src={brand} alt="brand" className="sidenav-brand" />
             </a>
-          )}
+          </MDBox>
         </MDBox>
-      </MDBox>
-      <hr></hr>
-      <List>{renderRoutes}</List>
-    </SidenavRoot>
+          {/* button for toggling the mobile menu */}
+          {mobileSidenav && (
+            <MDBox>
+              <MDButton
+                className="mobile-menu-button"
+                onClick={() => setHideMobileNav(!hideMobileNav)}
+              >
+                <MenuIcon className="mobile-menu-icon"></MenuIcon>
+              </MDButton>
+            </MDBox>
+          )}
+        {!hideMobileNav && <hr></hr>}
+        {!hideMobileNav && <List>{renderRoutes}</List>}
+      </SidenavRoot>
   );
 }
 

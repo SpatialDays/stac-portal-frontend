@@ -239,3 +239,18 @@ overline {
 .table-toolbar {
   box-shadow: none !important;
 }
+
+#content-display{
+  flex: 1 1 auto;
+  margin-left: 300px;  // The sidenav takes 300px, so use rest of the screen
+  padding: 1rem;
+  width: calc(100% - 330px);
+  height: 100%;
+}
+
+// adapts display content size for mobile
+.mobile-display{
+  padding-top: 3rem !important;
+  margin: 0.5em !important;
+  width: auto !important;
+}
