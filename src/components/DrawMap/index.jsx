@@ -3,7 +3,7 @@ import { useState } from "react";
 
 // Modules
 import axios from "axios";
-import path from 'path-browserify';
+import path from "path-browserify";
 
 // Leaflet
 import * as L from "leaflet"; // This must be imported for use by react-leaflet
@@ -26,10 +26,18 @@ import { Stack, Box } from "@mui/system";
 import "./map.scss";
 
 // Url paths
-import { backendUrl, publicCatalogsPath, collectionsPath, searchPath } from '../../utils/paths.jsx'
+import {
+  backendUrl,
+  publicCatalogsPath,
+  collectionsPath,
+  searchPath,
+} from "../../utils/paths.jsx";
 
 const searchCollections = async (bbox, datetime) => {
-  const url = new URL(path.join(publicCatalogsPath, collectionsPath, searchPath, '/'), backendUrl).toString();
+  const url = new URL(
+    path.join(publicCatalogsPath, collectionsPath, searchPath, "/"),
+    backendUrl
+  ).toString();
   const collections = await axios({
     method: "POST",
     url: url,
@@ -87,43 +95,46 @@ const DrawMap = ({
             marginTop="1em"
             flexWrap="wrap"
           >
-            <TextField
-              id="aoi"
-              label="AOI"
-              autoComplete="off"
-              style={{ margin: 6, width: "50%", padding: "0" }}
-              placeholder={"Click to draw AOI on the map"}
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              padding="0"
-              // set inside padding to 0
-              inputProps={{
-                style: { padding: "0.67em", fontSize: "0.9rem" },
-              }}
-              value={AOI}
-              variant="outlined"
-              onChange={(e) => setAOI(e.target.value)}
-              onClick={() => {
-                setShowMap(true);
-                // Enable draw tool
-                const drawTool = document.getElementsByClassName(
-                  "leaflet-draw-draw-rectangle"
-                );
-                if (drawTool.length === 1) {
-                  // Click but dont focus
-                  drawTool[0].click();
-
-                  // Refoucs on AOI
-                  const aoi = document.getElementById("aoi");
-                  aoi.focus();
-                }
-              }}
-            />
-            {/* Small button to upload shapefile */}
-            <ShapefileLoader />
+            <Box
+              display="flex"
+              width="100%"
+              justifyContent="center"
+              alignItems="center"
               
+
+            >
+              <TextField
+                id="aoi"
+                label="AOI"
+                autoComplete="off"
+                style={{ margin: 6, width: "50%", padding: "0" }}
+                placeholder={"Click to draw AOI on the map"}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                padding="0"
+                inputProps={{
+                  style: { padding: "0.67em", fontSize: "0.9rem" },
+                }}
+                value={AOI}
+                variant="outlined"
+                onChange={(e) => setAOI(e.target.value)}
+                onClick={() => {
+                  setShowMap(true);
+                  const drawTool = document.getElementsByClassName(
+                    "leaflet-draw-draw-rectangle"
+                  );
+                  if (drawTool.length === 1) {
+                    drawTool[0].click();
+                    const aoi = document.getElementById("aoi");
+                    aoi.focus();
+                  }
+                }}
+              />
+              {/* Small button to upload shapefile */}
+              <ShapefileLoader />
+            </Box>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
                 label="Start Date"
