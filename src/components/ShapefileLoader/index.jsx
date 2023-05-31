@@ -1,5 +1,14 @@
+// React
 import React, { useRef, useState } from "react";
+
+// Modules
+import path from "path-browserify";
+import axios from "axios";
+
+// Icons
 import SettingsIcon from "@mui/icons-material/Settings";
+
+// @mui components
 import {
   Dialog,
   DialogTitle,
@@ -12,8 +21,13 @@ import MDTypography from "components/MDTypography";
 import { CloseOutlined, QuestionMarkOutlined } from "@mui/icons-material";
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
-import axios from "axios";
+
+// Utility functions
 import { createGeoJSONPolygon, convertGeoJSONToWKT } from "./utils";
+import {
+  geoTransformerUrl,
+  geoTransformerPath,
+} from "../../utils/paths.jsx";
 
 const ShapefileLoader = ({ setAOI, setPolygonBounds }) => {
   const fileInputShp = useRef();
@@ -27,7 +41,12 @@ const ShapefileLoader = ({ setAOI, setPolygonBounds }) => {
     formData.append("file", file, file.name);
     formData.append("output_epsg", 4326);
 
-    const url = "http://localhost:5000/transform";
+    // "http://localhost:5000/transform";
+    const url = new URL(
+      path.join(geoTransformerPath),
+      geoTransformerUrl
+    ).toString();
+
     const response = await axios.post(url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",

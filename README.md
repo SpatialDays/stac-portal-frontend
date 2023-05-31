@@ -17,7 +17,8 @@ docker build -f ./Dockerfile_dev -t pdm-test:dev .
 | --- | --- |
 |REACT_APP_PORTAL_BACKEND_URL| Setting the url of the backend for the build process.|
 |REACT_APP_PORTAL_STAC_API_BROWSER_URL| Setting the url of the stac api browser viewer for the build process. Used for redirecting the user to stac assets once they are uploaded. |
-|REACT_APP_BLOB_URL| Setting the url of the Azure Blob Storage URL
+|REACT_APP_BLOB_URL| Setting the url of the Azure Blob Storage URL |
+|REACT_APP_PORTAL_GEOPROJECTOR_URL| Setting the url of the Geo Projector microservice
 # Authorization
 The frontend is meant to be runned on Azure App Service protected by easy auth which provides /.auth/me and /.auth/refresh endpoints for
 obtaining and refreshing the access tokens. These tokens are obtained 
