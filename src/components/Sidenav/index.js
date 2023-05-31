@@ -7,6 +7,7 @@ import { useLocation, NavLink } from "react-router-dom";
 // @mui material components
 import List from "@mui/material/List";
 import Link from "@mui/material/Link";
+import Drawer from "@mui/material/Drawer";
 
 // material icons
 import MenuIcon from '@mui/icons-material/Menu';
@@ -25,7 +26,7 @@ import MDButton from "components/MDButton";
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
-  // adding in a state for whether the sidenav should be collapsed or not (for mobile)
+  // sets the state for mobile screen or not based on screen width
   const mobileScreenSize = 768;
   const [mobileSidenav, setMobileSidenav] = useState(document.documentElement.clientWidth <= mobileScreenSize);
   const [hideMobileNav, setHideMobileNav] = useState(true);
@@ -38,7 +39,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       setHideMobileNav(document.documentElement.clientWidth <= mobileScreenSize);
     };
   
-    // Set initial state
+    // sets initial states
     setMobileSidenav(document.documentElement.clientWidth <= mobileScreenSize); 
     setHideMobileNav(document.documentElement.clientWidth <= mobileScreenSize);
   
@@ -49,7 +50,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     };
   }, []);
 
-  // if the screen is mobile size add the mobile-display class to the element with id="content-display"
+  // if the screen is mobile size, add the mobile-display class to the element with id="content-display"
   useEffect(() => {
     const displayElement = document.getElementById("content-display");
     if (mobileSidenav) {
@@ -84,7 +85,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             />
           </Link>
         ) : (
-          // when a link is clicked the link list is hidden if the screen is mobile size
+          // on click for closing the mobile sidenav once a link is selected
           <NavLink key={key} to={route} onClick={() => setHideMobileNav=mobileSidenav}>
             <SidenavCollapse
               name={name}
@@ -124,7 +125,29 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     }
   );
 
-  return(
+  if (mobileSidenav) {
+    return (
+      <MDBox className="mobile-sidenav">
+        <MDButton
+          className="mobile-sidenav__menu-button"
+          onClick={() => setHideMobileNav(!hideMobileNav)}
+        >
+          <MenuIcon className="mobile-sidenav__menu-icon"></MenuIcon>
+        </MDButton>
+        <Drawer
+          anchor="left"
+          open={!hideMobileNav}
+          onClose={() => setHideMobileNav(true)}
+          className="mobile-sidenav__container"
+        >
+          <MDBox to="/" className="mobile-sidenav__container-content">
+            {<List>{renderRoutes}</List>}
+          </MDBox>
+        </Drawer>
+      </MDBox>
+    );
+  } else {
+    return (
       <SidenavRoot variant="permanent" className="root-sidenav">
         <MDBox>
           <MDBox to="/" className="sidenav-brand-container">  
@@ -133,21 +156,11 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             </a>
           </MDBox>
         </MDBox>
-          {/* button for toggling the mobile menu */}
-          {mobileSidenav && (
-            <MDBox>
-              <MDButton
-                className="mobile-menu-button"
-                onClick={() => setHideMobileNav(!hideMobileNav)}
-              >
-                <MenuIcon className="mobile-menu-icon"></MenuIcon>
-              </MDButton>
-            </MDBox>
-          )}
         {!hideMobileNav && <hr></hr>}
         {!hideMobileNav && <List>{renderRoutes}</List>}
       </SidenavRoot>
-  );
+    )
+  }
 }
 
 export default Sidenav;

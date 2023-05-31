@@ -8,6 +8,10 @@ body {
   background-color: #f0f2f5;
 }
 
+#root {
+  position: relative;
+}
+
 h4 {
   font-weight: 700;
   // Nice heading
@@ -243,14 +247,13 @@ overline {
 #content-display{
   flex: 1 1 auto;
   margin-left: 300px;  // The sidenav takes 300px, so use rest of the screen
-  padding: 1rem;
+  padding: 1rem 0;
   width: calc(100% - 330px);
   height: 100%;
 }
 
 // adapts display content size for mobile
 .mobile-display{
-  padding-top: 3rem !important;
   margin: 0.5em !important;
   width: auto !important;
 }
