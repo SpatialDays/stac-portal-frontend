@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import wktParser from "wkt-parser";
 import SettingsIcon from "@mui/icons-material/Settings";
 import {
   Dialog,
@@ -14,27 +13,7 @@ import { CloseOutlined, QuestionMarkOutlined } from "@mui/icons-material";
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 import axios from "axios";
-import { polygon, multiPolygon } from "@turf/turf";
-import { convert } from "terraformer-wkt-parser";
-
-const createWKTFromGeometry = (geometry) => {
-  const polygons = geometry.features.map(
-    (feature) => feature.geometry.coordinates
-  );
-
-  let result;
-  // If there's only one feature, create a Polygon
-  if (polygons.length === 1) {
-    result = polygon(polygons[0]);
-  } else {
-    // If there are multiple features, create a MultiPolygon
-    result = multiPolygon(polygons);
-  }
-
-  // Convert GeoJSON to WKT
-  const wkt = convert(result.geometry);
-  return wkt;
-};
+import { createGeoJSONPolygon, convertGeoJSONToWKT } from "./utils";
 
 const ShapefileLoader = ({ setAOI }) => {
   const fileInputShp = useRef();
@@ -56,7 +35,8 @@ const ShapefileLoader = ({ setAOI }) => {
     });
 
     const geometry = JSON.parse(response.data.geometry);
-    const wkt = createWKTFromGeometry(geometry);
+    const polygon = createGeoJSONPolygon(geometry);
+    const wkt = convertGeoJSONToWKT(polygon);
     setAOI(wkt);
     setDialogOpen(false);
     return wkt;
