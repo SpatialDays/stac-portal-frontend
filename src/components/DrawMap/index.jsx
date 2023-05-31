@@ -1,5 +1,5 @@
 // React
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 // Modules
 import axios from "axios";
@@ -7,7 +7,12 @@ import path from "path-browserify";
 
 // Leaflet
 import * as L from "leaflet"; // This must be imported for use by react-leaflet
-import { MapContainer, TileLayer, FeatureGroup, Polygon } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  FeatureGroup,
+  Polygon,
+} from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 
 // Components
@@ -56,8 +61,18 @@ const DrawMap = ({
   setEndDate,
   setPublicCollections,
 }) => {
-  const [rectangleBounds, setRectangleBounds] = useState(null);
+  const [polygonBounds, setPolygonBounds] = useState([]);
   const [showMap, setShowMap] = useState(true);
+
+  const mapRef = useRef();
+  const groupRef = useRef();
+
+  const handleDraw = () => {
+    setTimeout(() => {
+      setPolygonBounds([]);
+    }, 100);
+  };
+
 
   const handleCreate = (e) => {
     const bounds = e.layer._bounds;
@@ -66,18 +81,9 @@ const DrawMap = ({
     const minY = bounds._southWest.lat;
     const maxX = bounds._northEast.lng;
     const maxY = bounds._northEast.lat;
-
-    // Bbox is form [-1, 50, 1, 51]
     const bbox = [minX, minY, maxX, maxY];
 
     setAOI(bbox);
-  };
-
-  const handleDraw = (e) => {
-    // wait 50 ms
-    setTimeout(() => {
-      setRectangleBounds(null);
-    }, 100);
   };
 
   const handleDelete = () => {
@@ -100,8 +106,6 @@ const DrawMap = ({
               width="100%"
               justifyContent="center"
               alignItems="center"
-              
-
             >
               <TextField
                 id="aoi"
@@ -135,6 +139,7 @@ const DrawMap = ({
               {/* Small button to upload shapefile */}
               <ShapefileLoader
                 setAOI={setAOI}
+                setPolygonBounds={setPolygonBounds}
               />
             </Box>
             <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -172,7 +177,6 @@ const DrawMap = ({
                 let datetime = "";
                 if (startDate) {
                   let startDateAsIsoString = startDate.toISOString();
-                  // remove everything after the first T and add 00:00:00Z
                   startDateAsIsoString = startDateAsIsoString
                     .split("T")[0]
                     .concat("T00:00:00Z");
@@ -196,10 +200,8 @@ const DrawMap = ({
                   datetime
                 );
 
-                // flatten these into collections
                 if (searchedCollections && searchedCollections.length) {
                   let allCollections = [];
-                  // Loop through these and
                   searchedCollections.forEach((collection) => {
                     if (
                       collection.collections &&
@@ -228,8 +230,8 @@ const DrawMap = ({
         </div>
         {showMap && (
           <div style={{ height: "25em", width: "100%" }}>
-            <MapContainer center={[51.505, -0.09]} zoom={7}>
-              <FeatureGroup>
+            <MapContainer center={[51.505, -0.09]} zoom={7} whenCreated={map => mapRef.current = map}>
+              <FeatureGroup ref={groupRef}>
                 <EditControl
                   position="topright"
                   onCreated={handleCreate}
@@ -249,10 +251,11 @@ const DrawMap = ({
                 />
               </FeatureGroup>
 
-              {rectangleBounds && (
+              {/* Loop through the polygon bounds and add them to the map */}
+              {polygonBounds.length > 0 && (
                 <Polygon
-                  positions={rectangleBounds}
-                  pathOptions={{ color: "black" }}
+                  positions={polygonBounds}
+                  pathOptions={{ color: "purple" }}
                 />
               )}
 
