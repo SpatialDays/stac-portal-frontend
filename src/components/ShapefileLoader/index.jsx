@@ -13,36 +13,53 @@ import MDTypography from "components/MDTypography";
 import { CloseOutlined, QuestionMarkOutlined } from "@mui/icons-material";
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
+import axios from "axios";
+import { polygon, multiPolygon } from "@turf/turf";
+import { convert } from "terraformer-wkt-parser";
 
-const shapefile = require("shapefile");
+const createWKTFromGeometry = (geometry) => {
+  const polygons = geometry.features.map(
+    (feature) => feature.geometry.coordinates
+  );
 
-function getSRSFromWKT(wkt) {
-  console.log("WKT is: ", wkt);
-  let code = null;
+  let result;
+  // If there's only one feature, create a Polygon
+  if (polygons.length === 1) {
+    result = polygon(polygons[0]);
+  } else {
+    // If there are multiple features, create a MultiPolygon
+    result = multiPolygon(polygons);
+  }
 
-  console.log(wktParser(wkt));
+  // Convert GeoJSON to WKT
+  const wkt = convert(result.geometry);
+  return wkt;
+};
 
-  return code;
-}
-
-const ShapefileLoader = () => {
+const ShapefileLoader = ({ setAOI }) => {
   const fileInputShp = useRef();
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleShapefileUpload = (event) => {
+  const handleShapefileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    shapefile
-      .open(file.path)
-      .then((source) =>
-        source.read().then(function log(result) {
-          if (result.done) return;
-          console.log(result.value);
-          return source.read().then(log);
-        })
-      )
-      .catch((error) => console.error(error.stack));
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    formData.append("output_epsg", 3857);
+
+    const url = "http://localhost:5000/transform";
+    const response = await axios.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const geometry = JSON.parse(response.data.geometry);
+    const wkt = createWKTFromGeometry(geometry);
+    setAOI(wkt);
+    setDialogOpen(false);
+    return wkt;
   };
 
   return (
@@ -77,9 +94,15 @@ const ShapefileLoader = () => {
           </DialogTitle>
 
           <List>
-            <ListItem>
+            <ListItem
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <input
                 type="file"
+                accept=".zip"
                 ref={fileInputShp}
                 style={{ display: "none" }}
                 onChange={handleShapefileUpload}

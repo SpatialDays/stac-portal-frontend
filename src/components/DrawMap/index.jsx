@@ -133,7 +133,9 @@ const DrawMap = ({
                 }}
               />
               {/* Small button to upload shapefile */}
-              <ShapefileLoader />
+              <ShapefileLoader
+                setAOI={setAOI}
+              />
             </Box>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
