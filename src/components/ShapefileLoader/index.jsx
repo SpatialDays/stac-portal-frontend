@@ -15,7 +15,7 @@ import MDBox from "components/MDBox";
 import axios from "axios";
 import { createGeoJSONPolygon, convertGeoJSONToWKT } from "./utils";
 
-const ShapefileLoader = ({ setAOI }) => {
+const ShapefileLoader = ({ setAOI, setPolygonBounds }) => {
   const fileInputShp = useRef();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -25,7 +25,7 @@ const ShapefileLoader = ({ setAOI }) => {
 
     const formData = new FormData();
     formData.append("file", file, file.name);
-    formData.append("output_epsg", 3857);
+    formData.append("output_epsg", 4326);
 
     const url = "http://localhost:5000/transform";
     const response = await axios.post(url, formData, {
@@ -36,6 +36,10 @@ const ShapefileLoader = ({ setAOI }) => {
 
     const geometry = JSON.parse(response.data.geometry);
     const polygon = createGeoJSONPolygon(geometry);
+    const flippedCoordinates = polygon.geometry.coordinates[0].map(
+      ([longitude, latitude]) => [latitude, longitude]
+    );
+    setPolygonBounds(flippedCoordinates);
     const wkt = convertGeoJSONToWKT(polygon);
     setAOI(wkt);
     setDialogOpen(false);
