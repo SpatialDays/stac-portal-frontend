@@ -1,8 +1,19 @@
-import React, { useRef } from "react";
-import proj4 from "proj4";
-import epsg from "epsg";
-// var wktParser = require("wkt-parser");
+import React, { useRef, useState } from "react";
 import wktParser from "wkt-parser";
+import SettingsIcon from "@mui/icons-material/Settings";
+import {
+  Dialog,
+  DialogTitle,
+  FormLabel,
+  List,
+  ListItem,
+  Tooltip,
+} from "@mui/material";
+import MDTypography from "components/MDTypography";
+import { CloseOutlined, QuestionMarkOutlined } from "@mui/icons-material";
+import MDButton from "components/MDButton";
+import MDBox from "components/MDBox";
+
 const shapefile = require("shapefile");
 
 function getSRSFromWKT(wkt) {
@@ -16,7 +27,7 @@ function getSRSFromWKT(wkt) {
 
 const ShapefileLoader = () => {
   const fileInputShp = useRef();
-  const fileInputPrj = useRef();
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleShapefileUpload = (event) => {
     const file = event.target.files[0];
@@ -34,41 +45,79 @@ const ShapefileLoader = () => {
       .catch((error) => console.error(error.stack));
   };
 
-  const handlePrjfileUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const wkt = e.target.result;
-      console.log("WKT is: ", wkt);
-      const srsCode = getSRSFromWKT(wkt);
-      console.log(`EPSG code is: ${srsCode}`);
-    };
-    reader.readAsText(file);
-  };
-
   return (
-    <div>
-      <input
-        type="file"
-        ref={fileInputShp}
-        style={{ display: "none" }}
-        onChange={handleShapefileUpload}
+    <div
+      style={{
+        position: "relative",
+      }}
+    >
+      <SettingsIcon
+        style={{ color: "black", cursor: "pointer" }}
+        onClick={() => setDialogOpen(true)}
       />
-      <button onClick={() => fileInputShp.current.click()}>
-        Upload Shapefile
-      </button>
+      <Dialog
+        open={dialogOpen}
+        onClose={() => {}}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <CloseOutlined
+          style={{
+            position: "absolute",
+            right: "0.5em",
+            top: "0.5em",
+            cursor: "pointer",
+            color: "black",
+          }}
+          onClick={() => setDialogOpen(false)}
+        />
+        <div style={{ padding: "1em" }}>
+          <DialogTitle id="alert-dialog-title">
+            <MDTypography variant="h4">Additional Parameters</MDTypography>
+          </DialogTitle>
 
-      <input
-        type="file"
-        ref={fileInputPrj}
-        style={{ display: "none" }}
-        onChange={handlePrjfileUpload}
-      />
-      <button onClick={() => fileInputPrj.current.click()}>
-        Upload PRJ file
-      </button>
+          <List>
+            <ListItem>
+              <input
+                type="file"
+                ref={fileInputShp}
+                style={{ display: "none" }}
+                onChange={handleShapefileUpload}
+              />
+              <FormLabel>Use a shapefile to set the AOI</FormLabel>
+              <MDBox
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <MDButton
+                  variant="contained"
+                  color="primary"
+                  onClick={() => fileInputShp.current.click()}
+                >
+                  Upload Shapefile
+                </MDButton>
+                <Tooltip
+                  title="Upload a valid shapefile zip with a .shp, .shx, .dbf, and .prj file"
+                  placement="right"
+                  sx={{ fontSize: "5em" }}
+                >
+                  <QuestionMarkOutlined
+                    style={{
+                      color: "black",
+                      cursor: "pointer",
+                      marginLeft: "0.5em",
+                      fontSize: "1em",
+                    }}
+                  />
+                </Tooltip>
+              </MDBox>
+            </ListItem>
+          </List>
+        </div>
+      </Dialog>
     </div>
   );
 };
