@@ -28,7 +28,7 @@ export const IconButtonWithDropdown = () => {
     setAnchorEl(null);
   };
 
-  const [userDetails] = useContext(UserDataContext);
+  const userDetails = useContext(UserDataContext);
 
   useEffect(() => {
     if (userDetails && userDetails.picture) {
