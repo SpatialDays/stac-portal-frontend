@@ -56,9 +56,10 @@ const DisplayMyDetails = () => {
       setUserPicture(userPicture);
     }
     
-    fetchData();
+    if (userDetails){
+      fetchData();
+    };
   }, [userDetails]);
-  console.log(userDetails);
 
   // placeholder until functionality for providing API keys is ready
   let apiKey = '00000000000000000000000000000000';  
