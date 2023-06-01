@@ -33,10 +33,13 @@ const addProfilePicture = async (userData) => {
 };
 
 // returns the dev data object when in development
-const getDevData = () => {
+const getDevData = async () => {
   // paste in your own user data to test or use the dev default
-  const data = [{"access_token":"000","user_claims":[{"typ":"name","val":"Dev User"},{"typ":"roles","val":".Developer"}],"user_id":"Dev User"}];
-  return data[0];
+  let data = [{"access_token":"000","user_claims":[{"typ":"name","val":"Dev User"},{"typ":"roles","val":".Developer"}],"user_id":"Dev User"}];
+  console.log('adding profile pic to data in dev')
+  data = await addProfilePicture(data[0]);
+  console.log('user data being returned in dev: ', data)
+  return data;
 };
 
 // returns the user data object when in production (called in app.js)
@@ -63,8 +66,12 @@ const getAADData = async () => {
       }
 
       const newTokenResponse = await instance.get("/.auth/me");
-      console.log('user data being returned in prod: ', newTokenResponse.data[0])
-      return newTokenResponse.data[0];  // returns the whole user data object
+      // console.log('user data being returned in prod: ', newTokenResponse.data[0])
+      console.log('adding profile pic to data in dev')
+      // adds the profile picture to the user data object
+      const data = await addProfilePicture(newTokenResponse.data[0]);
+      console.log('user data being returned in prod: ', data)
+      return data;  // returns the whole user data object
     }
 
     // Implies we are localhost
@@ -136,4 +143,4 @@ const auth = async () => {
   });
 };
 
-export { getDevData, getAADData, addProfilePicture, auth };
+export { getDevData, getAADData, auth };

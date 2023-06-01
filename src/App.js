@@ -13,7 +13,7 @@ import STAClogo from "assets/images/logo.png";
 
 // Styles
 import "./assets/styles/base.scss";
-import { getDevData, getAADData, addProfilePicture } from "auth/auth";
+import { getDevData, getAADData } from "auth/auth";
 
 export const UserDataContext = createContext();
 
@@ -29,13 +29,13 @@ export default function App() {
       // if in development, return the dev data object
       if (process.env.NODE_ENV !== 'production'){
         console.log('dev mode')
-        const userData = await addProfilePicture(getDevData());
+        const userData = await getDevData();
         console.log(userData)
         setUserData(userData); 
       } else {
         // if in production, return the user data object (calls the getAADData function which sets the axois headers only for prod)
         console.log('prod mode')
-        let userData = await addProfilePicture(getAADData());
+        let userData = await getAADData();
         console.log(userData);
 
         setUserData(userData);
