@@ -30,13 +30,11 @@ export default function App() {
       if (process.env.NODE_ENV !== 'production'){
         console.log('dev mode')
         const userData = await getDevData();
-        console.log(userData)
         setUserData(userData); 
       } else {
         // if in production, return the user data object (calls the getAADData function which sets the axois headers only for prod)
         console.log('prod mode')
         let userData = await getAADData();
-        console.log(userData);
 
         setUserData(userData);
       }

@@ -16,7 +16,6 @@ const addProfilePicture = async (userData) => {
 
     if (!response.ok) {
       userData.picture = 'no-picture.jpg';
-      console.log('user data with picture:', userData)
       return userData;
     }
 
@@ -38,14 +37,11 @@ const getDevData = async () => {
   let data = [{"access_token":"000","user_claims":[{"typ":"name","val":"Dev User"},{"typ":"roles","val":".Developer"}],"user_id":"Dev User"}];
   console.log('adding profile pic to data in dev')
   data = await addProfilePicture(data[0]);
-  console.log('user data being returned in dev: ', data)
   return data;
 };
 
 // returns the user data object when in production (called in app.js)
 const getAADData = async () => {
-
-  console.log('running the getAADData function')
 
   try {
     const instance = axios.create();
@@ -66,11 +62,9 @@ const getAADData = async () => {
       }
 
       const newTokenResponse = await instance.get("/.auth/me");
-      // console.log('user data being returned in prod: ', newTokenResponse.data[0])
-      console.log('adding profile pic to data in dev')
+      console.log('adding profile pic to data in prod')
       // adds the profile picture to the user data object
       const data = await addProfilePicture(newTokenResponse.data[0]);
-      console.log('user data being returned in prod: ', data)
       return data;  // returns the whole user data object
     }
 
@@ -89,6 +83,7 @@ const getAADData = async () => {
 
 // returns the users id token in production 
 const getAADToken = async () => {
+  
   console.log('running the getAADToken function')
 
   try {
