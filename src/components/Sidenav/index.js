@@ -94,6 +94,27 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             />
           </NavLink>
         );
+      } else if (title === "OS Catalog" && mobileSidenav) {  // no top padding only for first title in mobile sidenav
+        returnValue = (
+          <MDTypography
+            key={key}
+            display="block"
+            variant="span"
+            fontWeight="bold"
+            textTransform="uppercase"
+            color="white"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textTransform: "uppercase",
+              fontSize: "0.75rem",
+              marginBottom: "0.4rem",
+              marginLeft: "1rem",
+            }}
+          >
+            {title}
+          </MDTypography>
+        );
       } else if (type === "title") {
         returnValue = (
           <MDTypography
