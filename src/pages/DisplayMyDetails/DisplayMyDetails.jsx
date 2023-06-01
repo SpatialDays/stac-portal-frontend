@@ -32,7 +32,7 @@ const DisplayMyDetails = () => {
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
   const [userPicture, setUserPicture] = useState('');
-  const [userDetails] = useContext(UserDataContext);
+  const userDetails = useContext(UserDataContext);
   
   useEffect(() => {
     // getting the user's name and role from the user_claims array
@@ -58,6 +58,7 @@ const DisplayMyDetails = () => {
     
     fetchData();
   }, [userDetails]);
+  console.log(userDetails);
 
   // placeholder until functionality for providing API keys is ready
   let apiKey = '00000000000000000000000000000000';  

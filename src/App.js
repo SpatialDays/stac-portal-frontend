@@ -13,7 +13,7 @@ import STAClogo from "assets/images/logo.png";
 
 // Styles
 import "./assets/styles/base.scss";
-import { auth } from "auth/auth";
+import { getDevData, getAADData, addProfilePicture } from "auth/auth";
 
 export const UserDataContext = createContext();
 
@@ -23,11 +23,24 @@ export default function App() {
 
   // getting the user data and setting it to the state
   useEffect(() => {
-    async function getUserData() {
-      let userData = await auth();
-      console.log(userData);
-      setUserData(userData);
+    // returns the user data object with the profile picture included
+    const getUserData = async () => {
+
+      // if in development, return the dev data object
+      if (process.env.NODE_ENV !== 'production'){
+        console.log('dev mode')
+        const userData = await addProfilePicture(getDevData());
+        console.log(userData)
+        setUserData(userData); 
+      } else {
+        // if in production, return the user data object (calls the getAADData function which sets the axois headers only for prod)
+        console.log('prod mode')
+        let userData = await addProfilePicture(getAADData());
+        console.log(userData);
+
+        setUserData(userData);
       }
+    };
   
       getUserData();
   }, []);
@@ -61,8 +74,8 @@ export default function App() {
     });
 
   return (
-    // passing the userData in the context
-    <UserDataContext.Provider value={[userData, setUserData]}>
+    // passing just the userData in the context
+    <UserDataContext.Provider value={userData}>
       <Sidenav brand={STAClogo} brandName="STAC Portal" routes={routes} />
       <div
         style={{
