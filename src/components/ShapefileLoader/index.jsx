@@ -29,7 +29,7 @@ import {
   geoTransformerPath,
 } from "../../utils/paths.jsx";
 
-const ShapefileLoader = ({ setAOI, setPolygonBounds }) => {
+const ShapefileLoader = ({ setAOI, setPolygonBounds, setGeoJSONPolygon }) => {
   const fileInputShp = useRef();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -41,7 +41,7 @@ const ShapefileLoader = ({ setAOI, setPolygonBounds }) => {
     formData.append("file", file, file.name);
     formData.append("output_epsg", 4326);
 
-    // "http://localhost:5000/transform";
+    // "http://localhost:5002/transform";
     const url = new URL(
       path.join(geoTransformerPath),
       geoTransformerUrl
@@ -55,6 +55,9 @@ const ShapefileLoader = ({ setAOI, setPolygonBounds }) => {
 
     const geometry = JSON.parse(response.data.geometry);
     const polygon = createGeoJSONPolygon(geometry);
+    setGeoJSONPolygon(polygon);
+
+    // This is required for the polygon to render correctly... 
     const flippedCoordinates = polygon.geometry.coordinates[0].map(
       ([longitude, latitude]) => [latitude, longitude]
     );

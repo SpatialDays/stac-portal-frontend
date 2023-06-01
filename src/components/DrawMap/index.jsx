@@ -38,7 +38,7 @@ import {
   searchPath,
 } from "../../utils/paths.jsx";
 
-const searchCollections = async (bbox, datetime) => {
+const searchCollections = async (bbox, geoJSONPolygon, datetime) => {
   const url = new URL(
     path.join(publicCatalogsPath, collectionsPath, searchPath, "/"),
     backendUrl
@@ -46,7 +46,7 @@ const searchCollections = async (bbox, datetime) => {
   const collections = await axios({
     method: "POST",
     url: url,
-    data: { bbox: bbox, datetime: datetime },
+    data: { intersects: geoJSONPolygon, datetime: datetime },
   });
   const data = await collections.data;
   return data;
@@ -60,6 +60,8 @@ const DrawMap = ({
   endDate,
   setEndDate,
   setPublicCollections,
+  geoJSONPolygon,
+  setGeoJSONPolygon,
 }) => {
   const [polygonBounds, setPolygonBounds] = useState([]);
   const [showMap, setShowMap] = useState(true);
@@ -140,6 +142,7 @@ const DrawMap = ({
               <ShapefileLoader
                 setAOI={setAOI}
                 setPolygonBounds={setPolygonBounds}
+                setGeoJSONPolygon={setGeoJSONPolygon}
               />
             </Box>
             <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -169,9 +172,7 @@ const DrawMap = ({
             <MDButton
               buttonType="create"
               onClick={async () => {
-                // Hide map
                 setShowMap(false);
-                // Empty the collections
                 setPublicCollections([]);
                 let bbox = AOI;
                 let datetime = "";
@@ -197,6 +198,7 @@ const DrawMap = ({
                 }
                 let searchedCollections = await searchCollections(
                   bbox,
+                  geoJSONPolygon,
                   datetime
                 );
 
