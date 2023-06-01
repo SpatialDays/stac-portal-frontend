@@ -10,6 +10,7 @@ import "./style.scss";
 
 const Breadcrumbs = ({ page }) => {
   return (
+    <>
     <div className="breadcrumbs">
       <div className="breadcrumbs__container">
         <div
@@ -27,6 +28,10 @@ const Breadcrumbs = ({ page }) => {
       </div>
       <IconButtonWithDropdown />
     </div>
+    <div>
+      <hr id="mobile-nav-hr"></hr>
+    </div>
+    </>
   );
 };
 
