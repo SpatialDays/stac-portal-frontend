@@ -1,3 +1,5 @@
+@import 'index.scss';
+
 .uploader {
   &-dash {
     padding: 1.5rem;
@@ -40,5 +42,89 @@
   &__dropzone {
     height: 5em;
     border: 1px dashed #ccc;
+  }
+}
+
+
+.local-load-card {
+  padding: 1.5em !important;
+  display: flex;
+  flex-direction: column;
+
+  &-box__select-folder {
+
+    margin-top: 2em;
+
+    &-upload {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  &-box__create-metadata{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-width: 450px;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.publish-all-mobile-button{
+  display: none !important;
+}
+
+.error-files-box {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem;
+  height: 250px;
+  max-width: 1000px;
+
+  &__scroll{
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    border: 1px dotted #ccc;
+    padding-top: 0.5em;
+  }
+}
+
+.error-files-box-content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 2em;
+  padding-right: 2em;
+  box-sizing: border-box;
+  height: 1.5em;
+}
+
+// custom media query width for moving Publish all button
+@media(max-width: 850px){
+  .local-load-card-box__create-metadata{
+    justify-content: normal !important;
+
+    & button{
+      margin: 0 1.5rem;
+    }
+  }
+}
+
+@media(max-width: $breakpoint-mobile){
+  .local-load-card-box__create-metadata{
+    & button{
+      display: none;
+    }
+  }
+  .publish-all-mobile-button{
+    display: flex !important;
+    max-width: 12em !important;
+    padding: 1.5em !important;
+    margin-bottom: 1em;
   }
 }

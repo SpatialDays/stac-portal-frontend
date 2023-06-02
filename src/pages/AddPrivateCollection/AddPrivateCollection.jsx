@@ -16,6 +16,9 @@ import MDButton from "components/MDButton";
 // Interface
 import { addPrivateCollection } from "interface/collections";
 
+// Styles
+import "./style.scss";
+
 const AddPrivateCollection = () => {
   const [collectionId, setCollectionId] = useState("");
   const [collectionTitle, setCollectionName] = useState("");
@@ -43,7 +46,7 @@ const AddPrivateCollection = () => {
   return (
     <DashboardLayout>
       <MDBox>
-        <MDBox sx={{ pt: 3 }}>
+        <MDBox>
           <Card className="card-title">
             <MDTypography variant="h4" >
               Add Private Collection
@@ -51,24 +54,10 @@ const AddPrivateCollection = () => {
           </Card>
           <br></br>
           <MDBox
-            display="flex"
-            flexDirection="column"
-            width="30%"
-            minWidth="450px"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "30%",
-              minWidth: "450px",
-            }}
+            className="add-collection-container"
           >
             <Card
-              sx={{
-                p: 3,
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-              }}
+              className="add-collection-card"
             >
               <div>
                 <MDInput

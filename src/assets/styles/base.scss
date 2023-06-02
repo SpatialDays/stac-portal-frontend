@@ -154,7 +154,7 @@ overline {
     }
   }
 
-  &-update, &-refresh {
+  &-update, &-refresh, &-copy{
     background-color: var(--osweb-color-primary);
     color: #fff;
     cursor: pointer;

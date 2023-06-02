@@ -89,7 +89,7 @@ const CollectionSelect = ({ setSelectedCollection }) => {
           <MDTypography variant="h6">
             Choose an existing collection
           </MDTypography>
-          <MDTypography variant="overline" mb={2}>
+          <MDTypography variant="overline" className="existing-collection-text">
             Choose a collection from your organisation's existing Catalog.
           </MDTypography>
           <MDBox
@@ -104,7 +104,7 @@ const CollectionSelect = ({ setSelectedCollection }) => {
               options={collections || []}
               // If options is empty, then don't show no collections found
               noOptionsText={collections ? "" : "No collections found"}
-              sx={{ width: 300, height: "3rem" }}
+              sx={{ width: "15em", height: "3rem" }}
               size="small"
               // Small font
               text
@@ -161,13 +161,10 @@ const CollectionSelect = ({ setSelectedCollection }) => {
             }}
           >
             <MDButton
+              className="create-collection-mobile-button"
               buttonType="create"
               onClick={() => {
                 setOpenModal(true);
-              }}
-              sx={{
-                width: "30%",
-                minWidth: "200px",
               }}
             >
               Create
@@ -200,7 +197,7 @@ const CollectionSelect = ({ setSelectedCollection }) => {
                   <MDTypography variant="h4">
                     Create a new collection
                   </MDTypography>
-                  <MDTypography variant="overline">
+                  <MDTypography variant="overline" className="create-new-collection-text">
                     Create a new collection to add to your organisation's
                     existing Catalog.
                   </MDTypography>

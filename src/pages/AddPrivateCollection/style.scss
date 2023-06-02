@@ -1,0 +1,20 @@
+@import 'index.scss';
+
+.add-collection-container{
+  display:flex;
+  flex-direction:column;
+  width:40vw;
+
+  & .add-collection-card{
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+@media(max-width: $breakpoint-mobile){
+    .add-collection-container{
+      width:100%;
+    }
+}

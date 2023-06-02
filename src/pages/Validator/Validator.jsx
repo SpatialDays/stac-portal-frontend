@@ -98,102 +98,101 @@ const Validator = () => {
           </div>
         ) : null}
       </Grid>
-      <Box pt={4} display="flex" justifyContent="space-between">
-        <Box display="flex" width="100%">
-          <MDButton
-            buttonType="info"
-            style={{ marginRight: "10px" }}
-            onClick={() => {
-              // Remove any existing alert
-              setAlertBox({ display: false, message: "", severity: "error" });
-              navigator.clipboard.readText().then((text) => {
-                const textField = document.getElementById("text-field");
-
-                try {
-                  let ugly = JSON.parse(text);
-                  let pretty = JSON.stringify(ugly, undefined, 4);
-                  textField.value = pretty;
-                } catch {
-                  textField.value = "";
-                  setAlertBox({
-                    display: true,
-                    message:
-                      "Invalid JSON, please put this through a JSON formatter before validating STAC",
-                    severity: "error",
-                    icon: "error",
-                  });
-                }
-              });
-            }}
-            noIcon
-          >
-            {" "}
-            <ContentPaste
-              sx={{
-                mr: 1,
-              }}
-            />
-            Paste from clipboard
-          </MDButton>
-
-          <MDButton
-            buttonType="info"
-            style={{ marginRight: "10px" }}
-            disabled={isLoading}
-            sx={{ mr: 4 }}
-            onClick={() => {
-              // export as json
+      <Box pt={4} class="validator-tools">
+        <MDButton
+          buttonType="info"
+          className="validator-tools__btn"
+          onClick={() => {
+            // Remove any existing alert
+            setAlertBox({ display: false, message: "", severity: "error" });
+            navigator.clipboard.readText().then((text) => {
               const textField = document.getElementById("text-field");
-              const dataStr =
-                "data:text/json;charset=utf-8," +
-                encodeURIComponent(textField.value);
-              const downloadAnchorNode = document.createElement("a");
-              downloadAnchorNode.setAttribute("href", dataStr);
-              downloadAnchorNode.setAttribute("download", "stac.json");
-              document.body.appendChild(downloadAnchorNode); // required for firefox
-              downloadAnchorNode.click();
-              downloadAnchorNode.remove();
-            }}
-            noIcon
-          >
-            {" "}
-            <SaveAlt
-              sx={{
-                mr: 1,
-              }}
-            />
-            Export as JSON
-          </MDButton>
 
-          <MDButton
-            buttonType="info"
-            style={{ marginRight: "10px" }}
-            sx={{ mr: 4 }}
-            onClick={() => {
-              const textField = document.getElementById("text-field");
-              textField.value = "";
+              try {
+                let ugly = JSON.parse(text);
+                let pretty = JSON.stringify(ugly, undefined, 4);
+                textField.value = pretty;
+              } catch {
+                textField.value = "";
+                setAlertBox({
+                  display: true,
+                  message:
+                    "Invalid JSON, please put this through a JSON formatter before validating STAC",
+                  severity: "error",
+                  icon: "error",
+                });
+              }
+            });
+          }}
+          noIcon
+        >
+          {" "}
+          <ContentPaste
+            sx={{
+              mr: 1,
             }}
-            noIcon
+          />
+          Paste from clipboard
+        </MDButton>
+
+        <MDButton
+          buttonType="info"
+          className="validator-tools__btn"
+          disabled={isLoading}
+          onClick={() => {
+            // export as json
+            const textField = document.getElementById("text-field");
+            const dataStr =
+              "data:text/json;charset=utf-8," +
+              encodeURIComponent(textField.value);
+            const downloadAnchorNode = document.createElement("a");
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "stac.json");
+            document.body.appendChild(downloadAnchorNode); // required for firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+          }}
+          noIcon
+        >
+          {" "}
+          <SaveAlt
+            sx={{
+              mr: 1,
+            }}
+          />
+          Export as JSON
+        </MDButton>
+
+        <MDButton
+          buttonType="info"
+          className="validator-tools__btn"
+          onClick={() => {
+            const textField = document.getElementById("text-field");
+            textField.value = "";
+          }}
+          noIcon
+        >
+          {" "}
+          <Clear
+            sx={{
+              mr: 1,
+            }}
+          />
+          Clear
+        </MDButton>
+        <MDButton
+          buttonType="create"
+          className="validator-tools__btn validator-tools__btn--validate"
+          onClick={handleSubmit}
+          noIcon
           >
-            {" "}
-            <Clear
-              sx={{
-                mr: 1,
-              }}
-            />
-            Clear
-          </MDButton>
-        </Box>
-        <Box display="flex" width="100%" justifyContent="flex-end">
-          <MDButton buttonType="create" onClick={handleSubmit} noIcon>
-            <TaskAlt
-              sx={{
-                mr: 1,
-              }}
-            />
-            Validate STAC
-          </MDButton>
-        </Box>
+          <TaskAlt
+            sx={{
+              mr: 1,
+            }}
+          />
+          Validate STAC
+        </MDButton>
       </Box>
       <MDBox>
         <Grid>

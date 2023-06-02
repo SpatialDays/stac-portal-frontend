@@ -1,15 +1,5 @@
-// 1250px
-@media (max-width: 1250px) {
-  #collection-select {
-    flex-direction: column !important;
-    // Flex spacing
+@import 'index.scss';
 
-    // All first divs shoould have margin-bottom
-    > div:nth-child(2) {
-      margin-bottom: 25px !important;
-    }
-  }
-}
 .modal {
   // Modal that tints the background and centers the content
   position: fixed;
@@ -33,5 +23,30 @@
     max-height: 80%;
     overflow-y: auto;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+// 1250px
+@media (max-width: $breakpoint-max) {
+  #collection-select {
+    flex-direction: column !important;
+    // Flex spacing
+
+    // All first divs shoould have margin-bottom
+    > div:nth-child(2) {
+      margin-bottom: 25px !important;
+    }
+  }
+}
+
+@media(max-width: $breakpoint-mobile){
+  .create-collection-mobile-button{
+    width: 10rem !important;
+    padding: 1.5em !important;
+  }
+
+  .existing-collection-text{
+    display: block;
+    max-width: 70%;
   }
 }
