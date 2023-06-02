@@ -54,9 +54,11 @@ const getAADData = async () => {
     // Check if the response is valid
     if (response.status === 200) {
       const { expires_on } = response.data[0];
-      const tokenExpiryDateTime = new Date(expires_on);
+      const tokenExpiryDateTimeUTC = new Date(expires_on); // this is UTC time
       const now = new Date();
-      let timeToExpiry = tokenExpiryDateTime - now;
+      const nowIsoUTC = now.toISOString();
+      const nowUTC = new Date(nowIsoUTC);
+      let timeToExpiry = tokenExpiryDateTimeUTC - nowUTC;
       if (timeToExpiry < 300000) {
         await instance.get("/.auth/refresh");
       }
@@ -97,9 +99,11 @@ const getAADToken = async () => {
     // Check if the response is valid
     if (response.status === 200) {
       const { expires_on } = response.data[0];
-      const tokenExpiryDateTime = new Date(expires_on);
+      const tokenExpiryDateTimeUTC = new Date(expires_on); // this is UTC time
       const now = new Date();
-      let timeToExpiry = tokenExpiryDateTime - now;
+      const nowIsoUTC = now.toISOString();
+      const nowUTC = new Date(nowIsoUTC);
+      let timeToExpiry = tokenExpiryDateTimeUTC - nowUTC;
       if (timeToExpiry < 300000) {
         await instance.get("/.auth/refresh");
       }
