@@ -54,11 +54,9 @@ const getAADData = async () => {
     // Check if the response is valid
     if (response.status === 200) {
       const { expires_on } = response.data[0];
-      const tokenExpiryTimestamp = new Date(expires_on);
-      const tokenExpiryTimestampUnix = tokenExpiryTimestamp.getTime();
-      const now = new Date();
-      const nowUnix = now.getTime();
-      let timeToExpiry = tokenExpiryTimestampUnix - nowUnix;
+      const tokenExpiryTimestampUnix = new Date(expires_on).getTime();
+      const nowUnix = new Date().getTime();
+      const timeToExpiry = tokenExpiryTimestampUnix - nowUnix;
       if (timeToExpiry < 300000) {
         await instance.get("/.auth/refresh");
       }
@@ -67,7 +65,8 @@ const getAADData = async () => {
       console.log('adding profile pic to data in prod')
       // adds the profile picture to the user data object
       const data = await addProfilePicture(newTokenResponse.data[0]);
-      return data;  // returns the whole user data object
+      // returns the whole user data object
+      return data;  
     }
 
     // Implies we are localhost
@@ -99,11 +98,9 @@ const getAADToken = async () => {
     // Check if the response is valid
     if (response.status === 200) {
       const { expires_on } = response.data[0];
-      const tokenExpiryTimestamp = new Date(expires_on);
-      const tokenExpiryTimestampUnix = tokenExpiryTimestamp.getTime();
-      const now = new Date();
-      const nowUnix = now.getTime();
-      let timeToExpiry = tokenExpiryTimestampUnix - nowUnix;
+      const tokenExpiryTimestampUnix = new Date(expires_on).getTime();
+      const nowUnix = new Date().getTime();
+      const timeToExpiry = tokenExpiryTimestampUnix - nowUnix;
       if (timeToExpiry < 300000) {
         await instance.get("/.auth/refresh");
       }
