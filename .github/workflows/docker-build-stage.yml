@@ -37,6 +37,6 @@ jobs:
           push: true
           tags: ${{ secrets.EO_PROJ_STAGING_DOCKER_REGISTRY_URL }}/stac-portal-frontend:${{ env.SHORT_SHA }}
           build-args: |
-            PORTAL_BACKEND_URL=https://os-eo-platform-rg-staging-stac-portal-backend.azurewebsites.net
-            PORTAL_STAC_API_BROWSER_URL=https://os-eo-platform-rg-staging-stac-browser.azurewebsites.net
+            PORTAL_BACKEND_URL=${{ secrets.REACT_APP_PORTAL_BACKEND_URL }}
+            PORTAL_STAC_API_BROWSER_URL=${{ secrets.REACT_APP_PORTAL_STAC_API_BROWSER_URL }}
 
