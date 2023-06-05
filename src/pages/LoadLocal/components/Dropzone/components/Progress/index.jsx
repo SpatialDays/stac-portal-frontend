@@ -33,7 +33,7 @@ const Progress = ({ files }) => {
             alignItems: "center",
             justifyContent: "flex-start",
             width: "50%",
-            minWidth: "400px",
+            minWidth: "30vw",
           }}
           id="processing"
         >
