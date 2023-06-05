@@ -12,6 +12,10 @@ RUN npm run build
 
 # Build step #2: build an nginx container
 FROM nginx:1.19.1-alpine
+ARG REACT_APP_PORTAL_BACKEND_URL
+ARG REACT_APP_PORTAL_STAC_API_BROWSER_URL
+ENV REACT_APP_PORTAL_BACKEND_URL=${REACT_APP_PORTAL_BACKEND_URL}
+ENV REACT_APP_PORTAL_STAC_API_BROWSER_URL=${REACT_APP_PORTAL_STAC_API_BROWSER_URL}
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-step /usr/src/app/build /usr/share/nginx/html
 EXPOSE 80
