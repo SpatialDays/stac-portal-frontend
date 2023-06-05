@@ -1,15 +1,13 @@
-# ARG REACT_APP_PORTAL_BACKEND_URL=
-# ARG REACT_APP_PORTAL_STAC_API_BROWSER_URL=
-# ARG REACT_APP_BLOB_URL=
+ARG REACT_APP_PORTAL_BACKEND_URL
+ARG REACT_APP_PORTAL_STAC_API_BROWSER_URL
 FROM node:16 as build-step
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
 # TODO: use ARG and pass this in from the github action
-ENV REACT_APP_PORTAL_BACKEND_URL=https://os-eo-platform-rg-staging-stac-portal-backend.azurewebsites.net
-ENV REACT_APP_PORTAL_STAC_API_BROWSER_URL=https://os-eo-platform-rg-staging-stac-browser.azurewebsites.net
-ENV REACT_APP_BLOB_URL=https://oseoinfrastagingstrgacc.blob.core.windows.net/manual-upload-storage-container/
+ENV REACT_APP_PORTAL_BACKEND_URL=${REACT_APP_PORTAL_BACKEND_URL}
+ENV REACT_APP_PORTAL_STAC_API_BROWSER_URL=${REACT_APP_PORTAL_STAC_API_BROWSER_URL}
 RUN npm run build
 
 # Build step #2: build an nginx container
