@@ -4,6 +4,9 @@ import MDTypography from "components/MDTypography";
 import { CircularProgress } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 
+// Styles
+import "../../style.scss";
+
 const Progress = ({ files }) => {
   const completedFiles = files.filter((file) => file.complete);
 
@@ -30,7 +33,7 @@ const Progress = ({ files }) => {
             alignItems: "center",
             justifyContent: "flex-start",
             width: "50%",
-            minWidth: "400px",
+            minWidth: "30vw",
           }}
           id="processing"
         >
@@ -40,12 +43,7 @@ const Progress = ({ files }) => {
           </MDTypography>
           {/* List all processing files */}
           <MDBox
-            style={{
-              boxSizing: "border-box",
-              width: "100%",
-              padding: "1rem",
-              height: "250px",
-            }}
+            className="processing-files-dropzone"
           >
             <MDBox
               style={{

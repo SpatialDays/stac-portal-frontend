@@ -1,3 +1,5 @@
+@import 'index.scss';
+
 .breadcrumbs {
   display:flex;
   justify-content: space-between;
@@ -62,7 +64,7 @@
   background-image: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   #mobile-nav-hr {
     display: block;
   }

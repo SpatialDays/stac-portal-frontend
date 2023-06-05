@@ -103,9 +103,9 @@ const DisplayMyDetails = () => {
                     </ListItem>
                     <ListItem>
                       <MDTypography variant="h4">API Key:</MDTypography>
-                      <span id="api-key" class="my-details-item">{apiKey.slice(0, 7)}...</span>
+                        <span id="api-key" class="my-details-item">{apiKey.slice(0, 7)}...</span>
                       <IconButton
-                        className='copy-api-key-button'
+                        className='inline-copy-api-key-button'
                         title="Copy API Key to clipboard"
                       >
                         <ContentCopy
@@ -114,10 +114,19 @@ const DisplayMyDetails = () => {
                         />
                       </IconButton>
                     </ListItem>
+                    <ListItem className="copy-button-list-item">
+                      <MDButton
+                        buttonType="copy"
+                        className="btn-full-width copy-api-key-button"
+                        onClick={() =>  navigator.clipboard.writeText(apiKey)}
+                      >
+                        Copy API Key
+                      </MDButton>
+                    </ListItem> 
                     <ListItem>
                       <MDButton
                         buttonType="refresh"
-                        className="btn-full-width"
+                        className="btn-full-width refresh-api-key-button"
                         // onClick={handleRefreshAPIKey}  // functionality to be added
                       >
                         Refresh API Key

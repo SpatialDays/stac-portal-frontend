@@ -180,12 +180,7 @@ const LoadLocal = () => {
           {/* Step 1 - Upload */}
           <Grid item xs={12}>
             <Card
-              sx={{
-                p: 3,
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-              }}
+              className="local-load-card"
             >
               <MDTypography variant="h5">
                 Step 1 - Select Folder(s)
@@ -196,19 +191,11 @@ const LoadLocal = () => {
               </MDTypography>
 
               <MDBox
-                style={{
-                  display: "flex",
-                  height: "100%",
-                  marginTop: "2em",
-                }}
+                className="local-load-card-box__select-folder"
               >
                 {/* Directory folder upload */}
                 <MDBox
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                  }}
+                  className="local-load-card-box__select-folder-upload"
                 >
                   {/* Dropzone */}
                   <Dropzone files={files} setFiles={setFiles} />
@@ -231,39 +218,16 @@ const LoadLocal = () => {
               {showErrorFiles && (
                 <MDBox>
                   <MDBox
-                    style={{
-                      boxSizing: "border-box",
-                      width: "100%",
-                      padding: "1rem",
-                      height: "250px",
-                      maxWidth: "1000px",
-                    }}
+                    className="error-files-box"
                   >
                     <MDBox
-                      style={{
-                        // Scroll bar
-                        overflowY: "scroll",
-                        height: "100%",
-                        width: "100%",
-                        border: "1px dotted #ccc",
-                        paddingTop: "0.5em",
-                      }}
+                      className="error-files-box__scroll"
                     >
                       {errorFiles.map((file) => {
                         return (
                           <MDBox
+                            className="error-files-box-content"
                             key={Math.random().toString(36).substring(7)}
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              paddingLeft: "2em",
-                              paddingRight: "2em",
-                              boxSizing: "border-box",
-                              height: "1.5em",
-                            }}
                           >
                             <MDTypography variant="overline">
                               {file.originalName}
@@ -285,18 +249,10 @@ const LoadLocal = () => {
           <Grid
             item
             xs={12}
-            style={{
-              marginTop: "3rem",
-            }}
           >
             <MDBox>
               <Card
-                sx={{
-                  p: 3,
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                }}
+                className="local-load-card"
               >
                 <MDTypography variant="h5">
                   Step 4 - Choose Collection
@@ -323,22 +279,10 @@ const LoadLocal = () => {
           <Grid item xs={12}>
             <MDBox>
               <Card
-                sx={{
-                  p: 3,
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                }}
+                className="local-load-card"
               >
                 <MDBox
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "100%",
-                    minWidth: "450px",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
+                  className="local-load-card-box__create-metadata"
                 >
                   <MDTypography variant="h5">
                     Step 5 - View STAC Records
@@ -368,6 +312,20 @@ const LoadLocal = () => {
                 >
                   View the newly created STAC records for each item.
                 </MDTypography>
+                <MDButton
+                  className="publish-all-mobile-button"
+                  onClick={publish}
+                  buttonType="create"
+                  disabled={!selectedCollection}
+                  style={{
+                    backgroundColor: selectedCollection
+                    ? "var(--osweb-color-secondary)"
+                    : "#ccc",
+                    cursor: selectedCollection ? "pointer" : "none",
+                  }}
+                    >
+                  Publish All
+                </MDButton>
                 <STACTable files={files} stac={stac} />
               </Card>
             </MDBox>

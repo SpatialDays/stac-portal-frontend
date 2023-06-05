@@ -1,3 +1,5 @@
+@import 'index.scss';
+
 .valid {
   border: 3px solid rgba(0, 128, 0, 0.483) !important;
   border-radius: 5px;
@@ -11,4 +13,43 @@
 
 .hide {
   display: none !important;
+}
+
+.validator-tools{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  padding-top: 2em;
+
+  &__btn {
+    margin-right: 10px;
+  }
+
+  &__btn--validate {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+
+// wrapping the validate stac button at width 1070px
+@media(max-width: 1070px){
+  .validator-tools{
+    justify-content: flex-start !important;
+
+    &__btn {
+      margin: 5px;
+    }
+  }
+}
+
+// entralise and increase button padding for mobile screens
+@media(max-width: $breakpoint-mobile){
+  .validator-tools{
+    justify-content: center !important;
+
+    &__btn {
+      padding: 20px !important;
+    }
+  }
 }

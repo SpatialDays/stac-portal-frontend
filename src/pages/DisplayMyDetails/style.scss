@@ -1,5 +1,7 @@
+@import 'index.scss';
+
 .my-details-container{
-  max-width: 50vw !important;
+  max-width: 45vw !important;
   margin: 0 auto !important;
 
   & .my-details-card {
@@ -24,6 +26,11 @@
         height: 30vh !important;
         font-size: 15vh !important;
         background-color: var(--osweb-color-primary) !important;
+        margin-bottom: 10px;
+      }
+
+      & .copy-button-list-item {
+        display: none;
       }
       
       & .my-details-list {
@@ -33,11 +40,11 @@
         justify-content: space-evenly;
 
         & .my-details-item {
-          margin-left: 8px;
+          margin-left: 8px !important;
           font-size: 20px;
         }
 
-        & .copy-api-key-button {
+        & .inline-copy-api-key-button {
           &:hover {
             background-color: #fff !important;
           }
@@ -50,8 +57,52 @@
             }
           }
         }
+        & .refresh-api-key-button{
+          padding: 15px;
+          margin-bottom: 10px;
+        }
       }
     }
   }
 }
 
+
+// for mobile screens 
+@media (max-width: $breakpoint-mobile) {
+  
+  .my-details-container{
+    max-width: 100vw !important;
+
+    & .my-details-card {
+      // height: auto !important;
+      min-height: 65vh !important;
+
+      & .my-details-grid{
+        & .avatar {
+          width: 12rem !important;
+          height: 12rem !important;
+          font-size: 5rem !important;
+        }
+        & .copy-button-list-item{
+          display: flex !important;
+          padding-bottom: 0;
+
+          & .copy-api-key-button {
+            padding: 15px;
+          }
+        }
+        & .my-details-list {
+          & .my-details-item {
+            font-size: 18px;
+          }
+          & h4 {
+            font-size: 20px;
+          }
+          & .inline-copy-api-key-button {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

@@ -16,6 +16,9 @@ import CloudSyncIcon from "@mui/icons-material/CloudSync";
 // Layout components
 import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
 
+// Styles
+import "./style.scss";
+
 // Interface
 import Table from "components/Table";
 import {
@@ -149,11 +152,7 @@ const PublicCatalogs = () => {
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <Card
-              sx={{
-                p: 3,
-                display: "flex",
-                flexDirection: "column",
-              }}
+              className="card narrow-card"
             >
               <MDTypography variant="h4">
                 Synchronise with STAC Index
@@ -183,11 +182,7 @@ const PublicCatalogs = () => {
 
           <Grid item xs={12}>
             <Card
-              sx={{
-                p: 3,
-                display: "flex",
-                flexDirection: "column",
-              }}
+              className="card narrow-card"
             >
               <MDTypography variant="h4">Add Public Catalog</MDTypography>
               <MDTypography variant="overline">
@@ -200,7 +195,7 @@ const PublicCatalogs = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Card sx={{ p: 3, display: "flex", flexDirection: "column" }}>
+            <Card className="card">
               <MDTypography variant="h4">Public Catalogs</MDTypography>
               <MDTypography variant="overline">
                 See the list of STAC-compliant public Catalogs that you can load
@@ -227,8 +222,8 @@ const PublicCatalogs = () => {
               />
             </Card>
           </Grid>
-          <Grid item xs={12}>
-            <Card sx={{ p: 3, display: "flex", flexDirection: "column" }}>
+          <Grid item xs={12} className="grid">
+            <Card className="card">
               <MDTypography variant="h4">Public Collections</MDTypography>
               <MDTypography variant="overline">
                 See the list of STAC-compliant public Collections that you can

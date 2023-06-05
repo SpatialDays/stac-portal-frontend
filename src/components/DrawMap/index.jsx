@@ -210,7 +210,7 @@ const DrawMap = ({
           </Box>
         </div>
         {showMap && (
-          <div style={{ height: "25em", width: "100%" }}>
+          <div id="leaflet-container-wrapper" style={{ height: "25em", width: "100%" }}>
             <MapContainer center={[51.505, -0.09]} zoom={7}>
               <FeatureGroup>
                 <EditControl
@@ -247,7 +247,8 @@ const DrawMap = ({
           </div>
         )}
 
-        <Box display="flex" justifyContent="flex-end" alignItems="center">
+        {/* move to scss and try mobile center the button and padding 20px */}
+        <Box display="flex" justifyContent="flex-end" alignItems="center"> 
           <MDButton
             buttonType="update"
             style={{ display: showMap ? "block" : "none" }}
