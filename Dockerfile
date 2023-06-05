@@ -1,6 +1,6 @@
+FROM node:16 as build-step
 ARG PORTAL_BACKEND_URL
 ARG PORTAL_STAC_API_BROWSER_URL
-FROM node:16 as build-step
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
