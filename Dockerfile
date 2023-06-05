@@ -8,9 +8,6 @@ COPY . .
 # TODO: use ARG and pass this in from the github action
 ENV REACT_APP_PORTAL_BACKEND_URL=$PORTAL_BACKEND_URL
 ENV REACT_APP_PORTAL_STAC_API_BROWSER_URL=$PORTAL_STAC_API_BROWSER_URL
-# echo out the env vars to make sure they are set
-RUN echo $REACT_APP_PORTAL_BACKEND_URL
-RUN echo $REACT_APP_PORTAL_STAC_API_BROWSER_URL
 RUN npm run build
 
 # Build step #2: build an nginx container
