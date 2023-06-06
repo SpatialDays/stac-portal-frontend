@@ -34,7 +34,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   // sets mobileSidenav to true/false depending on the window size
   useEffect(() => {
     const handleResize = () => {
-      console.log(document.documentElement.clientWidth);
       setMobileSidenav(document.documentElement.clientWidth <= mobileScreenSize);
       setHideMobileNav(document.documentElement.clientWidth <= mobileScreenSize);
     };

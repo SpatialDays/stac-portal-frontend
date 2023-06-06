@@ -28,12 +28,10 @@ export default function App() {
 
       // if in development, return the dev data object
       if (process.env.NODE_ENV !== 'production'){
-        console.log('dev mode')
         const userData = await getDevData();
         setUserData(userData); 
       } else {
         // if in production, return the user data object (calls the getAADData function which sets the axois headers only for prod)
-        console.log('prod mode')
         let userData = await getAADData();
 
         setUserData(userData);
@@ -73,7 +71,7 @@ export default function App() {
 
   return (
     // passing just the userData in the context
-    <UserDataContext.Provider value={userData}>
+    <UserDataContext.Provider value={[userData, setUserData]}>
       <Sidenav brand={STAClogo} brandName="STAC Portal" routes={routes} />
       <div
         style={{
