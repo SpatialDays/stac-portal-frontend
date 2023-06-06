@@ -66,7 +66,7 @@ const DisplayMyDetails = () => {
 
       console.log('refresh response: ', response);
   
-      newAPIKey = response.data.secrets[0];
+      newAPIKey = response.data.secrets.primaryKey;
   
       console.log(userDetails)
       console.log('new key:', newAPIKey)
@@ -116,15 +116,10 @@ const DisplayMyDetails = () => {
 
         console.log('get response: ', response)
 
-        if (!response.ok) {
-          // it will be '00000000000000000000000000000000'
-          return userAPIKey;
-        }
-
         console.log(response);
         console.log(response.data);
         
-        userAPIKey = response.data.secrets[0];
+        userAPIKey = response.data.secrets.primaryKey;
         console.log(userAPIKey);
 
         // userDetails.userAPIKey = userAPIKey;  // ADD it to the user data object?
