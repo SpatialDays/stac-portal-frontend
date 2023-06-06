@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
-import { CommentsDisabledOutlined, ContentCopy } from "@mui/icons-material";
+import { ContentCopy } from "@mui/icons-material";
 
 // Layout components
 import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
@@ -41,16 +41,29 @@ const DisplayMyDetails = () => {
   const [userRole, setUserRole] = useState('');
   const [userPicture, setUserPicture] = useState('');
   const [userAPIKey, setUserAPIKey] = useState('');
+  const [refreshAPIKeyButtonText, setRefreshAPIKeyButtonText] = useState('Refresh API Key');
+  const [isRefreshingAPIKey, setIsRefreshingAPIKey] = useState(false);  // to disable the refresh API Key button while it's refreshing
   const [userDetails, setUserDetails] = useContext(UserDataContext);
 
   const handleRefreshAPIKey = async (userDetails) => {
     console.log('API KEY REFRESH')
+
+    setIsRefreshingAPIKey(true);
+    setRefreshAPIKeyButtonText('Refreshing...');
+
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    console.log('disable button?', isRefreshingAPIKey)
+    console.log('Refreshing...')
 
     let newAPIKey = '00000000000000000000000000000000';  // default in case of error
 
     if (userDetails.id_token === 'dev_mode') {
       // default API key placeholder for dev mode
       console.log('dev mode default apik being set:', newAPIKey);
+      setIsRefreshingAPIKey(false);
+      console.log('disable button?', isRefreshingAPIKey);
+      setRefreshAPIKeyButtonText('Refresh API Key');
       return newAPIKey;
     }
 
@@ -77,6 +90,10 @@ const DisplayMyDetails = () => {
       console.log('response not ok');
       console.error(error);
       return newAPIKey;
+    } finally {
+      setIsRefreshingAPIKey(false);
+      console.log('disable button?', isRefreshingAPIKey);
+      setRefreshAPIKeyButtonText('Refresh API Key');
     }
 
   };
@@ -229,14 +246,14 @@ const DisplayMyDetails = () => {
                     </ListItem> 
                     <ListItem>
                       <MDButton
-                        buttonType="refresh"
-                        className="btn-full-width refresh-api-key-button"
-                        // onClick={handleRefreshAPIKey}  // refreshAPIKey(userDetails);
+                        buttonType='refresh'
+                        className={`btn-full-width refresh-api-key-button ${isRefreshingAPIKey ? 'disabled-refresh-button' : ''}`}
+                        disabled= {isRefreshingAPIKey}
                         onClick={() => {
-                          handleRefreshAPIKey(userDetails)
+                          handleRefreshAPIKey(userDetails);
                         }}
                       >
-                        Refresh API Key
+                        {refreshAPIKeyButtonText}
                       </MDButton>
                     </ListItem>                  
                   </List>
