@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
-import { ContentCopy } from "@mui/icons-material";
+import { CommentsDisabledOutlined, ContentCopy } from "@mui/icons-material";
 
 // Layout components
 import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
@@ -23,8 +23,16 @@ import { Avatar } from "@mui/material";
 // Context
 import { UserDataContext } from "App";
 
+// API Key refreshing
+import axios from "axios";
+
+// Url paths
+import { backendUrl } from '../../utils/paths.jsx'
+
 // Styles
 import "./style.scss";
+import { set } from "date-fns";
+
 
 // set up the display of the user's details
 const DisplayMyDetails = () => {
@@ -32,37 +40,137 @@ const DisplayMyDetails = () => {
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
   const [userPicture, setUserPicture] = useState('');
-  const userDetails = useContext(UserDataContext);
+  const [userAPIKey, setUserAPIKey] = useState('');
+  const [userDetails, setUserDetails] = useContext(UserDataContext);
+
+  const handleRefreshAPIKey = async (userDetails) => {
+    console.log('API KEY REFRESH')
+
+    let newAPIKey = '00000000000000000000000000000000';  // default in case of error
+
+    if (userDetails.id_token === 'dev_mode') {
+      // default API key placeholder for dev mode
+      console.log('dev mode default apik being set:', newAPIKey);
+      return newAPIKey;
+    }
+
+    try {
+      const url = new URL('apim/refresh/', backendUrl).toString();
+      const response = await axios({
+        method: 'GET',
+        url: url,
+        headers: {
+          'Authorization': `Bearer ${userDetails.id_token}`
+        }
+      });
+
+      console.log('refresh response: ', response);
+  
+      newAPIKey = response.secrets.primaryKey;
+  
+      // console.log(userDetails)
+  
+      setUserAPIKey(newAPIKey);
+
+    } catch (error) {
+      console.log('response not ok');
+      console.error(error);
+      return newAPIKey;
+    }
+
+  };
   
   useEffect(() => {
+    console.log('RUNNING USE EFFECT')
+
     // getting the user's name and role from the user_claims array
     function getValueByType(list, valueType) {
       if (list && list.length > 0){
         const value = list.find(item => item.typ === valueType);
         return value ? value.val : '';
       }  
-    }
+    };
+
+    //  function to get the user's APIKey using their id_token
+    const getUserAPIKey = async (userDetails) => {
+      console.log('API KEY GET')
+      let userAPIKey = '00000000000000000000000000000000';
+    
+      if (userDetails.id_token === 'dev_mode') {
+        // default API key placeholder for dev mode
+        console.log('dev mode default apik being set:', userAPIKey);
+        return userAPIKey;
+      }
+
+      try {
+
+        const url = new URL('apim/', backendUrl).toString();
+        const response = await axios({
+          method: 'GET',
+          url: url,
+          headers: {
+            'Authorization': `Bearer ${userDetails.id_token}`
+          }
+        });
+
+        console.log('get response: ', response)
+
+        if (!response.ok) {
+          // it will be '00000000000000000000000000000000'
+          return userAPIKey;
+        }
+
+        // console.log(response);
+        // console.log(response.data);
+        // console.log(response.data.secrets[0]);
+
+        userAPIKey = response.data.secrets[0];
+
+        // userDetails.userAPIKey = userAPIKey;  // ADD it to the user data object?
+        return userAPIKey;
+
+      } catch (error) {
+        console.log('response not ok');
+        console.error(error);
+        return userAPIKey;
+      }
+    
+      // test version
+      // try {
+
+      //   const resp = api_json;  // to be replaced with using the user token_id to get the API key
+      //   console.log(resp);
+    
+      //   const user_api_key = resp.secrets.primaryKey;
+      //   return user_api_key;
+  
+      // } catch (error) {
+      //   console.log('response not ok');
+      //   console.error(error);
+      //   return null  // userDetails;
+      // }
+    };
   
     async function fetchData() {
       // getting the user's name, role and picture from the userDetails object
       const userDetailsList = userDetails.user_claims;
       const userName = getValueByType(userDetailsList, 'name');
       let userRole = getValueByType(userDetailsList, 'roles');
-      const userPicture = userDetails.picture ? userDetails.picture : null;
       userRole = userRole ? userRole.split('.')[1]: userRole;
-
+      const userPicture = userDetails.picture ? userDetails.picture : null;
+      const userAPIKey = await getUserAPIKey(userDetails);  // userDetails.user_api_key;
+      
       setUserName(userName);
       setUserRole(userRole);
       setUserPicture(userPicture);
+      setUserAPIKey(userAPIKey);
     }
     
     if (userDetails){
       fetchData();
     };
+    
   }, [userDetails]);
-
-  // placeholder until functionality for providing API keys is ready
-  let apiKey = '00000000000000000000000000000000';  
 
   return (
     <DashboardLayout>
@@ -103,14 +211,14 @@ const DisplayMyDetails = () => {
                     </ListItem>
                     <ListItem>
                       <MDTypography variant="h4">API Key:</MDTypography>
-                        <span id="api-key" class="my-details-item">{apiKey.slice(0, 7)}...</span>
+                        <span id="api-key" class="my-details-item">{userAPIKey.slice(0, 7)}...</span>
                       <IconButton
                         className='inline-copy-api-key-button'
                         title="Copy API Key to clipboard"
                       >
                         <ContentCopy
                           className='copy-api-key-icon' 
-                          onClick={() =>  navigator.clipboard.writeText(apiKey)}
+                          onClick={() =>  navigator.clipboard.writeText(userAPIKey)}
                         />
                       </IconButton>
                     </ListItem>
@@ -118,7 +226,7 @@ const DisplayMyDetails = () => {
                       <MDButton
                         buttonType="copy"
                         className="btn-full-width copy-api-key-button"
-                        onClick={() =>  navigator.clipboard.writeText(apiKey)}
+                        onClick={() =>  navigator.clipboard.writeText(userAPIKey)}
                       >
                         Copy API Key
                       </MDButton>
@@ -127,7 +235,10 @@ const DisplayMyDetails = () => {
                       <MDButton
                         buttonType="refresh"
                         className="btn-full-width refresh-api-key-button"
-                        // onClick={handleRefreshAPIKey}  // functionality to be added
+                        // onClick={handleRefreshAPIKey}  // refreshAPIKey(userDetails);
+                        onClick={() => {
+                          handleRefreshAPIKey(userDetails)
+                        }}
                       >
                         Refresh API Key
                       </MDButton>

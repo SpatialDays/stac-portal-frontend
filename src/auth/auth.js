@@ -1,6 +1,13 @@
 // Modules
 import axios from "axios";
 
+// Url paths
+import { backendUrl } from '../utils/paths.jsx'
+
+// FOR TESTING
+import { useState } from "react";
+
+
 // adds user's profile picture to their data object
 const addProfilePicture = async (userData) => {
 
@@ -34,9 +41,11 @@ const addProfilePicture = async (userData) => {
 // returns the dev data object when in development
 const getDevData = async () => {
   // paste in your own user data to test or use the dev default
-  let data = [{"access_token":"000","user_claims":[{"typ":"name","val":"Dev User"},{"typ":"roles","val":".Developer"}],"user_id":"Dev User"}];
-  console.log('adding profile pic to data in dev')
+  let data = [{"access_token":"000","id_token": "dev_mode", "user_claims":[{"typ":"name","val":"Dev User"},{"typ":"roles","val":".Developer"}],"user_id":"Dev User"}];
+  // adds profile picture if one is set for dev user
   data = await addProfilePicture(data[0]);
+  // add the user's API key to their object
+  // data = await addAPIKey(data);
   return data;
 };
 
@@ -62,9 +71,10 @@ const getAADData = async () => {
       }
 
       const newTokenResponse = await instance.get("/.auth/me");
-      console.log('adding profile pic to data in prod')
       // adds the profile picture to the user data object
-      const data = await addProfilePicture(newTokenResponse.data[0]);
+      let data = await addProfilePicture(newTokenResponse.data[0]);
+      // add the user's API key to their object
+      // data = await addAPIKey(data);
       // returns the whole user data object
       return data;  
     }
@@ -84,8 +94,6 @@ const getAADData = async () => {
 
 // returns the users id token in production 
 const getAADToken = async () => {
-  
-  console.log('running the getAADToken function')
 
   try {
     const instance = axios.create();
@@ -124,12 +132,10 @@ const getAADToken = async () => {
 
 // returns the user data object with the profile picture included
 const auth = async () => {
-  console.log('auth function')
 
   // if in production, set axois headers
   axios.interceptors.request.use(async (config) => {
-    
-    console.log('prod mode')
+
     const token = await getAADToken();
 
     if (token) {
