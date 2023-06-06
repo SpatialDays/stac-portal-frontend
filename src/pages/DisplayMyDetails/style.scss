@@ -61,6 +61,15 @@
           padding: 15px;
           margin-bottom: 10px;
         }
+        & .disabled-refresh-button{
+          background-color: grey !important;
+          color: white !important;
+          cursor: not-allowed !important;
+
+          .btn-icon{
+            display: none !important;
+          }
+        }
       }
     }
   }
