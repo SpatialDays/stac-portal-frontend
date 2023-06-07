@@ -1,6 +1,9 @@
 // React
 import React, { useEffect, useState, useContext } from "react";
 
+// Modules
+import axios from "axios";
+
 // Context
 import { UserDataContext } from "App";
 
@@ -26,6 +29,31 @@ export const IconButtonWithDropdown = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogoutRedirect = async (userDetails) => {
+
+    try {
+      const response = await fetch(`/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${userDetails.id_token}`
+        }
+      });
+
+      if (response.status === 200) {
+        console.log('Successful redirect')
+        console.log('process.env.REACT_APP_LOGOUT_REDIRECT_URL', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
+        window.location.href = `${response.url}`;
+
+      } else {
+        console.log('redirect Failed')
+      }
+  
+    } catch (error) {
+      // Handle any errors during the request
+      console.error(error);
+    }
   };
 
   const userDetails = useContext(UserDataContext)[0];
@@ -61,7 +89,8 @@ export const IconButtonWithDropdown = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={() => (window.location.href = "/my-details")}>My Details</MenuItem>
-        <MenuItem onClick={() => (window.location.href = `/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`)}>
+
+        <MenuItem onClick={() => handleLogoutRedirect(userDetails)}>
           Logout
         </MenuItem>
       </Menu>
