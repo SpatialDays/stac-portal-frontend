@@ -61,7 +61,7 @@ export const IconButtonWithDropdown = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={() => (window.location.href = "/my-details")}>My Details</MenuItem>
-        <MenuItem onClick={() => (window.location.href = "/.auth/logout")}>
+        <MenuItem onClick={() => (window.location.href = `/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`)}>
           Logout
         </MenuItem>
       </Menu>
