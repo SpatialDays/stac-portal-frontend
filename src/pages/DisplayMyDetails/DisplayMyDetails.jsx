@@ -66,10 +66,7 @@ const DisplayMyDetails = () => {
       const url = new URL('apim/refresh/', backendUrl).toString();
       const response = await axios({
         method: 'GET',
-        url: url,
-        headers: {
-          'Authorization': `Bearer ${userDetails.id_token}`
-        }
+        url: url
       });
   
       newAPIKey = response.data.secrets.primaryKey;
@@ -113,10 +110,7 @@ const DisplayMyDetails = () => {
         const url = new URL('apim/', backendUrl).toString();
         const response = await axios({
           method: 'GET',
-          url: url,
-          headers: {
-            'Authorization': `Bearer ${userDetails.id_token}`
-          }
+          url: url
         });
         
         userAPIKey = response.data.secrets.primaryKey;
