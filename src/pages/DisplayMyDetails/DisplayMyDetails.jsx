@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
-import { ContentCopy } from "@mui/icons-material";
+import { ContentCopy, Visibility, VisibilityOff } from "@mui/icons-material";
 
 // Layout components
 import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
@@ -31,7 +31,6 @@ import { backendUrl } from '../../utils/paths.jsx'
 
 // Styles
 import "./style.scss";
-import { set } from "date-fns";
 
 
 // set up the display of the user's details
@@ -43,63 +42,50 @@ const DisplayMyDetails = () => {
   const [userAPIKey, setUserAPIKey] = useState('');
   const [refreshAPIKeyButtonText, setRefreshAPIKeyButtonText] = useState('Refresh API Key');
   const [isRefreshingAPIKey, setIsRefreshingAPIKey] = useState(false);  // to disable the refresh API Key button while it's refreshing
+  const [showFullAPIKey, setShowFullAPIKey] = useState(false);
   const [userDetails, setUserDetails] = useContext(UserDataContext);
 
   const handleRefreshAPIKey = async (userDetails) => {
-    console.log('API KEY REFRESH')
 
+    // disabling the refresh api key button until the refresh is complete
     setIsRefreshingAPIKey(true);
     setRefreshAPIKeyButtonText('Refreshing...');
 
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    console.log('disable button?', isRefreshingAPIKey)
-    console.log('Refreshing...')
-
-    let newAPIKey = '00000000000000000000000000000000';  // default in case of error
+    // default in case of error or for dev mode
+    let newAPIKey = '00000000000000000000000000000000';  
 
     if (userDetails.id_token === 'dev_mode') {
-      // default API key placeholder for dev mode
-      console.log('dev mode default apik being set:', newAPIKey);
+      // resetting the refresh api key button in dev mode
       setIsRefreshingAPIKey(false);
-      console.log('disable button?', isRefreshingAPIKey);
       setRefreshAPIKeyButtonText('Refresh API Key');
       return newAPIKey;
     }
 
     try {
+      // creating url and fetching the refreshed api key
       const url = new URL('apim/refresh/', backendUrl).toString();
       const response = await axios({
         method: 'GET',
-        url: url,
-        headers: {
-          'Authorization': `Bearer ${userDetails.id_token}`
-        }
+        url: url
       });
-
-      console.log('refresh response: ', response);
   
       newAPIKey = response.data.secrets.primaryKey;
-  
-      console.log(userDetails)
-      console.log('new key:', newAPIKey)
-  
       setUserAPIKey(newAPIKey);
 
     } catch (error) {
       console.log('response not ok');
       console.error(error);
       return newAPIKey;
+
     } finally {
+      // resetting the refresh api key button
       setIsRefreshingAPIKey(false);
-      console.log('disable button?', isRefreshingAPIKey);
       setRefreshAPIKeyButtonText('Refresh API Key');
     }
 
   };
   
   useEffect(() => {
-    console.log('RUNNING USE EFFECT')
 
     // getting the user's name and role from the user_claims array
     function getValueByType(list, valueType) {
@@ -111,35 +97,23 @@ const DisplayMyDetails = () => {
 
     //  function to get the user's APIKey using their id_token
     const getUserAPIKey = async (userDetails) => {
-      console.log('API KEY GET')
+
+      // default in case of error or for dev mode
       let userAPIKey = '00000000000000000000000000000000';
     
       if (userDetails.id_token === 'dev_mode') {
-        // default API key placeholder for dev mode
-        console.log('dev mode default apik being set:', userAPIKey);
         return userAPIKey;
       }
 
       try {
-
+        // creating url and fetching the user's api key
         const url = new URL('apim/', backendUrl).toString();
         const response = await axios({
           method: 'GET',
-          url: url,
-          headers: {
-            'Authorization': `Bearer ${userDetails.id_token}`
-          }
+          url: url
         });
-
-        console.log('get response: ', response)
-
-        console.log(response);
-        console.log(response.data);
         
         userAPIKey = response.data.secrets.primaryKey;
-        console.log(userAPIKey);
-
-        // userDetails.userAPIKey = userAPIKey;  // ADD it to the user data object?
         return userAPIKey;
 
       } catch (error) {
@@ -147,21 +121,6 @@ const DisplayMyDetails = () => {
         console.error(error);
         return userAPIKey;
       }
-    
-      // test version
-      // try {
-
-      //   const resp = api_json;  // to be replaced with using the user token_id to get the API key
-      //   console.log(resp);
-    
-      //   const user_api_key = resp.secrets.primaryKey;
-      //   return user_api_key;
-  
-      // } catch (error) {
-      //   console.log('response not ok');
-      //   console.error(error);
-      //   return null  // userDetails;
-      // }
     };
   
     async function fetchData() {
@@ -224,26 +183,75 @@ const DisplayMyDetails = () => {
                     </ListItem>
                     <ListItem>
                       <MDTypography variant="h4">API Key:</MDTypography>
-                        <span id="api-key" class="my-details-item">{userAPIKey.slice(0, 7)}...</span>
+                        <span
+                          className={`my-details-item ${showFullAPIKey ? 'hide-api-key' : ''}`}
+                        >
+                          {userAPIKey.slice(0, 7)}...
+                        </span>
                       <IconButton
-                        className='inline-copy-api-key-button'
+                        className='inline-api-key-button'
                         title="Copy API Key to clipboard"
                       >
                         <ContentCopy
-                          className='copy-api-key-icon' 
+                          className='api-key-icon' 
                           onClick={() =>  navigator.clipboard.writeText(userAPIKey)}
                         />
                       </IconButton>
+                      <IconButton
+                        className={`inline-api-key-button ${showFullAPIKey ? 'hide-inline-button' : ''}`}
+                        title="Show full API Key"
+                      >
+                        <Visibility
+                          className='api-key-icon' 
+                          onClick={() =>  setShowFullAPIKey(true)}
+                        />
+                      </IconButton>
+                      <IconButton
+                        className={`inline-api-key-button ${!showFullAPIKey ? 'hide-inline-button' : ''}`}
+                        title="Hide full API Key"
+                      >
+                        <VisibilityOff
+                          className='api-key-icon' 
+                          onClick={() =>  setShowFullAPIKey(false)}
+                        />
+                      </IconButton>
                     </ListItem>
-                    <ListItem className="copy-button-list-item">
+                    <ListItem
+                      className={`full-api-key my-details-item ${!showFullAPIKey ? 'hide-api-key' : ''}`}
+                    >
+                      {userAPIKey}
+                    </ListItem>
+                    <ListItem className="api-key-function-buttons-list-item">
                       <MDButton
                         buttonType="copy"
-                        className="btn-full-width copy-api-key-button"
+                        className="btn-full-width api-key-function-buttons"
                         onClick={() =>  navigator.clipboard.writeText(userAPIKey)}
                       >
                         Copy API Key
                       </MDButton>
-                    </ListItem> 
+                    </ListItem>
+                    <ListItem
+                      className={`${showFullAPIKey ? 'hide-api-key-function-button' : 'api-key-function-buttons-list-item'}`}
+                      >
+                      <MDButton
+                        buttonType="visibility"
+                        className='btn-full-width api-key-function-buttons'
+                        onClick={() =>  setShowFullAPIKey(true)}
+                      >
+                        Show full API Key
+                      </MDButton>
+                    </ListItem>
+                    <ListItem
+                      className={`${!showFullAPIKey ? 'hide-api-key-function-button' : 'api-key-function-buttons-list-item'}`}
+                    >
+                      <MDButton
+                        buttonType="visibility-off"
+                        className="btn-full-width api-key-function-buttons"
+                        onClick={() =>  setShowFullAPIKey(false)}
+                      >
+                        Hide full API Key
+                      </MDButton>
+                    </ListItem>
                     <ListItem>
                       <MDButton
                         buttonType='refresh'
