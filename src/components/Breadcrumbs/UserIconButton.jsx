@@ -31,17 +31,23 @@ export const IconButtonWithDropdown = () => {
     setAnchorEl(null);
   };
 
-  const handleLogoutRedirect = async (userDetails) => {
+  const handleLogoutRedirect = async () => {
+
+    console.log('the env var', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
+    console.log('the encoded env var', encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL))
 
     try {
-      const response = await fetch(`/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`, {
+      const response = await fetch(`.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`, {
         method: 'GET'
       });
+      console.log(response)
+
+      // await new Promise(resolve => setTimeout(resolve, 20000));
 
       if (response.status === 200) {
         console.log('Successful redirect')
         console.log('process.env.REACT_APP_LOGOUT_REDIRECT_URL', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
-        window.location.href = `${response.url}`;
+        // window.location.href = `${process.env.REACT_APP_LOGOUT_REDIRECT_URL}`;
 
       } else {
         console.log('redirect Failed')
@@ -49,6 +55,7 @@ export const IconButtonWithDropdown = () => {
   
     } catch (error) {
       // Handle any errors during the request
+      console.log('signout redirect failed')
       console.error(error);
     }
   };
@@ -87,7 +94,7 @@ export const IconButtonWithDropdown = () => {
       >
         <MenuItem onClick={() => (window.location.href = "/my-details")}>My Details</MenuItem>
 
-        <MenuItem onClick={() => handleLogoutRedirect(userDetails)}>
+        <MenuItem onClick={handleLogoutRedirect}>
           Logout
         </MenuItem>
       </Menu>
