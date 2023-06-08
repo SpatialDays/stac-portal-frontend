@@ -35,10 +35,7 @@ export const IconButtonWithDropdown = () => {
 
     try {
       const response = await fetch(`/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${userDetails.id_token}`
-        }
+        method: 'GET'
       });
 
       if (response.status === 200) {
