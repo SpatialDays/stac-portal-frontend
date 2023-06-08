@@ -33,32 +33,34 @@ export const IconButtonWithDropdown = () => {
 
   const handleLogoutRedirect = async () => {
 
-    console.log('the env var', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
-    console.log('the encoded env var', encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL))
+    window.location.href = `.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
 
-    try {
-      // `.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
-      const response = await fetch('/.auth/logout', {
-        method: 'GET'
-      });
-      console.log(response)
+    // console.log('the env var', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
+    // console.log('the encoded env var', encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL))
 
-      await new Promise(resolve => setTimeout(resolve, 20000));
+    // try {
+    //   // `.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
+    //   const response = await fetch('/.auth/logout', {
+    //     method: 'GET'
+    //   });
+    //   console.log(response)
 
-      if (response.status === 200) {
-        console.log('Successful redirect')
-        console.log('process.env.REACT_APP_LOGOUT_REDIRECT_URL', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
-        window.location.href = `${process.env.REACT_APP_LOGOUT_REDIRECT_URL}`;
+    //   await new Promise(resolve => setTimeout(resolve, 20000));
 
-      } else {
-        console.log('redirect Failed')
-      }
+    //   if (response.status === 200) {
+    //     console.log('Successful redirect')
+    //     console.log('process.env.REACT_APP_LOGOUT_REDIRECT_URL', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
+    //     window.location.href = `${process.env.REACT_APP_LOGOUT_REDIRECT_URL}`;
+
+    //   } else {
+    //     console.log('redirect Failed')
+    //   }
   
-    } catch (error) {
-      // Handle any errors during the request
-      console.log('signout redirect failed')
-      console.error(error);
-    }
+    // } catch (error) {
+    //   // Handle any errors during the request
+    //   console.log('signout redirect failed')
+    //   console.error(error);
+    // }
   };
 
   const userDetails = useContext(UserDataContext)[0];
