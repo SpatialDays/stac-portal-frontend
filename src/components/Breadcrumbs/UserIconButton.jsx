@@ -33,8 +33,17 @@ export const IconButtonWithDropdown = () => {
 
   const handleLogoutRedirect = async () => {
 
-    window.location.href = `.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
-    window.location.href = `${process.env.REACT_APP_LOGOUT_REDIRECT_URL}`
+    // window.location.href = `.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
+    const response = await fetch('/.auth/logout', {
+      method: 'GET'
+    });
+    console.log(response)
+    
+    if (response){
+      console.log('redirecting...')
+      window.location.href = `${process.env.REACT_APP_LOGOUT_REDIRECT_URL}`
+    };
+    
 
 
     // console.log('the env var', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
