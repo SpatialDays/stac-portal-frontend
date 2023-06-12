@@ -34,9 +34,13 @@ export const IconButtonWithDropdown = () => {
   const handleLogoutRedirect = async () => {
 
     try {
-      window.location.href = '/.auth/logout';
+      console.log('logging out')
+      window.location.href = 'https://os-eo-platform-rg-staging-stac-portal-frontend.azurewebsites.net/.auth/logout';
+      console.log('logged out')
 
+      console.log('redirecting to', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
       window.location.href = encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL);
+      console.log('redirected')
 
     } catch (error) {
       // Handle any errors during the request
