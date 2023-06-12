@@ -33,15 +33,22 @@ export const IconButtonWithDropdown = () => {
 
   const handleLogoutRedirect = async () => {
 
+    // needs a get request which will wait until auth logout works properly
+
     try {
-      console.log('logging out...')
-      window.location.href = '/.auth/logout';
-      console.log('logged out')
-
-      console.log('redirecting...')
-      window.location.href = process.env.REACT_APP_LOGOUT_REDIRECT_URL;
-      console.log('redirected')
-
+      const response = await fetch('/.auth/logout', { method: 'POST' });
+      console.log('logging out')
+      
+      if (response.ok) {
+        // Logout successful, redirect to the desired URL
+        window.location.href = process.env.REACT_APP_LOGOUT_REDIRECT_URL;
+        console.log('redirected')
+      } else {
+        // Handle logout failure
+        console.log('Logout failed');
+        console.error(response);
+      }
+      
     } catch (error) {
       // Handle any errors during the request
       console.log('Signout redirect failed')

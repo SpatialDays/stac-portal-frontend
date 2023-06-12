@@ -77,7 +77,8 @@ const getAADData = async () => {
     console.log("Error fetching AAD token:", e);
   }
 
-  window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGIN_REDIRECT_URL)}`;
+  window.location.href = '/.auth/login/aad';
+  // window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGIN_REDIRECT_URL)}`;
 
   return null;
 };
@@ -116,7 +117,8 @@ const getAADToken = async () => {
     console.log("Error fetching AAD token:", e);
   }
 
-  window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGIN_REDIRECT_URL)}`;
+  window.location.href = '/.auth/login/aad';
+  // window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGIN_REDIRECT_URL)}`;
 
   return null;
 };
