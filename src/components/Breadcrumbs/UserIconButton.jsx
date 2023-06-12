@@ -1,9 +1,6 @@
 // React
 import React, { useEffect, useState, useContext } from "react";
 
-// Modules
-import axios from "axios";
-
 // Context
 import { UserDataContext } from "App";
 
@@ -33,29 +30,9 @@ export const IconButtonWithDropdown = () => {
 
   const handleLogoutRedirect = async () => {
 
-    // needs a get request which will wait until auth logout works properly
+    window.location.href = `/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
+    console.log('logging out')
 
-    try {
-      const response = await fetch('/.auth/logout', { method: 'POST' });
-      console.log('logging out')
-      
-      if (response.ok) {
-        // Logout successful, redirect to the desired URL
-        window.location.href = process.env.REACT_APP_LOGOUT_REDIRECT_URL;
-        console.log('redirected')
-      } else {
-        // Handle logout failure
-        console.log('Logout failed');
-        console.error(response);
-      }
-      
-    } catch (error) {
-      // Handle any errors during the request
-      console.log('Signout redirect failed')
-      console.error(error);
-    } finally {
-      console.log('Successful signout redirect')
-    }
   };
 
   const userDetails = useContext(UserDataContext)[0];
