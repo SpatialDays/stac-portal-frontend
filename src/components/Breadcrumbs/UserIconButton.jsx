@@ -33,45 +33,18 @@ export const IconButtonWithDropdown = () => {
 
   const handleLogoutRedirect = async () => {
 
-    // window.location.href = `.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
-    const response = await fetch('/.auth/logout', {
-      method: 'GET'
-    });
-    console.log(response)
-    
-    if (response){
-      console.log('redirecting...')
-      window.location.href = `${process.env.REACT_APP_LOGOUT_REDIRECT_URL}`
-    };
-    
+    try {
+      window.location.href = '/.auth/logout';
 
+      window.location.href = encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL);
 
-    // console.log('the env var', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
-    // console.log('the encoded env var', encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL))
-
-    // try {
-    //   // `.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
-    //   const response = await fetch('/.auth/logout', {
-    //     method: 'GET'
-    //   });
-    //   console.log(response)
-
-    //   await new Promise(resolve => setTimeout(resolve, 20000));
-
-    //   if (response.status === 200) {
-    //     console.log('Successful redirect')
-    //     console.log('process.env.REACT_APP_LOGOUT_REDIRECT_URL', process.env.REACT_APP_LOGOUT_REDIRECT_URL)
-    //     window.location.href = `${process.env.REACT_APP_LOGOUT_REDIRECT_URL}`;
-
-    //   } else {
-    //     console.log('redirect Failed')
-    //   }
-  
-    // } catch (error) {
-    //   // Handle any errors during the request
-    //   console.log('signout redirect failed')
-    //   console.error(error);
-    // }
+    } catch (error) {
+      // Handle any errors during the request
+      console.log('Signout redirect failed')
+      console.error(error);
+    } finally {
+      console.log('Successful signout redirect')
+    }
   };
 
   const userDetails = useContext(UserDataContext)[0];
