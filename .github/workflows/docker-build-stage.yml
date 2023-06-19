@@ -37,6 +37,8 @@ jobs:
           push: true
           tags: ${{ secrets.EO_PROJ_STAGING_DOCKER_REGISTRY_URL }}/stac-portal-frontend:${{ env.SHORT_SHA }}
           build-args: |
-            PORTAL_BACKEND_URL=${{ secrets.REACT_APP_PORTAL_BACKEND_URL }}
-            PORTAL_STAC_API_BROWSER_URL=${{ secrets.REACT_APP_PORTAL_STAC_API_BROWSER_URL }}
+            REACT_APP_PORTAL_BACKEND_URL=${{ secrets.REACT_APP_PORTAL_BACKEND_URL }}
+            REACT_APP_PORTAL_STAC_API_BROWSER_URL=${{ secrets.REACT_APP_PORTAL_STAC_API_BROWSER_URL }}
+            REACT_APP_LOGIN_REDIRECT_URL=${{ secrets.REACT_APP_LOGIN_REDIRECT_URL }}
+            REACT_APP_LOGOUT_REDIRECT_URL=${{ secrets.REACT_APP_LOGOUT_REDIRECT_URL }}
 

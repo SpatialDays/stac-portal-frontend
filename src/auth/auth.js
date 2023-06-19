@@ -1,12 +1,6 @@
 // Modules
 import axios from "axios";
 
-// Url paths
-import { backendUrl } from '../utils/paths.jsx'
-
-// FOR TESTING
-import { useState } from "react";
-
 
 // adds user's profile picture to their data object
 const addProfilePicture = async (userData) => {
@@ -44,8 +38,6 @@ const getDevData = async () => {
   let data = [{"access_token":"000","id_token": "dev_mode", "user_claims":[{"typ":"name","val":"Dev User"},{"typ":"roles","val":".Developer"}],"user_id":"Dev User"}];
   // adds profile picture if one is set for dev user
   data = await addProfilePicture(data[0]);
-  // add the user's API key to their object
-  // data = await addAPIKey(data);
   return data;
 };
 
@@ -73,8 +65,6 @@ const getAADData = async () => {
       const newTokenResponse = await instance.get("/.auth/me");
       // adds the profile picture to the user data object
       let data = await addProfilePicture(newTokenResponse.data[0]);
-      // add the user's API key to their object
-      // data = await addAPIKey(data);
       // returns the whole user data object
       return data;  
     }
@@ -87,7 +77,8 @@ const getAADData = async () => {
     console.log("Error fetching AAD token:", e);
   }
 
-  window.location.href = "/.auth/login/aad";
+  window.location.href = '/.auth/login/aad';
+  // window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGIN_REDIRECT_URL)}`;
 
   return null;
 };
@@ -126,7 +117,9 @@ const getAADToken = async () => {
     console.log("Error fetching AAD token:", e);
   }
 
-  window.location.href = "/.auth/login/aad";
+  window.location.href = '/.auth/login/aad';
+  // window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGIN_REDIRECT_URL)}`;
+
   return null;
 };
 

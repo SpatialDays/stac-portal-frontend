@@ -1,55 +1,55 @@
 @import 'index.scss';
 
 .my-details-container{
-  max-width: 45vw !important;
-  margin: 0 auto !important;
+  max-width: 50vw !important;
+  // margin: 0 auto !important;
+  
 
   & .my-details-card {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
     margin: 2rem;
-    height: 60vh;
+    margin-left: 0;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
+    flex-direction: column;
 
     & .my-details-grid{
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      margin: 1rem;
 
       & .avatar {
-        width: 30vh !important;
-        height: 30vh !important;
-        font-size: 15vh !important;
+        width: 15rem !important;
+        height: 15rem !important;
+        font-size: 8rem !important;
         background-color: var(--osweb-color-primary) !important;
-        margin-bottom: 10px;
       }
 
-      & .copy-button-list-item {
-        display: none;
+      & .api-key-function-buttons-list-item {
+        display: none !important;
+      }
+      & .hide-api-key-function-button{
+        display: none !important;
       }
       
       & .my-details-list {
-        height: 30vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
 
         & .my-details-item {
           margin-left: 8px !important;
           font-size: 20px;
         }
+        & .full-api-key{
+          padding: 0.5em;
+          word-break:break-all;
+        }
+        & .hide-api-key{
+          display: none;
+        }
 
-        & .inline-copy-api-key-button {
+        & .inline-api-key-button {
           &:hover {
             background-color: #fff !important;
           }
           
-          & .copy-api-key-icon {
+          & .api-key-icon {
             color: var(--osweb-color-primary);
           
             &:hover {
@@ -57,9 +57,23 @@
             }
           }
         }
+        & .hide-inline-button{
+          visibility: hidden;
+          display: none;
+        }
+
         & .refresh-api-key-button{
           padding: 15px;
           margin-bottom: 10px;
+        }
+        & .disabled-refresh-button{
+          background-color: grey !important;
+          color: white !important;
+          cursor: not-allowed !important;
+
+          .btn-icon{
+            display: none !important;
+          }
         }
       }
     }
@@ -74,32 +88,37 @@
     max-width: 100vw !important;
 
     & .my-details-card {
-      // height: auto !important;
-      min-height: 65vh !important;
+      display: flex;
+      margin: auto;
+      margin-top: 2em;
 
       & .my-details-grid{
         & .avatar {
           width: 12rem !important;
           height: 12rem !important;
           font-size: 5rem !important;
+          margin-top: 1rem;
         }
-        & .copy-button-list-item{
+        & .api-key-function-buttons-list-item{
           display: flex !important;
-          padding-bottom: 0;
 
-          & .copy-api-key-button {
+          & .api-key-function-buttons {
             padding: 15px;
           }
         }
+        & .hide-api-key-function-button{
+          display: none !important;
+        }
         & .my-details-list {
+
           & .my-details-item {
             font-size: 18px;
           }
           & h4 {
             font-size: 20px;
           }
-          & .inline-copy-api-key-button {
-            display: none;
+          & .inline-api-key-button {
+            display: none !important;
           }
         }
       }

@@ -28,6 +28,13 @@ export const IconButtonWithDropdown = () => {
     setAnchorEl(null);
   };
 
+  const handleLogoutRedirect = async () => {
+
+    window.location.href = `/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(process.env.REACT_APP_LOGOUT_REDIRECT_URL)}`
+    console.log('logging out')
+
+  };
+
   const userDetails = useContext(UserDataContext)[0];
 
   useEffect(() => {
@@ -61,7 +68,8 @@ export const IconButtonWithDropdown = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={() => (window.location.href = "/my-details")}>My Details</MenuItem>
-        <MenuItem onClick={() => (window.location.href = "/.auth/logout")}>
+
+        <MenuItem onClick={handleLogoutRedirect}>
           Logout
         </MenuItem>
       </Menu>
