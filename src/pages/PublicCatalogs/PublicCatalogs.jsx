@@ -125,14 +125,25 @@ const PublicCatalogs = () => {
     },
     {
       accessorFn: (row) => {
-        return row.temporal_extent_start.split(".")[0];
+        try {
+          return row.temporal_extent_start.split("T")[0];
+          
+        }
+        catch (err) {
+          return "N/A"
+        }
       },
       header: "Temporal Extent Start",
       size: 100,
     },
     {
       accessorFn: (row) => {
-        return row.temporal_extent_end.split(".")[0];
+        try {
+          return row.temporal_extent_end.split("T")[0];
+        }
+        catch (err) {
+          return "N/A"
+        }
       },
       header: "Temporal Extent End",
       size: 100,
