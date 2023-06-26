@@ -34,9 +34,18 @@ const DownloadedCollections = ({ collections, setCollections }) => {
     },
     {
       accessorFn: (row) => {
-        let isPublic = row["stac-portal-metadata"]["type-of-collection"];
-        // return isPublic ? "Public collection" : "Private collection";
-        return isPublic; // TODO IM: dont just return the string, wrap it nicely
+        let typeOfCollection = row["stac-portal-metadata"]["type-of-collection"];
+        const commonNames = {
+          "public": "Public Collection",
+          "private": "Private Collection",
+          "bulk-upload-system": "Bulk Upload System Collection"
+        }
+        if (commonNames[typeOfCollection]) {
+          return commonNames[typeOfCollection];
+        }
+        else {
+          return typeOfCollection;
+        }
       },
       header: "Type",
       size: 100,

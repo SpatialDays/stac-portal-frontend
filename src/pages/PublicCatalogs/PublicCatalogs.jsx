@@ -24,6 +24,7 @@ import Table from "components/Table";
 import {
   retrieveAllPublicCatalogs,
   syncAllPublicCatalogs,
+  deletePublicCatalog,
 } from "interface/catalogs";
 import { retrieveAllPublicCollections } from "interface/collections";
 
@@ -72,6 +73,45 @@ const PublicCatalogs = () => {
       header: "Added On",
       size: 100,
     },
+    {
+      header: "Delete",
+      size: 40,
+      accessorFn: (row) => {
+        return (
+          <MDButton
+            buttonType="delete"
+            noIcon
+            onClick={async () => {
+              if(window.confirm("Are you sure you want to delete this catalog?")) {
+                const rowIdAsString = String(row.id);
+                await deletePublicCatalog(rowIdAsString);
+                // window.location.reload();
+                // remove this entry from the table
+                let newCatalogs = catalogs.filter((catalog) => {
+                  return catalog.id !== row.id;
+                });
+                setCatalogs(newCatalogs);
+                // console.log("Deleted catalog", row);
+                // let pubilcColectionsNew = publicCollections;
+                // if (pubilcColectionsNew.length === 0) {
+                //   pubilcColectionsNew = await retrieveAllPublicCollections();
+                // }
+                // console.log("Collections before delete", pubilcColectionsNew);
+                // let newCollections = publicCollections.filter((pubilcColectionsNew) => {
+                //   return collection.catalog.id !== row.id;
+                // });
+                // console.log("Collections after delete", newCollections);
+                // setpublicCollections(newCollections);
+
+              }
+            }}
+          >
+            Delete
+          </MDButton>
+        )
+      }
+    }
+
   ]);
 
   const genericTableMemo = [
@@ -127,10 +167,8 @@ const PublicCatalogs = () => {
       accessorFn: (row) => {
         try {
           return row.temporal_extent_start.split("T")[0];
-          
-        }
-        catch (err) {
-          return "N/A"
+        } catch (err) {
+          return "N/A";
         }
       },
       header: "Temporal Extent Start",
@@ -140,9 +178,8 @@ const PublicCatalogs = () => {
       accessorFn: (row) => {
         try {
           return row.temporal_extent_end.split("T")[0];
-        }
-        catch (err) {
-          return "N/A"
+        } catch (err) {
+          return "N/A";
         }
       },
       header: "Temporal Extent End",
@@ -162,9 +199,7 @@ const PublicCatalogs = () => {
       <MDBox>
         <Grid container spacing={6}>
           <Grid item xs={12}>
-            <Card
-              className="card narrow-card"
-            >
+            <Card className="card narrow-card">
               <MDTypography variant="h4">
                 Synchronise with STAC Index
               </MDTypography>
@@ -192,9 +227,7 @@ const PublicCatalogs = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Card
-              className="card narrow-card"
-            >
+            <Card className="card narrow-card">
               <MDTypography variant="h4">Add Public Catalog</MDTypography>
               <MDTypography variant="overline">
                 Add the details of a STAC-compliant public Catalog that you have

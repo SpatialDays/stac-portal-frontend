@@ -41,6 +41,14 @@ export const addPublicCatalog = async (
   return data;
 };
 
+export const deletePublicCatalog = async (publicCatalogId) => {
+  const url = new URL(path.join(publicCatalogsPath, publicCatalogId, '/'), backendUrl).toString();
+  console.log("Deleting public catalog with url: ", url);
+  const response = await axios({ method: "DELETE", url: url });
+  const data = await response.data;
+  return data;
+};
+
 export const deleteAllPublicCatalogs = async () => {
   const url = new URL(path.join(publicCatalogsPath, '/'), backendUrl).toString();
   const response = await axios({ method: "DELETE", url: url });
