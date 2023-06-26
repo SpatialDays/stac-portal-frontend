@@ -40,18 +40,26 @@ export const retrieveAllPrivateCollections = async () => {
   return data;
 };
 
-export const deletePublicCollection = async (
-  publicCatalogId,
-  publicCollectionId
-) => {
-  const url = new URL(path.join(publicCatalogsPath, publicCatalogId, collectionsPath, publicCollectionId, '/'), backendUrl).toString();
-  const response = await axios({ method: "DELETE", url: url });
-  const data = await response.data;
-  return data;
-};
+// export const deletePublicCollection = async (
+//   publicCatalogId,
+//   publicCollectionId
+// ) => {
+//   const url = new URL(path.join(publicCatalogsPath, publicCatalogId, collectionsPath, publicCollectionId, '/'), backendUrl).toString();
+//   const response = await axios({ method: "DELETE", url: url });
+//   const data = await response.data;
+//   return data;
+// };
 
-export const deletePrivateCollection = async (privateCollectionId) => {
-  const url = new URL(path.join(privateCatalogPath, collectionsPath, privateCollectionId, '/'), backendUrl).toString();
+// export const deletePrivateCollection = async (privateCollectionId) => {
+//   const url = new URL(path.join(privateCatalogPath, collectionsPath, privateCollectionId, '/'), backendUrl).toString();
+//   const response = await axios({ method: "DELETE", url: url });
+//   const data = await response.data;
+//   return data;
+// };
+
+
+export const deleteCollection = async (collectionId) => {
+  const url = new URL(path.join(`/stac/collections/${collectionId}/`), backendUrl).toString();
   const response = await axios({ method: "DELETE", url: url });
   const data = await response.data;
   return data;
@@ -78,7 +86,7 @@ export const callSelectiveIngester = async (
     endDateString = endDateString + "T00:00:00Z";
     // TODO: upgrade date picker to datetime picker and use it here
   }
-  const url = new URL(path.join(publicCatalogsPath, parentCatalogId, itemsPath, getPath, '/'), backendUrl).toString();
+  const url = new URL(path.join(`/public_catalogs/${parentCatalogId}/load/`), backendUrl).toString();
   const req_body = {
     update: true,
     bbox: aoi,

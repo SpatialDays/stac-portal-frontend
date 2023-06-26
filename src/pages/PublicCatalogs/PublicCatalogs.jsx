@@ -7,6 +7,7 @@ import AddPublicCatalog from "./components/AddPublicCatalog/AddPublicCatalog";
 import MDButton from "components/MDButton";
 import CustomWidthTooltip from "components/Tooltip/CustomWidthTooltip";
 import MDTypography from "components/MDTypography";
+import { Delete } from "@mui/icons-material";
 
 // @mui components
 import Grid from "@mui/material/Grid";
@@ -24,6 +25,7 @@ import Table from "components/Table";
 import {
   retrieveAllPublicCatalogs,
   syncAllPublicCatalogs,
+  deletePublicCatalog,
 } from "interface/catalogs";
 import { retrieveAllPublicCollections } from "interface/collections";
 
@@ -72,6 +74,33 @@ const PublicCatalogs = () => {
       header: "Added On",
       size: 100,
     },
+    {
+      header: "Delete",
+      size: 40,
+      accessorFn: (row) => {
+        return (
+          <MDButton
+            buttonType="delete"
+            noIcon
+            onClick={async () => {
+              if(window.confirm("Are you sure you want to delete this catalog?")) {
+                const rowIdAsString = String(row.id);
+                await deletePublicCatalog(rowIdAsString);
+                let newCatalogs = catalogs.filter((catalog) => {
+                  return catalog.id !== row.id;
+                });
+                setCatalogs(newCatalogs);
+
+
+              }
+            }}
+          >
+            Delete
+          </MDButton>
+        )
+      }
+    }
+
   ]);
 
   const genericTableMemo = [
@@ -125,14 +154,22 @@ const PublicCatalogs = () => {
     },
     {
       accessorFn: (row) => {
-        return row.temporal_extent_start.split(".")[0];
+        try {
+          return row.temporal_extent_start.split("T")[0];
+        } catch (err) {
+          return "N/A";
+        }
       },
       header: "Temporal Extent Start",
       size: 100,
     },
     {
       accessorFn: (row) => {
-        return row.temporal_extent_end.split(".")[0];
+        try {
+          return row.temporal_extent_end.split("T")[0];
+        } catch (err) {
+          return "N/A";
+        }
       },
       header: "Temporal Extent End",
       size: 100,
@@ -151,9 +188,7 @@ const PublicCatalogs = () => {
       <MDBox>
         <Grid container spacing={6}>
           <Grid item xs={12}>
-            <Card
-              className="card narrow-card"
-            >
+            <Card className="card narrow-card">
               <MDTypography variant="h4">
                 Synchronise with STAC Index
               </MDTypography>
@@ -181,9 +216,7 @@ const PublicCatalogs = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Card
-              className="card narrow-card"
-            >
+            <Card className="card narrow-card">
               <MDTypography variant="h4">Add Public Catalog</MDTypography>
               <MDTypography variant="overline">
                 Add the details of a STAC-compliant public Catalog that you have

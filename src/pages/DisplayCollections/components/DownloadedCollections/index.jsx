@@ -11,8 +11,7 @@ import { shortenDescription } from "../TableUtils";
 
 // Interface
 import {
-  deletePrivateCollection,
-  deletePublicCollection,
+  deleteCollection,
   retrieveAllCollections,
 } from "interface/collections";
 
@@ -35,8 +34,18 @@ const DownloadedCollections = ({ collections, setCollections }) => {
     },
     {
       accessorFn: (row) => {
-        let isPublic = row.management_metadata.is_public;
-        return isPublic ? "Public collection" : "Private collection";
+        const typeOfCollection = row["stac-portal-metadata"]["type-of-collection"];
+        const commonNames = {
+          "public": "Public Collection",
+          "private": "Private Collection",
+          "bulk-upload-system": "Bulk Upload System Collection"
+        }
+        if (commonNames[typeOfCollection]) {
+          return commonNames[typeOfCollection];
+        }
+        else {
+          return typeOfCollection;
+        }
       },
       header: "Type",
       size: 100,
@@ -85,14 +94,7 @@ const DownloadedCollections = ({ collections, setCollections }) => {
                 `Are you sure you want to delete ${row.id} collection?`
               );
               if (confirmation) {
-                if (row.management_metadata.is_public === false) {
-                  await deletePrivateCollection(row.id);
-                } else {
-                  await deletePublicCollection(
-                    row.management_metadata.parent_catalog_id,
-                    row.id
-                  );
-                }
+                await deleteCollection(row.id);
                 let collectionsOnStac = await retrieveAllCollections();
                 setCollections(collectionsOnStac.collections);
               }
