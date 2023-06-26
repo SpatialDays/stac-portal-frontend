@@ -34,7 +34,7 @@ const DownloadedCollections = ({ collections, setCollections }) => {
     },
     {
       accessorFn: (row) => {
-        let typeOfCollection = row["stac-portal-metadata"]["type-of-collection"];
+        const typeOfCollection = row["stac-portal-metadata"]["type-of-collection"];
         const commonNames = {
           "public": "Public Collection",
           "private": "Private Collection",

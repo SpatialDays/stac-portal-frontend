@@ -7,6 +7,7 @@ import AddPublicCatalog from "./components/AddPublicCatalog/AddPublicCatalog";
 import MDButton from "components/MDButton";
 import CustomWidthTooltip from "components/Tooltip/CustomWidthTooltip";
 import MDTypography from "components/MDTypography";
+import { Delete } from "@mui/icons-material";
 
 // @mui components
 import Grid from "@mui/material/Grid";
@@ -85,23 +86,11 @@ const PublicCatalogs = () => {
               if(window.confirm("Are you sure you want to delete this catalog?")) {
                 const rowIdAsString = String(row.id);
                 await deletePublicCatalog(rowIdAsString);
-                // window.location.reload();
-                // remove this entry from the table
                 let newCatalogs = catalogs.filter((catalog) => {
                   return catalog.id !== row.id;
                 });
                 setCatalogs(newCatalogs);
-                // console.log("Deleted catalog", row);
-                // let pubilcColectionsNew = publicCollections;
-                // if (pubilcColectionsNew.length === 0) {
-                //   pubilcColectionsNew = await retrieveAllPublicCollections();
-                // }
-                // console.log("Collections before delete", pubilcColectionsNew);
-                // let newCollections = publicCollections.filter((pubilcColectionsNew) => {
-                //   return collection.catalog.id !== row.id;
-                // });
-                // console.log("Collections after delete", newCollections);
-                // setpublicCollections(newCollections);
+
 
               }
             }}
