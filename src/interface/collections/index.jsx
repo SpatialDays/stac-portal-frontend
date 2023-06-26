@@ -86,7 +86,7 @@ export const callSelectiveIngester = async (
     endDateString = endDateString + "T00:00:00Z";
     // TODO: upgrade date picker to datetime picker and use it here
   }
-  const url = new URL(path.join(publicCatalogsPath, parentCatalogId, itemsPath, getPath, '/'), backendUrl).toString();
+  const url = new URL(path.join(`/public_catalogs/${parentCatalogId}/load/`), backendUrl).toString();
   const req_body = {
     update: true,
     bbox: aoi,

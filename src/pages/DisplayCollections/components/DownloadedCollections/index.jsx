@@ -85,14 +85,6 @@ const DownloadedCollections = ({ collections, setCollections }) => {
                 `Are you sure you want to delete ${row.id} collection?`
               );
               if (confirmation) {
-                // if (row.management_metadata.is_public === false) {
-                //   await deletePrivateCollection(row.id);
-                // } else {
-                //   await deletePublicCollection(
-                //     row.management_metadata.parent_catalog_id,
-                //     row.id
-                //   );
-                // }
                 await deleteCollection(row.id);
                 let collectionsOnStac = await retrieveAllCollections();
                 setCollections(collectionsOnStac.collections);
