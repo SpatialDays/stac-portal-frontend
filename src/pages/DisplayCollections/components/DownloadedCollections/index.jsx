@@ -14,6 +14,7 @@ import {
   deleteCollection,
   retrieveAllCollections,
 } from "interface/collections";
+import { ca } from "date-fns/locale";
 
 const DownloadedCollections = ({ collections, setCollections }) => {
   // Table Columns
@@ -34,6 +35,7 @@ const DownloadedCollections = ({ collections, setCollections }) => {
     },
     {
       accessorFn: (row) => {
+       try {
         const typeOfCollection = row["stac-portal-metadata"]["type-of-collection"];
         const commonNames = {
           "public": "Public Collection",
@@ -46,6 +48,10 @@ const DownloadedCollections = ({ collections, setCollections }) => {
         else {
           return typeOfCollection;
         }
+       }
+       catch (err) {
+        return "Unknown";
+       }
       },
       header: "Type",
       size: 100,
