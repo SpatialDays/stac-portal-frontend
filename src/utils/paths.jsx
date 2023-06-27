@@ -1,7 +1,7 @@
 
 const backendUrl = process.env.REACT_APP_PORTAL_BACKEND_URL
 const stacApiBrowserUrl = process.env.REACT_APP_PORTAL_STAC_API_BROWSER_URL
-const stacPath = "/stac/"
+const stacPath = "/stac/collections/"
 const publicCatalogsPath = "/public_catalogs/"
 const privateCatalogPath = "/private_catalog/"
 const collectionsPath = "/collections/"

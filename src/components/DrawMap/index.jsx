@@ -28,7 +28,7 @@ import "./map.scss";
 import { backendUrl, publicCatalogsPath, collectionsPath, searchPath } from '../../utils/paths.jsx'
 
 const searchCollections = async (bbox, datetime) => {
-  const url = new URL(path.join(publicCatalogsPath, collectionsPath, searchPath, '/'), backendUrl).toString();
+  const url = new URL(path.join("/public_catalogs/collections/search/"), backendUrl).toString();
   const collections = await axios({
     method: "POST",
     url: url,
@@ -178,25 +178,7 @@ const DrawMap = ({
                   bbox,
                   datetime
                 );
-
-                // flatten these into collections
-                if (searchedCollections && searchedCollections.length) {
-                  let allCollections = [];
-                  // Loop through these and
-                  searchedCollections.forEach((collection) => {
-                    if (
-                      collection.collections &&
-                      collection.collections.length
-                    ) {
-                      collection.collections.forEach((subCollection) => {
-                        subCollection.catalog = collection.catalog;
-                        allCollections.push(subCollection);
-                      });
-                    }
-                  });
-
-                  setPublicCollections(allCollections);
-                }
+                setPublicCollections(searchedCollections);
               }}
               noIcon
             >
