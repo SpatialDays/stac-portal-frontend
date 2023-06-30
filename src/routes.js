@@ -61,14 +61,14 @@ const routes = [
     component: <AddPrivateCollection />,
   },
 
-  {
-    type: "collapse",
-    name: "Load Local Data",
-    key: "load-local-data",
-    icon: <Storage />,
-    route: "/load-local-data",
-    component: <LoadLocal />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Load Local Data",
+  //   key: "load-local-data",
+  //   icon: <Storage />,
+  //   route: "/load-local-data",
+  //   component: <LoadLocal />,
+  // },
 
   {
     type: "title",
