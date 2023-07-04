@@ -1,5 +1,5 @@
 // React
-import { useEffect } from "react";
+import { useEffect, useState, createContext } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 // Layout components
@@ -13,8 +13,34 @@ import STAClogo from "assets/images/logo.png";
 
 // Styles
 import "./assets/styles/base.scss";
+import { getDevData, getAADData } from "auth/auth";
+
+export const UserDataContext = createContext();
 
 export default function App() {
+
+  const [userData, setUserData] = useState(null);
+
+  // getting the user data and setting it to the state
+  useEffect(() => {
+    // returns the user data object with the profile picture included
+    const getUserData = async () => {
+
+      // if in development, return the dev data object
+      if (process.env.NODE_ENV !== 'production'){
+        const userData = await getDevData();
+        setUserData(userData); 
+      } else {
+        // if in production, return the user data object (calls the getAADData function which sets the axois headers only for prod)
+        let userData = await getAADData();
+
+        setUserData(userData);
+      }
+    };
+  
+      getUserData();
+  }, []);
+  
   const { pathname } = useLocation();
 
   // Setting page scroll to 0 when changing the route
@@ -44,7 +70,8 @@ export default function App() {
     });
 
   return (
-    <>
+    // passing just the userData in the context
+    <UserDataContext.Provider value={[userData, setUserData]}>
       <Sidenav brand={STAClogo} brandName="STAC Portal" routes={routes} />
       <div
         style={{
@@ -52,15 +79,8 @@ export default function App() {
           flexDirection: "column",
         }}
       >
-        {/* The sidenav takes 300px, so use rest of the screen */}
         <div
-          style={{
-            flex: "1 1 auto",
-            marginLeft: "300px",
-            padding: "1rem",
-            width: "calc(100% - 330px)",
-            height: "100%",
-          }}
+          id="content-display"
         >
           <Routes>
             {getRoutes(routes)}
@@ -68,6 +88,6 @@ export default function App() {
           </Routes>
         </div>
       </div>
-    </>
+    </UserDataContext.Provider >
   );
 }

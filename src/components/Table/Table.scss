@@ -1,3 +1,5 @@
+@import 'index.scss';
+
 .MuiTableContainer-root {
   margin-top: 1.2em;
 }
@@ -52,4 +54,14 @@ tbody {
   background-color: #D40058;
   border-radius: 10px;
   padding: 0 0.5em;
+}
+
+// centralising the toolbar on mobile screens
+@media(max-width: $breakpoint-mobile){
+  .table-toolbar{
+    padding-left: 0 !important;
+  }
+  .css-sq9qdz{
+    justify-content: center !important;
+  }
 }

@@ -1,9 +1,11 @@
+@import 'index.scss';
 @import "leaflet/dist/leaflet.css";
 @import "leaflet-draw/dist/leaflet.draw.css";
 
 .leaflet-container {
   height: 100%;
   width: 100%;
+  position:relative;
 }
 
 .date-picker {
@@ -11,6 +13,14 @@
 
   & svg {
     color: #666666;
+  }
+}
+
+@media(max-width: $breakpoint-mobile){
+  .leaflet-container {
+    position:absolute;
+    max-height: 50vh !important;
+    overflow:hidden;
   }
 }
 

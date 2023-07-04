@@ -1,0 +1,29 @@
+@import 'index.scss';
+
+.card {
+  padding: 24px !important;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.narrow-card {
+  width: 40vw !important;
+}
+
+
+
+@media(max-width: $breakpoint-mobile){
+
+  .form-container-wrapper {
+    width: 70vw !important;
+    & .form-container{
+      align-items: center !important;
+    }
+  }
+  .narrow-card {
+    align-items: center !important;
+    width: 80vw !important;
+    margin: auto !important;
+  }
+}

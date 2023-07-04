@@ -1,15 +1,16 @@
 // @mui components
 import { Home, ChevronRight } from "@mui/icons-material";
 
-// Icons
-import LogoutIcon from "@mui/icons-material/Logout";
-import CustomWidthTooltip from "components/Tooltip/CustomWidthTooltip";
+// Dropdown menu button
+import { IconButtonWithDropdown } from "./UserIconButton";
 
 // Styles
 import "./style.scss";
 
+
 const Breadcrumbs = ({ page }) => {
   return (
+    <>
     <div className="breadcrumbs">
       <div className="breadcrumbs__container">
         <div
@@ -25,19 +26,12 @@ const Breadcrumbs = ({ page }) => {
           <span className="breadcrumbs__container__item__text">{page}</span>
         </div>
       </div>
-      <div className="breadcrumbs__container">
-        <CustomWidthTooltip title="Logout" placement="bottom" arrow>
-          <LogoutIcon
-            style={{
-              marginRight: "5px",
-              color: "#e18080",
-              cursor: "pointer",
-            }}
-            onClick={() => (window.location.href = "/.auth/logout")}
-          />
-        </CustomWidthTooltip>
-      </div>
+      <IconButtonWithDropdown />
     </div>
+    <div>
+      <hr id="mobile-nav-hr"></hr>
+    </div>
+    </>
   );
 };
 

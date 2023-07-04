@@ -18,6 +18,7 @@ const Table = ({
 }) => {
   return (
     <MaterialReactTable
+      className="toolbar-table"
       columns={columns}
       data={data}
       initialState={{

@@ -1,5 +1,5 @@
 // @mui components
-import { Add, Delete, Edit } from "@mui/icons-material";
+import { Add, Delete, Edit, Refresh, ContentCopy, Visibility, VisibilityOff } from "@mui/icons-material";
 
 const MDButton = ({
   children,
@@ -25,6 +25,10 @@ const MDButton = ({
           {buttonType === "create" && <Add />}
           {buttonType === "delete" && <Delete />}
           {buttonType === "update" && <Edit />}
+          {buttonType === "refresh" && <Refresh />}
+          {buttonType === "copy" && <ContentCopy />}
+          {buttonType === "visibility" && <Visibility />}
+          {buttonType === "visibility-off" && <VisibilityOff />}
         </span>
       )}
       {children}

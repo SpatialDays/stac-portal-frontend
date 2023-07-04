@@ -1,10 +1,11 @@
+@import 'index.scss';
+
 .breadcrumbs {
-  margin-bottom: 4em;
   display:flex;
   justify-content: space-between;
 
   & svg {
-    color:  #453C90!important;
+    color:  var(--osweb-color-primary) !important;
   }
 
   &__container {
@@ -37,6 +38,42 @@
         margin-right: 0.5em;
         margin-left: 0.5em;
       }
+    }
+
+    & .breadcrumbs-button {
+      height: 2.5rem;
+      width: 2.5rem;
+
+      & .breadcrumbs-avatar{
+        background-color: var(--osweb-color-primary) !important;
+        & svg {
+          color:  #fff !important;
+        }
+      }
+    }
+  } 
+}
+
+#mobile-nav-hr {
+  display: none;  // toggle remove for mobile view
+  width: 100%;
+  margin: 1em 0 !important;
+  border: none;
+  opacity: 1;
+  background-color: var(--osweb-color-primary);
+  background-image: none !important;
+}
+
+@media (max-width: $breakpoint-mobile) {
+  #mobile-nav-hr {
+    display: block;
+  }
+
+  .breadcrumbs{
+    justify-content: space-between !important;
+    margin-left: 5rem !important;  // leaves room for the burger menu icon
+    &__container {
+      margin-bottom: 0;
     }
   }
 }

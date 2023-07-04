@@ -1,17 +1,12 @@
 # STAC Portal Frontend
-Front end react app for https://github.com/SatelliteApplicationsCatapult/stac-portal-backend
 
-# Deployment
+Front end react app for [https://github.com/SpatialDays/stac-portal-backend](https://github.com/SpatialDays/stac-portal-backend)
 
-## Build Jobs
-Two build jobs set up, for building both prod and dev docker image
-from Dockerfile_dev and Dockerfile_prod.
+## Deployment
 
-```bash
-docker build -f ./Dockerfile_dev -t pdm-test:dev .
-```
+### Build Jobs
 
-## Environment variables
+Two build jobs are set up for building both prod and staging docker images.
 
 | Var name| Used for |
 | --- | --- |
@@ -20,8 +15,7 @@ docker build -f ./Dockerfile_dev -t pdm-test:dev .
 |REACT_APP_BLOB_URL| Setting the url of the Azure Blob Storage URL |
 |REACT_APP_PORTAL_GEOPROJECTOR_URL| Setting the url of the Geo Projector microservice
 # Authorization
-The frontend is meant to be runned on Azure App Service protected by easy auth which provides /.auth/me and /.auth/refresh endpoints for
-obtaining and refreshing the access tokens. These tokens are obtained 
-and attached to the header of every axios request using the auth module.
+The frontend is meant to be run on Azure App Service protected by easy auth, which provides `/.auth/me` and `/.auth/refresh` endpoints for obtaining and refreshing access tokens. These tokens are obtained and attached to the headers of every Axios request using the auth module.
 
-For ease of use, if /.auth/* endpoints are not present, it is assumed the app is running in the localhost mode and no token/header bussiness is performed.
+For ease of use, if `/.auth/*` endpoints are not present, it is assumed that the app is running in the localhost mode, and no token/header business is performed.
+

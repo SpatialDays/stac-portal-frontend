@@ -43,7 +43,8 @@ const PublicCollections = ({ collections, AOI, startDate, endDate }) => {
     },
     {
       accessorFn: (row) => {
-        return row.catalog.name;
+        //return row.catalog.name;
+        return row.parent_catalog_name;
       },
       header: "Catalog",
       size: 200,
@@ -55,8 +56,8 @@ const PublicCollections = ({ collections, AOI, startDate, endDate }) => {
             buttonType="create"
             noIcon
             onClick={() => {
-              const parentCatalogId = row.catalog.id;
-              const collectionId = row.id;
+              const parentCatalogId = String(row.parent_catalog);
+              const collectionId = String(row.id);
               callSelectiveIngester(
                 parentCatalogId,
                 collectionId,
@@ -64,7 +65,7 @@ const PublicCollections = ({ collections, AOI, startDate, endDate }) => {
                 startDate,
                 endDate
               );
-              alert(`Ingesting ${row.title} from ${row.catalog.name}...`);
+              alert(`Ingesting ${row.title} from ${row.parent_catalog}...`);
             }}
           >
             <CloudDownloadIcon
@@ -80,7 +81,7 @@ const PublicCollections = ({ collections, AOI, startDate, endDate }) => {
       size: 100,
     },
   ]);
-  const columnOrder = ["Title", "ID", "stac_version"];
+  const columnOrder = ["Title", "Description", "Catalog", "Load"];
 
   return (
     <MDBox>

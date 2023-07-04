@@ -1,5 +1,21 @@
+@import 'index.scss';
+
+.dropzone {
+  transition: border 0.3s ease-in-out;
+  &:hover {
+    border: 1px dashed var(--osweb-color-secondary)!important;
+  }
+}
+
+.processing-files-dropzone{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem;
+  height: 250px;
+}
+
 // Media query 1250px
-@media (max-width: 1250px) {
+@media (max-width: $breakpoint-max) {
   #processing {
     width: 100% !important;
   }
@@ -9,9 +25,9 @@
   }
 }
 
-.dropzone {
-  transition: border 0.3s ease-in-out;
-  &:hover {
-    border: 1px dashed var(--osweb-color-secondary)!important;
+@media(max-width: $breakpoint-mobile){
+  .processing-files-dropzone{
+    box-sizing: content-box;
+    width: 80vw;
   }
 }

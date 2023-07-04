@@ -43,6 +43,7 @@ const searchCollections = async (bbox, geoJSONPolygon, datetime) => {
     path.join(publicCatalogsPath, collectionsPath, searchPath, "/"),
     backendUrl
   ).toString();
+
   const collections = await axios({
     method: "POST",
     url: url,
@@ -201,7 +202,6 @@ const DrawMap = ({
                   geoJSONPolygon,
                   datetime
                 );
-
                 if (searchedCollections && searchedCollections.length) {
                   let allCollections = [];
                   searchedCollections.forEach((collection) => {
@@ -231,7 +231,7 @@ const DrawMap = ({
           </Box>
         </div>
         {showMap && (
-          <div style={{ height: "25em", width: "100%" }}>
+          <div id="leaflet-container-wrapper" style={{ height: "25em", width: "100%" }}>
             <MapContainer center={[51.505, -0.09]} zoom={7} whenCreated={map => mapRef.current = map}>
               <FeatureGroup ref={groupRef}>
                 <EditControl
@@ -269,7 +269,8 @@ const DrawMap = ({
           </div>
         )}
 
-        <Box display="flex" justifyContent="flex-end" alignItems="center">
+        {/* move to scss and try mobile center the button and padding 20px */}
+        <Box display="flex" justifyContent="flex-end" alignItems="center"> 
           <MDButton
             buttonType="update"
             style={{ display: showMap ? "block" : "none" }}

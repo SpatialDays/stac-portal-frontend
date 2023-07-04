@@ -9,6 +9,9 @@ import MDButton from "components/MDButton";
 // Interface
 import { addPublicCatalog } from "interface/catalogs";
 
+// Styles
+import "../../style.scss";
+
 const AddPublicCatalog = () => {
   const [catalogName, setCatalogName] = useState("");
   const [catalogURL, setCatalogURL] = useState("");
@@ -34,7 +37,7 @@ const AddPublicCatalog = () => {
     }
   };
   return (
-    <MDBox>
+    <MDBox className="form-container-wrapper">
       <div className="form-container">
         <MDInput
           label="Catalog Name"

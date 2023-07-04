@@ -10,6 +10,7 @@ on:
 jobs:
   docker-build-push-dev:
     runs-on: ubuntu-latest
+    environment: STAGING_ENVIRONMENT
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -35,8 +36,9 @@ jobs:
           cache-to: type=registry,ref=${{ secrets.EO_PROJ_STAGING_DOCKER_REGISTRY_URL }}/stac-portal-frontend:cache,mode=max
           push: true
           tags: ${{ secrets.EO_PROJ_STAGING_DOCKER_REGISTRY_URL }}/stac-portal-frontend:${{ env.SHORT_SHA }}
-          # build-args: |
-          #   REACT_APP_PORTAL_BACKEND_URL=https://os-eo-platform-rg-staging-stac-portal-backend.azurewebsites.net
-          #   REACT_APP_PORTAL_STAC_API_BROWSER_URL="https://os-eo-plaform-stac-api-browser.azurewebsites.net"
-          #   REACT_APP_BLOB_URL=https://oseoinfrastagingstrgacc.blob.core.windows.net/manual-upload-storage-container
+          build-args: |
+            REACT_APP_PORTAL_BACKEND_URL=${{ secrets.REACT_APP_PORTAL_BACKEND_URL }}
+            REACT_APP_PORTAL_STAC_API_BROWSER_URL=${{ secrets.REACT_APP_PORTAL_STAC_API_BROWSER_URL }}
+            REACT_APP_LOGIN_REDIRECT_URL=${{ secrets.REACT_APP_LOGIN_REDIRECT_URL }}
+            REACT_APP_LOGOUT_REDIRECT_URL=${{ secrets.REACT_APP_LOGOUT_REDIRECT_URL }}
 

@@ -121,3 +121,43 @@
     }
   }
 }
+
+.mobile-sidenav {
+  &__menu-button {
+    background-color: #f0f2f5 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 60px !important;
+    min-width: 60px !important;
+    position: absolute;
+    top: 2rem;
+    left: 0;
+  }
+  
+  &__menu-icon {
+    color: var(--osweb-color-primary) !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 auto;
+  }
+  
+  &__container{
+    & .MuiPaper-root {
+      background: linear-gradient(180deg, #453C90 0%, #191636 100%) !important;
+      padding: 1em !important;
+      width: auto !important;
+      height: 100vh !important;
+      border-radius: 0 !important;
+    }
+  
+    &__container-content{
+      border: none;
+      background: linear-gradient(180deg, #453C90 0%, #191636 100%);
+      width: auto;
+      height: auto;
+      border-radius: 10px;
+      padding: 1em;
+      overflow-y: scroll;
+    }
+  }
+}
