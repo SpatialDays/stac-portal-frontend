@@ -18,7 +18,7 @@ const jsonPath = "/json/"
 const filePath = "/file/"
 const sasTokenPath = "/sas_token/"
 const stacGeneratorPath = "/stac_generator/"
-const geoTransformerPath = "/transform"
+const geoTransformerPath = "/transform/"
 
 export {
     backendUrl,

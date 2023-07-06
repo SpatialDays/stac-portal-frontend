@@ -25,7 +25,7 @@ import MDBox from "components/MDBox";
 
 // Utility functions
 import { createGeoJSONPolygon, convertGeoJSONToWKT } from "./utils";
-import { geoTransformerUrl, geoTransformerPath } from "../../utils/paths.jsx";
+import { backendUrl, geoTransformerPath } from "../../utils/paths.jsx";
 
 const ShapefileLoader = ({ setAOI, setPolygonBounds, setGeoJSONPolygon }) => {
   const fileInputShp = useRef();
@@ -41,10 +41,9 @@ const ShapefileLoader = ({ setAOI, setPolygonBounds, setGeoJSONPolygon }) => {
     formData.append("file", file, file.name);
     formData.append("output_epsg", 4326);
 
-    // "http://localhost:5002/transform";
     const url = new URL(
       path.join(geoTransformerPath),
-      geoTransformerUrl
+      backendUrl
     ).toString();
 
     const response = await axios.post(url, formData, {
@@ -54,7 +53,6 @@ const ShapefileLoader = ({ setAOI, setPolygonBounds, setGeoJSONPolygon }) => {
     });
 
     const geometry = JSON.parse(response.data.geometry);
-    console.log("geometry", geometry);
     const polygon = createGeoJSONPolygon(geometry);
     setGeoJSONPolygon(polygon);
 
