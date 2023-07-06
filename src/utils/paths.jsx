@@ -1,7 +1,6 @@
 
 const backendUrl = process.env.REACT_APP_PORTAL_BACKEND_URL
 const stacApiBrowserUrl = process.env.REACT_APP_PORTAL_STAC_API_BROWSER_URL
-const geoTransformerUrl = process.env.REACT_APP_PORTAL_GEOPROJECTOR_URL
 const stacPath = "/stac/"
 const publicCatalogsPath = "/public_catalogs/"
 const privateCatalogPath = "/private_catalog/"
@@ -23,7 +22,6 @@ const geoTransformerPath = "/transform/"
 export {
     backendUrl,
     stacApiBrowserUrl,
-    geoTransformerUrl,
     stacPath,
     publicCatalogsPath,
     privateCatalogPath,

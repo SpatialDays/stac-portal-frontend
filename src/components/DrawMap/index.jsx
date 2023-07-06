@@ -1,5 +1,5 @@
 // React
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef } from "react";
 
 // Modules
 import axios from "axios";
