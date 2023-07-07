@@ -1,5 +1,4 @@
 .toolbox {
-
   width: 25rem;
 
   &-search {
@@ -22,7 +21,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     background-color: #f5f5f5;
     color: #333;
     padding: 4px 20px;
@@ -46,4 +45,30 @@
       justify-content: flex-end;
     }
   }
+
+  &-back-button {
+    cursor: pointer;
+    & svg {
+      color: black;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
 }
