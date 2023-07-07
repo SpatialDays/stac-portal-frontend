@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { ExplorerContext } from "../../ExplorerContext";
 
@@ -7,9 +7,8 @@ import ToolboxItems from "../ToolboxItems/ToolboxItems";
 import "./style.scss";
 
 const ToolboxResults = () => {
-  const { state, setSelectedCollection, setAllCollections } =
+  const { state, setSelectedCollection, setAllCollections, setItemsVisible } =
     useContext(ExplorerContext);
-  const [isItemsVisible, setItemsVisible] = useState(false);
 
   useEffect(() => {
     setAllCollections([
@@ -80,11 +79,11 @@ const ToolboxResults = () => {
   return (
     <SwitchTransition>
       <CSSTransition
-        key={isItemsVisible ? "ToolboxItems" : "ToolboxResults"}
+        key={state.isItemsVisible ? "ToolboxItems" : "ToolboxResults"}
         timeout={500}
         classNames="fade"
       >
-        {isItemsVisible ? (
+        {state.isItemsVisible ? (
           <ToolboxItems />
         ) : (
           <div className="toolbox-results">

@@ -3,6 +3,7 @@ import React, { createContext, useReducer } from 'react';
 const initialState = {
   selectedCollection: null,
   allCollections: [],
+  isItemsVisible: false,
 };
 
 function reducer(state, action) {
@@ -11,6 +12,8 @@ function reducer(state, action) {
       return { ...state, selectedCollection: action.payload };
     case 'SET_ALL_COLLECTIONS':
       return { ...state, allCollections: action.payload };
+    case 'SET_ITEMS_VISIBLE':
+      return { ...state, isItemsVisible: action.payload };
     default:
       throw new Error('Invalid action type');
   }
@@ -29,7 +32,11 @@ const ExplorerProvider = ({ children }) => {
     dispatch({ type: 'SET_ALL_COLLECTIONS', payload: collections });
   };
 
-  const value = { state, setSelectedCollection, setAllCollections };
+  const setItemsVisible = (visibility) => {
+    dispatch({ type: 'SET_ITEMS_VISIBLE', payload: visibility });
+  };
+
+  const value = { state, setSelectedCollection, setAllCollections, setItemsVisible };
 
   return (
     <ExplorerContext.Provider value={value}>
