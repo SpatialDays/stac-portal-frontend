@@ -1,0 +1,16 @@
+#explorer-container-wrapper {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+#toolbox-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 999; // this ensures the search box stays above the map
+}

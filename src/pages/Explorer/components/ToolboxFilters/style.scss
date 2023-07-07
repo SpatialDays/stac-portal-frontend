@@ -1,0 +1,44 @@
+.toolbox-filters {
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px;
+  border: 1px solid #ddd;
+  max-width: 100%;
+
+  h2 {
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ddd;
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background: #0056b3;
+    }
+  }
+}
