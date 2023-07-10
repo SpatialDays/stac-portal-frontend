@@ -1,11 +1,12 @@
-import { useContext } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import "./style.scss";
 
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { ArrowForward, Map, ArrowBack } from "@mui/icons-material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 import { ExplorerContext } from "../../ExplorerContext";
+
+import ToolboxItemsActions from "../ToolboxItemsActions/ToolboxItemsActions";
 
 import { CSSTransition } from "react-transition-group";
 
@@ -104,8 +105,7 @@ const ToolboxItems = () => {
                     <div className="item-info-meta">
                       <p class="item-info-date">{item.datetime}</p>
                       <p class="item-info-actions">
-                        <Map />
-                        <MoreHorizIcon />
+                        <ToolboxItemsActions />
                       </p>
                     </div>
                   </div>
