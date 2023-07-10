@@ -1,22 +1,48 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Map } from "@mui/icons-material";
 
 import ToolboxItemModal from "../ToolboxItemModal/ToolboxItemModal";
 
-const DropdownActions = ({ index }) => {
+import { ExplorerContext } from "pages/Explorer/ExplorerContext";
+
+import stacLayer from "stac-layer";
+
+const ToolboxItemsActions = ({ item }) => {
+  const { state, setSelectedItem } = useContext(ExplorerContext);
   const [isOpen, setIsOpen] = useState(false);
   const [showItemModal, setShowItemModal] = useState(false);
   const node = useRef();
 
   const handleClickOutside = (e) => {
     if (node.current.contains(e.target)) {
-      // inside click
       return;
     }
-    // outside click
     setIsOpen(false);
+  };
+
+  const addSTACLayerToMap = async (item) => {
+    const stac_href = item.stac_href;
+    const map = state.mapRef;
+
+    // Make request to STAC endpoint
+    const data = await fetch(stac_href, {
+      method: "GET",
+    });
+
+    const json = await data.json();
+
+    console.log("Failed here");
+
+    // create layer
+    const layer = await stacLayer(json);
+
+    // add layer to map
+    layer.addTo(map);
+
+    // fit map to layer
+    map.fitBounds(layer.getBounds());
   };
 
   useEffect(() => {
@@ -36,14 +62,19 @@ const DropdownActions = ({ index }) => {
 
   return (
     <div ref={node}>
-      <Map />
+      <Map
+        onClick={() => {
+          addSTACLayerToMap(item);
+        }}
+      />
       <MoreHorizIcon onClick={() => setIsOpen(!isOpen)} />
       {isOpen && (
         <div className="dropdown-actions">
-          <p onClick={() => console.log("View STAC")}>View STAC</p>
+          <p onClick={() => console.log("View STAC", item)}>View STAC</p>
           <p onClick={() => console.log("Show COG")}>Show COG</p>
           <p
             onClick={() => {
+              setSelectedItem(item);
               setShowItemModal(true);
               setIsOpen(false);
             }}
@@ -54,7 +85,7 @@ const DropdownActions = ({ index }) => {
       )}
       {showItemModal && (
         <ToolboxItemModal
-          index={index}
+          item={item}
           showItemModal={showItemModal}
           setShowItemModal={setShowItemModal}
         />
@@ -63,4 +94,4 @@ const DropdownActions = ({ index }) => {
   );
 };
 
-export default DropdownActions;
+export default ToolboxItemsActions;

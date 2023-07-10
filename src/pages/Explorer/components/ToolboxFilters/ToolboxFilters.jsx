@@ -22,7 +22,7 @@ const ToolboxFilters = () => {
         <fieldset>
           <legend>Geographical</legend>
           <div className="form-group">
-            <label htmlFor="shapefile" class="toolbox-filters-upload">
+            <label htmlFor="shapefile" className="toolbox-filters-upload">
               <FileUploadIcon
                 sx={{
                   fontSize: "1rem",
@@ -54,7 +54,7 @@ const ToolboxFilters = () => {
           </div>
         </fieldset>
 
-        <button class="form-submit">Apply filters</button>
+        <button className="form-submit">Apply filters</button>
       </form>
     </div>
   );

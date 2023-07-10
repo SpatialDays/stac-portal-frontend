@@ -18,7 +18,7 @@ const Toolbox = () => {
       {!state.isItemsVisible && (
         <>
           <input type="text" placeholder="Search" className="toolbox-search" />
-          <div class="toolbox-filter-toggle-container">
+          <div className="toolbox-filter-toggle-container">
             <div
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               className={`toolbox-filter-toggle ${isFilterOpen ? "open" : ""}`}

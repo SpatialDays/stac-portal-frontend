@@ -37,6 +37,7 @@
 
       &-date {
         margin-top: 5px;
+        font-size: 0.75rem!important;
       }
 
       &-actions {
@@ -66,6 +67,23 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #eee;
+
+  &-title {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    & small {
+      color: #888;
+      font-size: 0.8em;
+    }
+  }
 }
 
 .toolbox-items-filters {

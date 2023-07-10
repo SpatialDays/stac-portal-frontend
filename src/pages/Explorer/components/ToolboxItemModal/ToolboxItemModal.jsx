@@ -7,7 +7,7 @@ import "./style.scss";
 
 ReactModal.setAppElement("#root"); // replace '#root' with the id of your application root element
 
-const ToolboxItemModal = ({ index, showItemModal, setShowItemModal }) => {
+const ToolboxItemModal = ({ item, showItemModal, setShowItemModal }) => {
   const [activeTab, setActiveTab] = useState("Asset Information");
 
   const tabs = [
@@ -81,7 +81,7 @@ const ToolboxItemModal = ({ index, showItemModal, setShowItemModal }) => {
     <ReactModal
       isOpen={showItemModal}
       onRequestClose={() => setShowItemModal(false)}
-      contentLabel={`Item Details ${index}`}
+      contentLabel={`Item Details ${item}`}
       className="toolbox-item-modal"
       overlayClassName="modal-overlay"
     >
