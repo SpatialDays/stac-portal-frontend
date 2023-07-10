@@ -81,11 +81,26 @@ const ToolboxItems = () => {
             >
               <ArrowBack />
             </div>
+
+            <div />
+          </div>
+
+          <div className="toolbox-items-header-content">
+            <img
+              src={
+                state.selectedCollection.assets.thumbnail
+                  ? state.selectedCollection.assets.thumbnail.href
+                  : state.selectedCollection.assets.preview.href
+              }
+              alt="thumbnail"
+              className="toolbox-items-header-collection-thumbnail"
+            />
             <div className="toolbox-items-header-title">
-              <h3> {state.selectedCollection.name}</h3>
+              <h3>
+                {state.selectedCollection.title || state.selectedCollection.id}
+              </h3>
               <small>{state.selectedCollection.accessibility}</small>
             </div>
-            <div />
           </div>
 
           <div className="toolbox-items-filters">
@@ -99,7 +114,7 @@ const ToolboxItems = () => {
           </div>
 
           <div className="toolbox-sort-container">
-            <div className="toolbox-sort-item">Page 1 of 13</div>
+            <div className="toolbox-sort-item">Items ( 6 )</div>
             <div className="toolbox-sort-item">
               <FilterAltIcon />
             </div>

@@ -18,6 +18,8 @@ function reducer(state, action) {
       return { ...state, allCollections: action.payload };
     case "SET_ITEMS_VISIBLE":
       return { ...state, isItemsVisible: action.payload };
+    case "SET_COLLECTION_PAGE":
+      return { ...state, collectionPage: action.payload };
     default:
       throw new Error("Invalid action type");
   }
@@ -48,6 +50,10 @@ const ExplorerProvider = ({ children }) => {
     dispatch({ type: "SET_ITEMS_VISIBLE", payload: visibility });
   };
 
+  const setCollectionPage = (page) => {
+    dispatch({ type: "SET_COLLECTION_PAGE", payload: page });
+  };
+
   const value = {
     state,
     setMapRef,
@@ -55,6 +61,7 @@ const ExplorerProvider = ({ children }) => {
     setSelectedItem,
     setAllCollections,
     setItemsVisible,
+    setCollectionPage,
   };
 
   return (
