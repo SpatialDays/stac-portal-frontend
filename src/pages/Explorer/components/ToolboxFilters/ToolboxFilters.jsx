@@ -9,13 +9,15 @@ const ToolboxFilters = () => {
       <form>
         <fieldset>
           <legend>Access</legend>
-          <div className="form-group checkbox-container">
-            <input type="checkbox" id="private" checked />
-            <label htmlFor="private">Private</label>
-          </div>
-          <div className="form-group checkbox-container">
-            <input type="checkbox" id="public" checked />
-            <label htmlFor="public">Public</label>
+          <div className="access-container">
+            <div className="form-group checkbox-container">
+              <input type="checkbox" id="private" checked />
+              <label htmlFor="private">Private</label>
+            </div>
+            <div className="form-group checkbox-container">
+              <input type="checkbox" id="public" checked />
+              <label htmlFor="public">Public</label>
+            </div>
           </div>
         </fieldset>
 

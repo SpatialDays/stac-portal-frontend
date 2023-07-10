@@ -55,10 +55,12 @@ const ToolboxItems = () => {
         "https://os-eo-platform-rg-staging-apim.azure-api.net/stac/collections/os_heightstore_dsm1m/items/129121-00000000-0000-0000-0000-000000148925?subscription-key=65146e3ad9f74e3e8df2587a5742a951",
     },
     {
-      name: "MYD11A1.A2023179.h18v03.061.2023181014543",
+      name: "Heightstore 1m",
       thumbnail:
         "https://planetarycomputer.microsoft.com/api/data/v1/item/preview.png?collection=modis-09Q1-061&item=MYD09Q1.A2023169.h18v03.061.2023178045328&assets=sur_refl_b02&assets=sur_refl_b01&assets=sur_refl_b01&color_formula=gamma%20RGB%203.0,%20saturation%201.9,%20sigmoidal%20RGB%200%200.55&max_size=100&request_entity=explorer",
       datetime: "2023-07-07T08:30",
+      stac_href:
+        "https://os-eo-platform-rg-staging-apim.azure-api.net/stac/collections/os_heightstore_dsm1m?subscription-key=65146e3ad9f74e3e8df2587a5742a951",
     },
   ];
 

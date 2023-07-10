@@ -12,6 +12,12 @@
     margin-bottom: 1em;
   }
 
+  .access-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
   form {
     fieldset {
       border: 1px solid #eee;

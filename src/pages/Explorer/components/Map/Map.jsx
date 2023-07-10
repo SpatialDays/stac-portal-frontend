@@ -19,7 +19,6 @@ const Map = () => {
   const { state, setMapRef } = useContext(ExplorerContext);
 
   useEffect(() => {
-    console.log('Map ref', mapRef.current)
     if (mapRef.current) {
       setMapRef(mapRef.current);
     }
@@ -54,6 +53,7 @@ const Map = () => {
         </FeatureGroup>
         <ZoomControl position="bottomright" />
         <TileLayer
+          className="basemap"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />

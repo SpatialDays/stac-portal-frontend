@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Map } from "@mui/icons-material";
+import { Map as MapIcon } from "@mui/icons-material";
 
 import ToolboxItemModal from "../ToolboxItemModal/ToolboxItemModal";
 
@@ -26,14 +26,20 @@ const ToolboxItemsActions = ({ item }) => {
     const stac_href = item.stac_href;
     const map = state.mapRef;
 
+    // remove all layers from map except basemap
+    map.eachLayer((layer) => {
+      console.log('Layer', layer)
+      if (layer.options.className !== "basemap") {
+        map.removeLayer(layer);
+      }
+    });
+
     // Make request to STAC endpoint
     const data = await fetch(stac_href, {
       method: "GET",
     });
 
     const json = await data.json();
-
-    console.log("Failed here");
 
     // create layer
     const layer = await stacLayer(json);
@@ -62,7 +68,7 @@ const ToolboxItemsActions = ({ item }) => {
 
   return (
     <div ref={node}>
-      <Map
+      <MapIcon
         onClick={() => {
           addSTACLayerToMap(item);
         }}
@@ -70,7 +76,7 @@ const ToolboxItemsActions = ({ item }) => {
       <MoreHorizIcon onClick={() => setIsOpen(!isOpen)} />
       {isOpen && (
         <div className="dropdown-actions">
-          <p onClick={() => console.log("View STAC", item)}>View STAC</p>
+          <p onClick={() => window.open(item.stac_href, "_blank")}>View STAC</p>
           <p onClick={() => console.log("Show COG")}>Show COG</p>
           <p
             onClick={() => {
