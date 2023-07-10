@@ -42,7 +42,14 @@ const DropdownActions = ({ index }) => {
         <div className="dropdown-actions">
           <p onClick={() => console.log("View STAC")}>View STAC</p>
           <p onClick={() => console.log("Show COG")}>Show COG</p>
-          <p onClick={() => setShowItemModal(true)}>Additional Properties</p>
+          <p
+            onClick={() => {
+              setShowItemModal(true);
+              setIsOpen(false);
+            }}
+          >
+            Additional Properties
+          </p>
         </div>
       )}
       {showItemModal && (
