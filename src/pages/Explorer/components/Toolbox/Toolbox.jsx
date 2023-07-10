@@ -17,25 +17,14 @@ const Toolbox = () => {
     <>
       {!state.isItemsVisible && (
         <>
-          <input
-            type="text"
-            placeholder="Search"
-            style={{ width: "100%" }}
-            className="toolbox-search"
-          />
+          <input type="text" placeholder="Search" className="toolbox-search" />
           <div class="toolbox-filter-toggle-container">
             <div
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               className={`toolbox-filter-toggle ${isFilterOpen ? "open" : ""}`}
             >
               Advanced Options
-              <TuneIcon
-                sx={{
-                  color: "black",
-                  fontSize: "0.8rem",
-                  marginLeft: "0.5rem",
-                }}
-              />
+              <TuneIcon />
             </div>
           </div>
           {isFilterOpen && <ToolboxFilters />}

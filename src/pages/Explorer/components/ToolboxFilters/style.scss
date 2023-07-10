@@ -1,44 +1,96 @@
 .toolbox-filters {
-  background: white;
-  padding: 15px;
-  border-radius: 5px;
-  margin: 15px;
-  border: 1px solid #ddd;
-  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
 
-  h2 {
-    margin-bottom: 15px;
+  .checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
   }
 
-  .form-group {
-    margin-bottom: 10px;
+  form {
+    fieldset {
+      border: 1px solid #eee;
+      padding-left: 1em;
+      padding-right: 1em;
+      margin-bottom: 1em;
 
-    label {
-      display: block;
-      margin-bottom: 5px;
+      legend {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 0.25em;
+
+        label {
+          display: block;
+          color: #666;
+        }
+
+        input[type="checkbox"] {
+          margin-right: 0.5em;
+        }
+
+        input[type="date"],
+        textarea {
+          width: 100%;
+          padding: 0.5em;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          box-sizing: border-box;
+          font-size: 14px;
+          color: #333;
+        }
+
+        input[type="file"] {
+          display: none;
+        }
+
+        label[for="shapefile"] {
+          font-size: 0.85rem;
+          padding: 0.5em 1em;
+          background-color: #989898;
+          color: white;
+          text-align: center;
+          border-radius: 3px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #017BFE;
+          }
+        }
+      }
     }
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 5px;
+    button {
+      padding: 0.5em 1em;
+      background-color: #007bff;
+      color: white;
+      border: none;
       border-radius: 3px;
-      border: 1px solid #ddd;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+
+    .form-submit {
+      width: 100%;
     }
   }
 
-  button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    background: #007bff;
-    color: white;
-    cursor: pointer;
+  &-upload {
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
 
-    &:hover {
-      background: #0056b3;
+    & svg {
+      margin-right: 0.5rem;
     }
   }
 }

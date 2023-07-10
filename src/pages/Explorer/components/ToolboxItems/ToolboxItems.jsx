@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import "./style.scss";
 
-import { ArrowBack } from "@mui/icons-material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { ArrowForward, Map, ArrowBack } from "@mui/icons-material";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 import { ExplorerContext } from "../../ExplorerContext";
 
@@ -66,9 +68,7 @@ const ToolboxItems = () => {
             >
               <ArrowBack />
             </div>
-
             <h3> {state.selectedCollection}</h3>
-
             <div />
           </div>
 
@@ -82,20 +82,55 @@ const ToolboxItems = () => {
             </div>
           </div>
 
+          <div className="toolbox-sort-container">
+            <div className="toolbox-sort-item">Page 1 of 13</div>
+            <div className="toolbox-sort-item">
+              <FilterAltIcon />
+            </div>
+          </div>
+
           <div id="toolbox-items">
-            {placeholderItems.map((item, index) => (
-              <div key={index} className="toolbox-item">
-                <img
-                  src={item.thumbnail}
-                  alt={item.name}
-                  className="item-thumbnail"
-                />
-                <div className="item-info">
-                  <h3>{item.name}</h3>
-                  <p class="item-info-date">{item.datetime}</p>
+            {placeholderItems.map((item, index) => {
+              item.datetime = new Date(item.datetime).toLocaleString();
+              return (
+                <div key={index} className="toolbox-item">
+                  <img
+                    src={item.thumbnail}
+                    alt={item.name}
+                    className="item-thumbnail"
+                  />
+                  <div className="item-info">
+                    <h3>{item.name}</h3>
+                    <div className="item-info-meta">
+                      <p class="item-info-date">{item.datetime}</p>
+                      <p class="item-info-actions">
+                        <Map />
+                        <MoreHorizIcon />
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              );
+            })}
+          </div>
+
+          <div className="toolbox-pagination-container">
+            <div className="toolbox-pagination">
+              <div className="toolbox-pagination-left">
+                <span>
+                  <ArrowBack />
+                </span>
               </div>
-            ))}
+              <div className="toolbox-pagination-number">
+                <span>1</span>
+                <span> of 13</span>
+              </div>
+              <div className="toolbox-pagination-right">
+                <span>
+                  <ArrowForward />
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </CSSTransition>

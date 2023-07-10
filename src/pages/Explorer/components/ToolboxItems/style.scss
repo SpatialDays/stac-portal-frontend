@@ -38,6 +38,24 @@
       &-date {
         margin-top: 5px;
       }
+
+      &-actions {
+        & svg {
+          color: #aaaaaa;
+          font-size: 1.3em;
+          margin-right: 10px;
+          cursor: pointer;
+
+          &:hover {
+            color: #777777;
+          }
+        }
+      }
+
+      &-meta {
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 }

@@ -3,8 +3,11 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { ExplorerContext } from "../../ExplorerContext";
 
 import ToolboxItems from "../ToolboxItems/ToolboxItems";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 import "./style.scss";
+import { ArrowBack } from "@mui/icons-material";
+import { ArrowForward } from "@mui/icons-material";
 
 const ToolboxResults = () => {
   const { state, setSelectedCollection, setAllCollections, setItemsVisible } =
@@ -87,9 +90,12 @@ const ToolboxResults = () => {
           <ToolboxItems />
         ) : (
           <div className="toolbox-results">
-            {state.selectedCollection && (
-              <p>Selected Collection: {state.selectedCollection}</p>
-            )}
+            <div className="toolbox-sort-container">
+              <div className="toolbox-sort-item">Collections ( 769 )</div>
+              <div className="toolbox-sort-item">
+                <FilterAltIcon />
+              </div>
+            </div>
             {state.allCollections.length &&
               state.allCollections.map((collection) => (
                 <div
@@ -115,6 +121,24 @@ const ToolboxResults = () => {
                   </div>
                 </div>
               ))}
+            <div className="toolbox-pagination-container">
+              <div className="toolbox-pagination">
+                <div className="toolbox-pagination-left">
+                  <span>
+                    <ArrowBack />
+                  </span>
+                </div>
+                <div className="toolbox-pagination-number">
+                  <span>1</span>
+                  <span> of 77</span>
+                </div>
+                <div className="toolbox-pagination-right">
+                  <span>
+                    <ArrowForward />
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </CSSTransition>
