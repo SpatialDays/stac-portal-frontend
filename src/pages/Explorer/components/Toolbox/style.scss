@@ -37,7 +37,6 @@
     }
 
     &-container {
-      width: 100%;
       display: flex;
       justify-content: flex-end;
       margin-top: 0.5rem;
@@ -133,4 +132,12 @@
     opacity: 0;
     transition: opacity 500ms;
   }
+}
+
+.basemap-changer {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000; // Ensure the control is above the map
+  user-select: auto;
 }

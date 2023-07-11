@@ -14,12 +14,20 @@ function reducer(state, action) {
       return { ...state, selectedCollection: action.payload };
     case "SET_SELECTED_ITEM":
       return { ...state, selectedItem: action.payload };
-    case "SET_ALL_COLLECTIONS":
-      return { ...state, allCollections: action.payload };
+    case "SET_ITEMS_FOR_TABLE":
+      return { ...state, itemsForTable: action.payload };
     case "SET_ITEMS_VISIBLE":
       return { ...state, isItemsVisible: action.payload };
+    case "SET_ALL_COLLECTIONS":
+      return { ...state, allCollections: action.payload };
+    case "SET_FILTERED_COLLECTIONS":
+      return { ...state, filteredCollections: action.payload };
     case "SET_COLLECTION_PAGE":
       return { ...state, collectionPage: action.payload };
+    case "SET_ITEMS_PAGE":
+      return { ...state, itemsPage: action.payload };
+    case "SET_COLLECTION_SEARCH_FILTERS":
+      return { ...state, collectionSearchFilters: action.payload };
     default:
       throw new Error("Invalid action type");
   }
@@ -46,12 +54,28 @@ const ExplorerProvider = ({ children }) => {
     dispatch({ type: "SET_ALL_COLLECTIONS", payload: collections });
   };
 
+  const setItemsForTable = (items) => {
+    dispatch({ type: "SET_ITEMS_FOR_TABLE", payload: items });
+  };
+
   const setItemsVisible = (visibility) => {
     dispatch({ type: "SET_ITEMS_VISIBLE", payload: visibility });
   };
 
+  const setFilteredCollections = (collections) => {
+    dispatch({ type: "SET_FILTERED_COLLECTIONS", payload: collections });
+  };
+
   const setCollectionPage = (page) => {
     dispatch({ type: "SET_COLLECTION_PAGE", payload: page });
+  };
+
+  const setItemsPage = (page) => {
+    dispatch({ type: "SET_ITEMS_PAGE", payload: page });
+  };
+
+  const setCollectionSearchFilters = (filters) => {
+    dispatch({ type: "SET_COLLECTION_SEARCH_FILTERS", payload: filters });
   };
 
   const value = {
@@ -60,8 +84,12 @@ const ExplorerProvider = ({ children }) => {
     setSelectedCollection,
     setSelectedItem,
     setAllCollections,
+    setItemsForTable,
     setItemsVisible,
+    setFilteredCollections,
     setCollectionPage,
+    setItemsPage,
+    setCollectionSearchFilters,
   };
 
   return (

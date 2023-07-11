@@ -14,6 +14,7 @@ const ToolboxResults = () => {
     state,
     setSelectedCollection,
     setAllCollections,
+    setFilteredCollections,
     setItemsVisible,
     setCollectionPage,
   } = useContext(ExplorerContext);
@@ -27,6 +28,7 @@ const ToolboxResults = () => {
       const response = await fetch(collectionsURL);
       const data = await response.json();
       setAllCollections(data);
+      setFilteredCollections(data);
     };
 
     getAllPublicCollections();
@@ -78,6 +80,33 @@ const ToolboxResults = () => {
     return collection;
   };
 
+  useEffect(() => {
+    // Query Filtering
+    console.log("Active");
+    const query = state.collectionSearchFilters?.query;
+    if (!query) {
+      setFilteredCollections(state.allCollections);
+      return;
+    }
+    const filteredCollections = state.allCollections.filter((collection) => {
+      if (collection.title.toLowerCase().includes(query.toLowerCase())) {
+        return true;
+      }
+      if (collection.description.toLowerCase().includes(query.toLowerCase())) {
+        return true;
+      }
+      if (collection.keywords.includes(query)) {
+        return true;
+      }
+      if (collection.id.includes(query)) {
+        return true;
+      }
+      return false;
+    });
+
+    setFilteredCollections(filteredCollections);
+  }, [state.collectionSearchFilters]);
+
   return (
     <SwitchTransition>
       <CSSTransition
@@ -91,20 +120,61 @@ const ToolboxResults = () => {
           <div className="toolbox-results">
             <div className="toolbox-sort-container">
               <div className="toolbox-sort-item">
-                Collections ( {state.allCollections.length} )
+                Collections ({state.filteredCollections?.length || 0})
               </div>
-              <div className="toolbox-sort-item">
-                <FilterAltIcon />
+
+              <div className="toolbox-pagination-container">
+                <div className="toolbox-pagination">
+                  <div className="toolbox-pagination-left">
+                    <span
+                      onClick={() => {
+                        if (state.collectionPage > 1) {
+                          setCollectionPage(state.collectionPage - 1);
+                        }
+                      }}
+                    >
+                      <ArrowBack />
+                    </span>
+                  </div>
+                  <div className="toolbox-pagination-number">
+                    <span>{state.collectionPage}</span>
+                    <span>
+                      {" "}
+                      of{" "}
+                      {state.filteredCollections
+                        ? Math.ceil(
+                            state.filteredCollections?.length / pageLimit
+                          )
+                        : 0}
+                    </span>
+                  </div>
+                  <div className="toolbox-pagination-right">
+                    <span
+                      onClick={() => {
+                        if (
+                          state.collectionPage <
+                          Math.ceil(
+                            state.filteredCollections.length / pageLimit
+                          )
+                        ) {
+                          setCollectionPage(state.collectionPage + 1);
+                        }
+                      }}
+                    >
+                      <ArrowForward />
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            {state.allCollections.length &&
-              state.allCollections
+            {/* Move to function */}
+            {state.filteredCollections?.length &&
+              state.filteredCollections
                 .slice(
                   (state.collectionPage - 1) * pageLimit,
                   state.collectionPage * pageLimit
                 )
                 .map((collection) => {
-                  // Move to function
                   collection = collectionParser(collection);
 
                   return (
@@ -132,42 +202,6 @@ const ToolboxResults = () => {
                     </div>
                   );
                 })}
-            <div className="toolbox-pagination-container">
-              <div className="toolbox-pagination">
-                <div className="toolbox-pagination-left">
-                  <span
-                    onClick={() => {
-                      if (state.collectionPage > 1) {
-                        setCollectionPage(state.collectionPage - 1);
-                      }
-                    }}
-                  >
-                    <ArrowBack />
-                  </span>
-                </div>
-                <div className="toolbox-pagination-number">
-                  <span>{state.collectionPage}</span>
-                  <span>
-                    {" "}
-                    of {Math.ceil(state.allCollections.length / pageLimit)}
-                  </span>
-                </div>
-                <div className="toolbox-pagination-right">
-                  <span
-                    onClick={() => {
-                      if (
-                        state.collectionPage <
-                        Math.ceil(state.allCollections.length / pageLimit)
-                      ) {
-                        setCollectionPage(state.collectionPage + 1);
-                      }
-                    }}
-                  >
-                    <ArrowForward />
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
         )}
       </CSSTransition>

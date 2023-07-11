@@ -18,6 +18,16 @@
     justify-content: space-around;
   }
 
+  .draw-tool-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & svg {
+      margin-right: 0.5rem;
+    }
+  }
+
   form {
     fieldset {
       border: 1px solid #eee;

@@ -23,31 +23,29 @@ const ToolboxItemsActions = ({ item }) => {
   };
 
   const addSTACLayerToMap = async (item) => {
-    const stac_href = item.stac_href;
+    console.log("Item", item);
     const map = state.mapRef;
 
     // remove all layers from map except basemap
     map.eachLayer((layer) => {
-      console.log('Layer', layer)
+      console.log("Layer", layer);
       if (layer.options.className !== "basemap") {
         map.removeLayer(layer);
       }
     });
 
-    // Make request to STAC endpoint
-    const data = await fetch(stac_href, {
-      method: "GET",
+    let layer;
+    layer = await stacLayer(item, {
+      displayOverview: false, // This is to force tiff
     });
 
-    const json = await data.json();
+    if (Object.keys(layer._layers).length === 1) {
+      layer = await stacLayer(item, {
+        debugLevel: 3,
+      });
+    }
 
-    // create layer
-    const layer = await stacLayer(json);
-
-    // add layer to map
     layer.addTo(map);
-
-    // fit map to layer
     map.fitBounds(layer.getBounds());
   };
 
@@ -77,7 +75,8 @@ const ToolboxItemsActions = ({ item }) => {
       {isOpen && (
         <div className="dropdown-actions">
           <p onClick={() => window.open(item.stac_href, "_blank")}>View STAC</p>
-          <p onClick={() => console.log("Show COG")}>Show COG</p>
+          <p onClick={() => console.log("WMTS")}>Get WMTS</p>
+          <p>View in STAC Browser</p>
           <p
             onClick={() => {
               setSelectedItem(item);

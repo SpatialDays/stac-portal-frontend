@@ -61,74 +61,86 @@
   }
 }
 
-.toolbox-items-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-
-  &-title {
+.toolbox-items {
+  &-header {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 
-    & h3 {
-      margin: 0;
-      font-size: 1.2em;
+    &-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      & h3 {
+        margin: 0;
+        font-size: 1.2em;
+      }
+
+      & small {
+        color: #888;
+        font-size: 0.8em;
+      }
     }
 
-    & small {
-      color: #888;
-      font-size: 0.8em;
+    &-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
-  }
 
-  &-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-
-  &-collection-thumbnail {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
-}
-
-.toolbox-items-filters {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  margin-top: 10px;
-
-  .toolbox-items-filters-search {
-    width: 300px;
-    position: relative;
-
-    .toolbox-items-filters-search-input {
+    &-collection-thumbnail {
       width: 100%;
-      height: 0.4em;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      outline: none;
-      font-size: 14px;
-      color: #333;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+  }
 
-      &::placeholder {
-        color: #aaa;
-      }
+  &-filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
 
-      &:focus {
-        border-color: #777;
+    .toolbox-items-filters-search {
+      width: 300px;
+      position: relative;
+
+      .toolbox-items-filters-search-input {
+        width: 100%;
+        height: 0.4em;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
+        font-size: 14px;
+        color: #333;
+
+        &::placeholder {
+          color: #aaa;
+        }
+
+        &:focus {
+          border-color: #777;
+        }
       }
     }
+  }
+
+  &-error {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2rem;
+    box-sizing: border-box;
+    color: #888;
+    margin-top: 2rem;
   }
 }
 

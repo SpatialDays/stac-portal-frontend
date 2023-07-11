@@ -1,22 +1,47 @@
-import { useRef, useContext, useEffect } from "react";
-import * as L from "leaflet"; // This must be imported for use by react-leaflet
-import {
-  MapContainer,
-  TileLayer,
-  FeatureGroup,
-  Polygon,
-  ZoomControl,
-} from "react-leaflet";
+import { useEffect, useRef, useContext, useState } from "react";
+import * as L from "leaflet";
+import { MapContainer, FeatureGroup, ZoomControl, useMap } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
+import "leaflet-providers";
 
 import Toolbox from "../Toolbox/Toolbox";
 import { ExplorerContext } from "pages/Explorer/ExplorerContext";
-
 import "./style.scss";
+
+const BASEMAPS = {
+  OpenStreetMap: "OpenStreetMap.Mapnik",
+  Esri: "Esri.DeLorme",
+  "Stamen Toner": "Stamen.TonerBackground",
+  CartoDB: "CartoDB.Positron",
+  "NASA Night Lights" : "NASAGIBS.ViirsEarthAtNight2012"
+};
+
+const ChangeBasemap = ({ baseMap }) => {
+  const map = useMap(); // Get map instance using useMap
+
+  useEffect(() => {
+    const provider = BASEMAPS[baseMap];
+
+    // Remove all layers from map except basemap
+    map.eachLayer((layer) => {
+      console.log("Layer", layer);
+      if (layer.options.className === "basemap") {
+        console.log('Removing layer from map', layer);
+        map.removeLayer(layer);
+      }
+    });
+
+    // Add className option while creating TileLayer
+    L.tileLayer.provider(provider, { className: "basemap" }).addTo(map);
+  }, [map, baseMap]);
+
+  return null;
+};
 
 const Map = () => {
   const mapRef = useRef(null);
   const { state, setMapRef } = useContext(ExplorerContext);
+  const [baseMap, setBaseMap] = useState("OpenStreetMap");
 
   useEffect(() => {
     if (mapRef.current) {
@@ -52,12 +77,17 @@ const Map = () => {
           />
         </FeatureGroup>
         <ZoomControl position="bottomright" />
-        <TileLayer
-          className="basemap"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-        />
+        <ChangeBasemap baseMap={baseMap} />
       </MapContainer>
+      <div className="basemap-changer">
+        <select onChange={(e) => setBaseMap(e.target.value)} value={baseMap}>
+          {Object.keys(BASEMAPS).map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };
