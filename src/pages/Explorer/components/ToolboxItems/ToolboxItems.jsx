@@ -3,6 +3,7 @@ import "./style.scss";
 
 import { ArrowForward, ArrowBack } from "@mui/icons-material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import Loader from "components/Loader";
 
 import { ExplorerContext } from "../../ExplorerContext";
 
@@ -15,77 +16,84 @@ const ToolboxItems = () => {
     useContext(ExplorerContext);
 
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const pageLimit = 5;
 
-  const fetchData = async (linkRel, pageAdjust = 0) => {
-    const itemsHref =
-      state.itemsForTable.links.find((link) => link.rel === linkRel).href +
-      "&limit=" +
-      pageLimit;
-    const response = await fetch(itemsHref);
-    const json = await response.json();
-    setItemsForTable(json);
-    setItemsPage(state.itemsPage + pageAdjust);
-  };
+  const handleSearch = async (e, searchParameters) => {
+    setError(null);
+    setItemsForTable([]);
+    setIsLoading(true);
 
-  useEffect(() => {
-    setItemsPage(1);
-    const getItems = async () => {
-      setError(null);
-      setItemsForTable([]);
-      const itemsHref =
-        state.selectedCollection.links.find((link) => link.rel === "items")
-          .href +
-        "?limit=" +
-        pageLimit;
-
-      const response = await fetch(itemsHref);
-      const json = await response.json();
-
-      if (json.features.length === 0) {
-        setError("No items to display");
-      }
-
-      setItemsForTable(json);
-    };
-
-    getItems();
-  }, [state.selectedCollection]);
-
-  const handleNextPage = () => fetchData("next", 1);
-
-
-  const handlePreviousPage = () => fetchData("previous", -1);
-
-
-  const handleSearch = async (e) => {
-    const search_url =
+    const searchUrl =
       "https://planetarycomputer.microsoft.com/api/stac/v1/search";
-    const search_parameters = {
-      collections: [state.selectedCollection.id], // assuming this is the currently selected collection
-      "filter-lang": "cql2-json",
-      filter: {
+    if (!searchParameters) {
+      searchParameters = {
+        collections: [state.selectedCollection.id],
+        "filter-lang": "cql2-json",
+        limit: pageLimit,
+      };
+    }
+
+    if (e && e.target.value.length > 1) {
+      searchParameters.filter = {
         op: "%like%",
         args: [
           {
             property: "id",
           },
-          `%${e.target.value}%`, // wildcard search on the value entered
+          `%${e.target.value}%`,
         ],
-      },
-      limit: pageLimit,
+      };
+    }
+
+    try {
+      const fetchPromise = fetch(searchUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(searchParameters),
+      });
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Request timed out")), 3500)
+      );
+
+      const response = await Promise.race([fetchPromise, timeoutPromise]);
+
+      const json = await response.json();
+      setItemsForTable(json);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setError("No items found");
+      setItemsForTable([]);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const getItems = async () => {
+      setError(null);
+      setItemsForTable([]);
+      handleSearch(null, null);
     };
+    getItems();
+  }, [state.selectedCollection]);
 
-    const response = await fetch(search_url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(search_parameters),
-    });
+  const handleNextPage = () => {
+    setItemsPage(state.itemsPage + 1);
+    const nextToken = state.itemsForTable.links.find(
+      (link) => link.rel === "next"
+    ).body;
+    handleSearch(null, nextToken);
+  };
 
-    const json = await response.json();
-
-    setItemsForTable(json);
+  const handlePreviousPage = () => {
+    setItemsPage(state.itemsPage - 1);
+    const previousToken = state.itemsForTable.links.find(
+      (link) => link.rel === "previous"
+    ).body;
+    handleSearch(null, previousToken);
   };
 
   return (
@@ -126,64 +134,67 @@ const ToolboxItems = () => {
               <small>{state.selectedCollection.accessibility}</small>
             </div>
           </div>
+          <div className="toolbox-items-filters">
+            <div className="toolbox-items-filters-search">
+              <input
+                type="text"
+                placeholder="Search"
+                className="toolbox-items-filters-search-input"
+                onChange={(e) => handleSearch(e)}
+              />
+            </div>
+          </div>
 
-          {!error && (
-            <>
-              <div className="toolbox-items-filters">
-                <div className="toolbox-items-filters-search">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="toolbox-items-filters-search-input"
-                    onChange={(e) => handleSearch(e)}
-                  />
-                </div>
+          {!isLoading && (
+            <div className="toolbox-sort-container">
+              <div className="toolbox-sort-item">Items ( 5 )</div>
+              <div className="toolbox-sort-item">
+                <FilterAltIcon />
               </div>
-
-              <div className="toolbox-sort-container">
-                <div className="toolbox-sort-item">Items ( 5 )</div>
-                <div className="toolbox-sort-item">
-                  <FilterAltIcon />
-                </div>
-              </div>
-            </>
+            </div>
           )}
 
-          <div id="toolbox-items">
-            {state.itemsForTable?.features?.map((item, index) => {
-              item.datetime = new Date(
-                item.properties.datetime
-              ).toLocaleString();
+          {isLoading ? (
+            <div class="toolbox-items-loader-container">
+              <Loader />
+            </div>
+          ) : (
+            <div id="toolbox-items">
+              {state.itemsForTable?.features?.map((item, index) => {
+                item.datetime = new Date(
+                  item.properties.datetime
+                ).toLocaleString();
 
-              item.thumbnail =
-                item.assets?.rendered_preview?.href ||
-                item.assets?.thumbnail?.href ||
-                item.assets?.preview?.href;
+                item.thumbnail =
+                  item.assets?.rendered_preview?.href ||
+                  item.assets?.thumbnail?.href ||
+                  item.assets?.preview?.href;
 
-              return (
-                <div key={index + "__item_thumb__"} className="toolbox-item">
-                  {!!item.thumbnail && (
-                    <img
-                      src={item.thumbnail}
-                      alt={item.id}
-                      className="item-thumbnail"
-                    />
-                  )}
-                  <div className="item-info">
-                    <h3>{item.id}</h3>
-                    <div className="item-info-meta">
-                      <p className="item-info-date">{item.datetime}</p>
-                      <p className="item-info-actions">
-                        <ToolboxItemsActions item={item} />
-                      </p>
+                return (
+                  <div key={index + "__item_thumb__"} className="toolbox-item">
+                    {!!item.thumbnail && (
+                      <img
+                        src={item.thumbnail}
+                        alt={item.id}
+                        className="item-thumbnail"
+                      />
+                    )}
+                    <div className="item-info">
+                      <h3>{item.id}</h3>
+                      <div className="item-info-meta">
+                        <p className="item-info-date">{item.datetime}</p>
+                        <p className="item-info-actions">
+                          <ToolboxItemsActions item={item} />
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
 
-            {error && <div className="toolbox-items-error">{error}</div>}
-          </div>
+              {error && <div className="toolbox-items-error">{error}</div>}
+            </div>
+          )}
 
           <div className="toolbox-pagination-container">
             <div className="toolbox-pagination">
