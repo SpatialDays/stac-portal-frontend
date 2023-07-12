@@ -1,8 +1,11 @@
 import React from "react";
 import "./style.scss";
 
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import RectangleOutlinedIcon from "@mui/icons-material/RectangleOutlined";
+
+// Filters
+import ShapefileUpload from "./components/ShapefileUpload";
+
 const ToolboxFilters = () => {
   return (
     <div className="toolbox-filters">
@@ -25,16 +28,7 @@ const ToolboxFilters = () => {
           <legend>Geographical</legend>
 
           <div className="form-group">
-            <label>Shapefile:</label>
-            <label htmlFor="shapefile" className="toolbox-filters-upload">
-              <FileUploadIcon
-                sx={{
-                  fontSize: "1rem",
-                }}
-              />
-              Upload Shapefile (zip)
-            </label>
-            <input type="file" id="shapefile" accept=".zip" />
+            <ShapefileUpload />
           </div>
           <div className="form-group">
             <label htmlFor="geojson">GeoJSON:</label>

@@ -1,6 +1,12 @@
 import { useEffect, useRef, useContext, useState } from "react";
 import * as L from "leaflet";
-import { MapContainer, FeatureGroup, ZoomControl, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  FeatureGroup,
+  ZoomControl,
+  useMap,
+  Polygon,
+} from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet-providers";
 
@@ -13,7 +19,7 @@ const BASEMAPS = {
   Esri: "Esri.DeLorme",
   "Stamen Toner": "Stamen.TonerBackground",
   CartoDB: "CartoDB.Positron",
-  "NASA Night Lights" : "NASAGIBS.ViirsEarthAtNight2012"
+  "NASA Night Lights": "NASAGIBS.ViirsEarthAtNight2012",
 };
 
 const ChangeBasemap = ({ baseMap }) => {
@@ -26,7 +32,7 @@ const ChangeBasemap = ({ baseMap }) => {
     map.eachLayer((layer) => {
       console.log("Layer", layer);
       if (layer.options.className === "basemap") {
-        console.log('Removing layer from map', layer);
+        console.log("Removing layer from map", layer);
         map.removeLayer(layer);
       }
     });
@@ -48,6 +54,11 @@ const Map = () => {
       setMapRef(mapRef.current);
     }
   }, [mapRef.current]);
+
+  useEffect(() => {
+
+    console.log("Active layers", state.activeLayers);
+  }, [state.activeLayers]);
 
   return (
     <div id="explorer-container-wrapper">
@@ -75,6 +86,12 @@ const Map = () => {
               edit: false,
             }}
           />
+          {state.activeLayers?.map(
+            (layer) =>
+              layer.id === "polygon" && (
+                <Polygon key={layer.id} positions={layer.coordinates} pathOptions={{ color: "purple" }} />
+              )
+          )}
         </FeatureGroup>
         <ZoomControl position="bottomright" />
         <ChangeBasemap baseMap={baseMap} />
