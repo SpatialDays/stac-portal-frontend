@@ -30,7 +30,7 @@ const Toolbox = () => {
             placeholder="Search"
             className="toolbox-search"
             onChange={handleSearch}
-            // value={state.collectionSearchFilters?.query}
+            value={state.collectionSearchFilters?.query}
           />
           <div className="toolbox-filter-toggle-container">
             <div

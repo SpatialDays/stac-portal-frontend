@@ -23,7 +23,6 @@ const ToolboxItemsActions = ({ item }) => {
   };
 
   const addSTACLayerToMap = async (item) => {
-    console.log("Item", item);
     const map = state.mapRef;
 
     // remove all layers from map except basemap
@@ -37,6 +36,7 @@ const ToolboxItemsActions = ({ item }) => {
     let layer;
     layer = await stacLayer(item, {
       displayOverview: false, // This is to force tiff
+      resolution: 256
     });
 
     if (Object.keys(layer._layers).length === 1) {

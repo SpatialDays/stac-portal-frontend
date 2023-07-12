@@ -18,6 +18,17 @@ const ToolboxItems = () => {
 
   const pageLimit = 5;
 
+  const fetchData = async (linkRel, pageAdjust = 0) => {
+    const itemsHref =
+      state.itemsForTable.links.find((link) => link.rel === linkRel).href +
+      "&limit=" +
+      pageLimit;
+    const response = await fetch(itemsHref);
+    const json = await response.json();
+    setItemsForTable(json);
+    setItemsPage(state.itemsPage + pageAdjust);
+  };
+
   useEffect(() => {
     setItemsPage(1);
     const getItems = async () => {
@@ -32,7 +43,6 @@ const ToolboxItems = () => {
       const response = await fetch(itemsHref);
       const json = await response.json();
 
-      // If json features is empty, then we have no items to display
       if (json.features.length === 0) {
         setError("No items to display");
       }
@@ -43,29 +53,39 @@ const ToolboxItems = () => {
     getItems();
   }, [state.selectedCollection]);
 
-  const handleNextPage = async () => {
-    const itemsHref =
-      state.itemsForTable.links.find((link) => link.rel === "next").href +
-      "&limit=" +
-      pageLimit;
+  const handleNextPage = () => fetchData("next", 1);
 
-    const response = await fetch(itemsHref);
+
+  const handlePreviousPage = () => fetchData("previous", -1);
+
+
+  const handleSearch = async (e) => {
+    const search_url =
+      "https://planetarycomputer.microsoft.com/api/stac/v1/search";
+    const search_parameters = {
+      collections: [state.selectedCollection.id], // assuming this is the currently selected collection
+      "filter-lang": "cql2-json",
+      filter: {
+        op: "%like%",
+        args: [
+          {
+            property: "id",
+          },
+          `%${e.target.value}%`, // wildcard search on the value entered
+        ],
+      },
+      limit: pageLimit,
+    };
+
+    const response = await fetch(search_url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(search_parameters),
+    });
+
     const json = await response.json();
-    setItemsForTable(json);
-    setItemsPage(state.itemsPage + 1);
-  };
-
-  const handlePreviousPage = async () => {
-    const itemsHref =
-      state.itemsForTable.links.find((link) => link.rel === "previous").href +
-      "&limit=" +
-      pageLimit;
-
-    const response = await fetch(itemsHref);
-    const json = await response.json();
 
     setItemsForTable(json);
-    setItemsPage(state.itemsPage - 1);
   };
 
   return (
@@ -115,6 +135,7 @@ const ToolboxItems = () => {
                     type="text"
                     placeholder="Search"
                     className="toolbox-items-filters-search-input"
+                    onChange={(e) => handleSearch(e)}
                   />
                 </div>
               </div>
