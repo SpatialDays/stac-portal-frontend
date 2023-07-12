@@ -22,7 +22,6 @@ const ToolboxResults = () => {
   const pageLimit = 8;
 
   useEffect(() => {
-    setCollectionPage(1);
     const getAllPublicCollections = async () => {
       const collectionsURL = "http://127.0.0.1:8009/json/test.json";
       const response = await fetch(collectionsURL);
@@ -81,8 +80,7 @@ const ToolboxResults = () => {
   };
 
   useEffect(() => {
-    // Query Filtering
-    console.log("Active");
+    setCollectionPage(1);
     const query = state.collectionSearchFilters?.query;
     if (!query) {
       setFilteredCollections(state.allCollections);

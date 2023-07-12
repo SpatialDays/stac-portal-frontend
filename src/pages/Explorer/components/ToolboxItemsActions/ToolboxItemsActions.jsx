@@ -7,9 +7,8 @@ import ToolboxItemModal from "../ToolboxItemModal/ToolboxItemModal";
 
 import { ExplorerContext } from "pages/Explorer/ExplorerContext";
 
-import stacLayer from "stac-layer";
 
-const ToolboxItemsActions = ({ item }) => {
+const ToolboxItemsActions = ({ item, addSTACLayerToMap }) => {
   const { state, setSelectedItem } = useContext(ExplorerContext);
   const [isOpen, setIsOpen] = useState(false);
   const [showItemModal, setShowItemModal] = useState(false);
@@ -22,32 +21,7 @@ const ToolboxItemsActions = ({ item }) => {
     setIsOpen(false);
   };
 
-  const addSTACLayerToMap = async (item) => {
-    const map = state.mapRef;
 
-    // remove all layers from map except basemap
-    map.eachLayer((layer) => {
-      console.log("Layer", layer);
-      if (layer.options.className !== "basemap") {
-        map.removeLayer(layer);
-      }
-    });
-
-    let layer;
-    layer = await stacLayer(item, {
-      displayOverview: false, // This is to force tiff
-      resolution: 256
-    });
-
-    if (Object.keys(layer._layers).length === 1) {
-      layer = await stacLayer(item, {
-        debugLevel: 3,
-      });
-    }
-
-    layer.addTo(map);
-    map.fitBounds(layer.getBounds());
-  };
 
   useEffect(() => {
     if (isOpen) {

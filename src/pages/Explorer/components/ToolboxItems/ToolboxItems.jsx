@@ -7,12 +7,12 @@ import Loader from "components/Loader";
 
 import { ExplorerContext } from "../../ExplorerContext";
 
-import ToolboxItemsActions from "../ToolboxItemsActions/ToolboxItemsActions";
+import ToolboxItem from "../ToolboxItem/ToolboxItem";
 
 import { CSSTransition } from "react-transition-group";
 
 const ToolboxItems = () => {
-  const { setItemsVisible, setItemsForTable, setItemsPage, state } =
+  const { setItemsVisible, setItemsForTable, setItemsPage, setCollectionPage, state } =
     useContext(ExplorerContext);
 
   const [error, setError] = useState(null);
@@ -35,7 +35,8 @@ const ToolboxItems = () => {
       };
     }
 
-    if (e && e.target.value.length > 1) {
+    if (e && e.target.value.length > 0) {
+      setItemsPage(1);
       searchParameters.filter = {
         op: "%like%",
         args: [
@@ -73,6 +74,7 @@ const ToolboxItems = () => {
 
   useEffect(() => {
     const getItems = async () => {
+      setItemsPage(1);
       setError(null);
       setItemsForTable([]);
       handleSearch(null, null);
@@ -109,7 +111,9 @@ const ToolboxItems = () => {
             <div
               id="toolbox-back-button"
               className="toolbox-back-button"
-              onClick={() => setItemsVisible(false)}
+              onClick={() => {
+                // setCollectionPage(1);
+                setItemsVisible(false)}}
             >
               <ArrowBack />
             </div>
@@ -160,37 +164,9 @@ const ToolboxItems = () => {
             </div>
           ) : (
             <div id="toolbox-items">
-              {state.itemsForTable?.features?.map((item, index) => {
-                item.datetime = new Date(
-                  item.properties.datetime
-                ).toLocaleString();
-
-                item.thumbnail =
-                  item.assets?.rendered_preview?.href ||
-                  item.assets?.thumbnail?.href ||
-                  item.assets?.preview?.href;
-
-                return (
-                  <div key={index + "__item_thumb__"} className="toolbox-item">
-                    {!!item.thumbnail && (
-                      <img
-                        src={item.thumbnail}
-                        alt={item.id}
-                        className="item-thumbnail"
-                      />
-                    )}
-                    <div className="item-info">
-                      <h3>{item.id}</h3>
-                      <div className="item-info-meta">
-                        <p className="item-info-date">{item.datetime}</p>
-                        <p className="item-info-actions">
-                          <ToolboxItemsActions item={item} />
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {state.itemsForTable?.features?.map((item, index) => (
+                <ToolboxItem item={item} key={index} />
+              ))}
 
               {error && <div className="toolbox-items-error">{error}</div>}
             </div>
