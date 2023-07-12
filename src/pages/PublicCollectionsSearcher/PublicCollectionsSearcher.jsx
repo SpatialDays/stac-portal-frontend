@@ -15,6 +15,7 @@ import DashboardLayout from "layout/LayoutContainers/DashboardLayout";
 
 const PublicCollectionsSearcher = () => {
   const [AOI, setAOI] = useState("");
+  const [geoJSONPolygon, setGeoJSONPolygon] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [publicCollections, setPublicCollections] = useState([]);
@@ -40,6 +41,8 @@ const PublicCollectionsSearcher = () => {
                 endDate={endDate}
                 setEndDate={setEndDate}
                 setPublicCollections={setPublicCollections}
+                geoJSONPolygon={geoJSONPolygon}
+                setGeoJSONPolygon={setGeoJSONPolygon}
               />
             </MDBox>
           </Grid>

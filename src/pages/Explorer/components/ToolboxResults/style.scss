@@ -1,0 +1,55 @@
+.toolbox-results {
+  p {
+    color: #888;
+    margin: 10px 0;
+    font-size: 0.9em;
+  }
+
+  .collection-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+
+    &.selected {
+      background-color: #f0f0f0;
+    }
+
+    &:hover {
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+
+    .collection-thumbnail {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      object-fit: cover;
+    }
+
+    .collection-info {
+      width: 100%;
+
+      h3 {
+        margin: 0;
+      }
+
+      span {
+        display: block;
+        color: #888;
+        font-size: 0.9em;
+      }
+
+      &-detail {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+
+        span {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
