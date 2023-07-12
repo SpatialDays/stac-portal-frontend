@@ -1,7 +1,7 @@
 
 const backendUrl = process.env.REACT_APP_PORTAL_BACKEND_URL
 const stacApiBrowserUrl = process.env.REACT_APP_PORTAL_STAC_API_BROWSER_URL
-const stacPath = "/stac/collections/"
+const stacPath = "/stac/"
 const publicCatalogsPath = "/public_catalogs/"
 const privateCatalogPath = "/private_catalog/"
 const collectionsPath = "/collections/"
@@ -17,6 +17,7 @@ const jsonPath = "/json/"
 const filePath = "/file/"
 const sasTokenPath = "/sas_token/"
 const stacGeneratorPath = "/stac_generator/"
+const geoTransformerPath = "/transform/"
 
 export {
     backendUrl,
@@ -36,5 +37,6 @@ export {
     jsonPath,
     filePath,
     sasTokenPath,
-    stacGeneratorPath
+    stacGeneratorPath,
+    geoTransformerPath
 };
