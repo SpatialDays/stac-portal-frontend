@@ -8,7 +8,7 @@ import { useContext } from "react";
 
 import { ExplorerContext } from "pages/Explorer/ExplorerContext";
 
-const ShapefileUpload = () => {
+const ShapefileUpload = ({ setGeoJSON }) => {
   const { state, setActiveLayers } = useContext(ExplorerContext);
 
   const handleShapefileUpload = async (event) => {
@@ -28,30 +28,16 @@ const ShapefileUpload = () => {
     });
 
     const geometry = JSON.parse(response.data.geometry);
-    const polygon = createGeoJSONPolygon(geometry);
-    const flippedCoordinates = polygon.geometry.coordinates[0].map(
-      ([longitude, latitude]) => [latitude, longitude]
-    );
 
-    const mapRef = state.mapRef;
-    mapRef.fitBounds(flippedCoordinates);
-
-    setActiveLayers([
-      ...state.activeLayers,
-      { id: "polygon", coordinates: flippedCoordinates },
-    ]);
+    // Turn to string but keep indent
+    const parsedGeoJSON = JSON.stringify(geometry, null, 2);
+    setGeoJSON(parsedGeoJSON);
   };
 
   return (
     <>
-      <label>Shapefile:</label>
-      <label htmlFor="shapefile" className="toolbox-filters-upload">
-        <FileUploadIcon
-          sx={{
-            fontSize: "1rem",
-          }}
-        />
-        Upload Shapefile (zip)
+      <label htmlFor="shapefile" className="toolbox-filters-geojson-tool">
+        Upload Shapefile
       </label>
       <input
         type="file"

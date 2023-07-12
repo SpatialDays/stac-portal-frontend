@@ -5,56 +5,102 @@
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px dotted #979797;
-
-  .checkbox-container {
+  .checkbox-container,
+  .access-container {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 1em;
   }
-
   .access-container {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
   }
-
-  .draw-tool-button {
+  .draw-tool-button,
+  &-upload {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #989898;
-
     & svg {
       margin-right: 0.5rem;
     }
   }
+  &-geojson {
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.65rem;
+      margin-top: 0.5rem;
+    }
 
+    &-input {
+      height: 10rem;
+    }
+
+    &-tool {
+      background-color: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      text-align: center;
+      transition: background-color 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #e9ecef;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &-view {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      & button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        padding: 0.5rem 1rem;
+        width: 100%;
+        margin-top: 1rem;
+        font-size: 1rem;
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
   form {
     fieldset {
       border: 1px solid #eee;
       padding-left: 1em;
       padding-right: 1em;
       margin-bottom: 1em;
-
       legend {
         font-weight: bold;
         color: #333;
       }
-
       .form-group {
         margin-bottom: 0.25em;
-
         label {
-          display: block;
           color: #666;
         }
-
         input[type="checkbox"] {
           margin-right: 0.5em;
         }
-
         input[type="date"],
-        textarea {
+        textarea,
+        input[type="file"] {
           width: 100%;
           padding: 0.5em;
           border: 1px solid #ccc;
@@ -63,54 +109,26 @@
           font-size: 14px;
           color: #333;
         }
-
         input[type="file"] {
           display: none;
         }
-
-        label[for="shapefile"] {
-          font-size: 0.85rem;
-          padding: 0.5em 1em;
-          background-color: #989898;
-          color: white;
-          text-align: center;
-          border-radius: 3px;
-          cursor: pointer;
-          transition: background-color 0.3s;
-
-          &:hover {
-            background-color: #017BFE;
-          }
-        }
       }
     }
-
     button {
+    }
+    .form-submit {
+      width: 100%;
       padding: 0.5em 1em;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 3px;
+      font-size: 1rem;
       cursor: pointer;
       transition: background-color 0.3s;
-
       &:hover {
         background-color: #0056b3;
       }
-    }
-
-    .form-submit {
-      width: 100%;
-    }
-  }
-
-  &-upload {
-    display: flex!important;
-    justify-content: center;
-    align-items: center;
-
-    & svg {
-      margin-right: 0.5rem;
     }
   }
 }

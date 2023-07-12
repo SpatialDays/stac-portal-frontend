@@ -1,51 +1,37 @@
 import React from "react";
 import "./style.scss";
 
-import RectangleOutlinedIcon from "@mui/icons-material/RectangleOutlined";
 
 // Filters
-import ShapefileUpload from "./components/ShapefileUpload";
+import GeoJSONParser from "./components/GeoJSONParser";
 
 const ToolboxFilters = () => {
   return (
     <div className="toolbox-filters">
       <form>
         <fieldset>
-          <legend>Access</legend>
+          <legend>Catalog Filter</legend>
           <div className="access-container">
             <div className="form-group checkbox-container">
               <input type="checkbox" id="private" checked />
-              <label htmlFor="private">Private</label>
+              <label htmlFor="private">OS Catalog</label>
             </div>
             <div className="form-group checkbox-container">
               <input type="checkbox" id="public" checked />
-              <label htmlFor="public">Public</label>
+              <label htmlFor="public">Public Catalogs</label>
             </div>
           </div>
         </fieldset>
 
         <fieldset>
-          <legend>Geographical</legend>
-
+          <legend>Area Filter</legend>
           <div className="form-group">
-            <ShapefileUpload />
-          </div>
-          <div className="form-group">
-            <label htmlFor="geojson">GeoJSON:</label>
-            <textarea id="geojson" />
-          </div>
-          {/* Draw tools */}
-          <div className="form-group">
-            <label htmlFor="draw">Draw AOI:</label>
-            <button className="draw-tool-button">
-              <RectangleOutlinedIcon />
-              Polygon
-            </button>
+            <GeoJSONParser />
           </div>
         </fieldset>
 
         <fieldset>
-          <legend>Temporal</legend>
+          <legend>Temporal Filter</legend>
           <div className="form-group">
             <label htmlFor="startdate">Start Date:</label>
             <input type="date" id="startdate" />
@@ -56,7 +42,7 @@ const ToolboxFilters = () => {
           </div>
         </fieldset>
 
-        <button className="form-submit">Apply filters</button>
+        <button className="form-submit">Search</button>
       </form>
     </div>
   );
