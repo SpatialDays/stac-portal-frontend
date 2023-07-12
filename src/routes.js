@@ -8,8 +8,8 @@ import LoadStatuses from "pages/LoadStatuses/LoadStatuses";
 import DisplayCollections from "pages/DisplayCollections/DisplayCollections";
 import PublicCatalogs from "pages/PublicCatalogs/PublicCatalogs";
 import AddPrivateCollection from "pages/AddPrivateCollection/AddPrivateCollection";
+import Explorer from "pages/Explorer/Explorer";
 import { DisplayMyDetails } from "pages/DisplayMyDetails/DisplayMyDetails";
-
 // @mui icons
 import {
   Search,
@@ -22,11 +22,18 @@ import {
   VerifiedUser,
   Explore,
 } from "@mui/icons-material";
-
 const routes = [
   {
     type: "title",
     title: "OS Catalog",
+  },
+  {
+    type: "collapse",
+    name: "Explorer",
+    key: "explorer",
+    icon: <Explore />,
+    route: "/explorer",
+    component: <Explorer />,
   },
   {
     type: "collapse",
@@ -36,6 +43,7 @@ const routes = [
     route: "/local-searcher",
     component: <PrivateCollectionsSearcher />,
   },
+
   {
     type: "collapse",
     name: "Local Catalog",
@@ -60,7 +68,6 @@ const routes = [
     route: "/add-collection",
     component: <AddPrivateCollection />,
   },
-
   // {
   //   type: "collapse",
   //   name: "Load Local Data",
@@ -69,7 +76,6 @@ const routes = [
   //   route: "/load-local-data",
   //   component: <LoadLocal />,
   // },
-
   {
     type: "title",
     title: "Public Sources",
@@ -98,7 +104,6 @@ const routes = [
     route: "/load-status",
     component: <LoadStatuses />,
   },
-
   {
     type: "title",
     title: "Utilities",
@@ -118,18 +123,14 @@ const routes = [
     icon: <Explore />,
     href: process.env.REACT_APP_PORTAL_STAC_API_BROWSER_URL,
   },
-
   {
     type: "hidden",
     name: "My Details",
     key: "my-details",
     route: "/my-details",
-    component: <DisplayMyDetails/>,
-
+    component: <DisplayMyDetails />,
   },
 ];
-
 // Array of all icons used
 const icons = [];
-
 export default routes;
