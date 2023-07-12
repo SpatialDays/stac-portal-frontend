@@ -1,114 +1,30 @@
-.pl {
-  display: block;
-  width: 9.375em;
-  height: 9.375em;
-}
-
-.pl__arrows,
-.pl__ring-rotate,
-.pl__ring-stroke,
-.pl__tick {
-  animation-duration: 2s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.pl__arrows {
-  animation-name: arrows42;
+.spinner {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  color: #423989;
+  background: radial-gradient(farthest-side, currentColor calc(100% - 7px),#0000 calc(100% - 6px) 0);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 15px),#000 calc(100% - 13px));
+  border-radius: 50%;
+  animation: spinner-sm4bhi 2s infinite linear;
+ }
+ 
+ .spinner::before,
+ .spinner::after {
+  content: "";
+  grid-area: 1/1;
+  background: linear-gradient(currentColor 0 0) center,
+           linear-gradient(currentColor 0 0) center;
+  background-size: 100% 11px,11px 100%;
+  background-repeat: no-repeat;
+ }
+ 
+ .spinner::after {
   transform: rotate(45deg);
-  transform-origin: 16px 52px;
-}
-
-.pl__ring-rotate,
-.pl__ring-stroke {
-  transform-origin: 80px 80px;
-}
-
-.pl__ring-rotate {
-  animation-name: ringRotate42;
-}
-
-.pl__ring-stroke {
-  animation-name: ringStroke42;
-  transform: rotate(-45deg);
-}
-
-.pl__tick {
-  animation-name: tick42;
-}
-
-.pl__tick:nth-child(2) {
-  animation-delay: -1.75s;
-}
-
-.pl__tick:nth-child(3) {
-  animation-delay: -1.5s;
-}
-
-.pl__tick:nth-child(4) {
-  animation-delay: -1.25s;
-}
-
-.pl__tick:nth-child(5) {
-  animation-delay: -1s;
-}
-
-.pl__tick:nth-child(6) {
-  animation-delay: -0.75s;
-}
-
-.pl__tick:nth-child(7) {
-  animation-delay: -0.5s;
-}
-
-.pl__tick:nth-child(8) {
-  animation-delay: -0.25s;
-}
-
-/* Animations */
-@keyframes arrows42 {
-  from {
-    transform: rotate(45deg);
+ }
+ 
+ @keyframes spinner-sm4bhi {
+  100% {
+   transform: rotate(1turn);
   }
-
-  to {
-    transform: rotate(405deg);
-  }
-}
-
-@keyframes ringRotate42 {
-  from {
-    transform: rotate(0);
-  }
-
-  to {
-    transform: rotate(720deg);
-  }
-}
-
-@keyframes ringStroke42 {
-  from,
-	to {
-    stroke-dashoffset: 452;
-    transform: rotate(-45deg);
-  }
-
-  50% {
-    stroke-dashoffset: 169.5;
-    transform: rotate(-180deg);
-  }
-}
-
-@keyframes tick42 {
-  from,
-	3%,
-	47%,
-	to {
-    stroke-dashoffset: -12;
-  }
-
-  14%,
-	36% {
-    stroke-dashoffset: 0;
-  }
-}
+ }

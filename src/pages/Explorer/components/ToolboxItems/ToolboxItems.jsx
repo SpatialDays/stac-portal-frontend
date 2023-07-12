@@ -12,12 +12,16 @@ import ToolboxItem from "../ToolboxItem/ToolboxItem";
 import { CSSTransition } from "react-transition-group";
 
 const ToolboxItems = () => {
-  const { setItemsVisible, setItemsForTable, setItemsPage, setCollectionPage, state } =
-    useContext(ExplorerContext);
+  const {
+    setItemsVisible,
+    setItemsForTable,
+    setItemsPage,
+    setCollectionPage,
+    state,
+  } = useContext(ExplorerContext);
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const pageLimit = 5;
 
   const handleSearch = async (e, searchParameters) => {
@@ -38,7 +42,7 @@ const ToolboxItems = () => {
     if (e && e.target.value.length > 0) {
       setItemsPage(1);
       searchParameters.filter = {
-        op: "%like%",
+        op: "%ilike%",
         args: [
           {
             property: "id",
@@ -62,6 +66,11 @@ const ToolboxItems = () => {
       const response = await Promise.race([fetchPromise, timeoutPromise]);
 
       const json = await response.json();
+
+      // If features empty
+      if (json.features.length === 0) {
+        setError("No items found");
+      }
       setItemsForTable(json);
       setIsLoading(false);
     } catch (error) {
@@ -112,8 +121,9 @@ const ToolboxItems = () => {
               id="toolbox-back-button"
               className="toolbox-back-button"
               onClick={() => {
-                // setCollectionPage(1);
-                setItemsVisible(false)}}
+                setCollectionPage(1);
+                setItemsVisible(false);
+              }}
             >
               <ArrowBack />
             </div>
