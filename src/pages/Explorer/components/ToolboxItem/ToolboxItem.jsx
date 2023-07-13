@@ -9,6 +9,7 @@ const ToolboxItem = ({ item }) => {
   const { state, setSelectedItem } = useContext(ExplorerContext);
 
   const addSTACLayerToMap = async (item) => {
+    console.log('Adding STACLayer to map')
     const map = state.mapRef;
 
     // remove all layers from map except basemap
@@ -35,7 +36,6 @@ const ToolboxItem = ({ item }) => {
     map.fitBounds(layer.getBounds());
   };
 
-  const node = useRef();
   item.datetime = new Date(item.properties.datetime).toLocaleString();
 
   item.thumbnail =

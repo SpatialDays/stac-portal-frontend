@@ -13,6 +13,8 @@ function reducer(state, action) {
       return { ...state, mapRef: action.payload };
     case "SET_ACTIVE_LAYERS":
       return { ...state, activeLayers: action.payload };
+    case "SET_DRAW_MODE":
+      return { ...state, drawMode: action.payload };
     case "SET_SELECTED_COLLECTION":
       return { ...state, selectedCollection: action.payload };
     case "SET_SELECTED_ITEM":
@@ -51,6 +53,10 @@ const ExplorerProvider = ({ children }) => {
       type: "SET_ACTIVE_LAYERS",
       payload: layer,
     });
+  };
+
+  const setDrawMode = (mode) => {
+    dispatch({ type: "SET_DRAW_MODE", payload: mode });
   };
 
   // Collections
@@ -95,6 +101,7 @@ const ExplorerProvider = ({ children }) => {
     state,
     setMapRef,
     setActiveLayers,
+    setDrawMode,
     setSelectedCollection,
     setSelectedItem,
     setAllCollections,

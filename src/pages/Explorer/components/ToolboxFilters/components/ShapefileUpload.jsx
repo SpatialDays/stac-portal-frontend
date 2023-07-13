@@ -8,8 +8,8 @@ import { useContext } from "react";
 
 import { ExplorerContext } from "pages/Explorer/ExplorerContext";
 
-const ShapefileUpload = ({ setGeoJSON }) => {
-  const { state, setActiveLayers } = useContext(ExplorerContext);
+const ShapefileUpload = () => {
+  const { state, setCollectionSearchFilters } = useContext(ExplorerContext);
 
   const handleShapefileUpload = async (event) => {
     const file = event.target.files[0];
@@ -31,7 +31,10 @@ const ShapefileUpload = ({ setGeoJSON }) => {
 
     // Turn to string but keep indent
     const parsedGeoJSON = JSON.stringify(geometry, null, 2);
-    setGeoJSON(parsedGeoJSON);
+    setCollectionSearchFilters({
+      ...state.collectionSearchFilters,
+      geoJSON: parsedGeoJSON,
+    });
   };
 
   return (
