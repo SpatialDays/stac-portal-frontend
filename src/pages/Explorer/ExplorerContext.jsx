@@ -15,6 +15,8 @@ function reducer(state, action) {
       return { ...state, activeLayers: action.payload };
     case "SET_DRAW_MODE":
       return { ...state, drawMode: action.payload };
+    case "SET_BASEMAP":
+      return { ...state, baseMap: action.payload };
     case "SET_SELECTED_COLLECTION":
       return { ...state, selectedCollection: action.payload };
     case "SET_SELECTED_ITEM":
@@ -53,6 +55,10 @@ const ExplorerProvider = ({ children }) => {
       type: "SET_ACTIVE_LAYERS",
       payload: layer,
     });
+  };
+
+  const setBaseMap = (baseMap) => {
+    dispatch({ type: "SET_BASEMAP", payload: baseMap });
   };
 
   const setDrawMode = (mode) => {
@@ -102,6 +108,7 @@ const ExplorerProvider = ({ children }) => {
     setMapRef,
     setActiveLayers,
     setDrawMode,
+    setBaseMap,
     setSelectedCollection,
     setSelectedItem,
     setAllCollections,

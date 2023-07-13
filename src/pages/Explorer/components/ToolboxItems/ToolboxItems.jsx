@@ -29,8 +29,11 @@ const ToolboxItems = () => {
     setItemsForTable([]);
     setIsLoading(true);
 
-    const searchUrl =
-      "https://planetarycomputer.microsoft.com/api/stac/v1/search";
+    // Find root in links and then append search
+    const searchUrl = state.selectedCollection.links.find(
+      (link) => link.rel === "root"
+    ).href + "/search";
+
     if (!searchParameters) {
       searchParameters = {
         collections: [state.selectedCollection.id],

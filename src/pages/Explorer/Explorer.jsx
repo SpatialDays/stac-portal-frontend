@@ -5,9 +5,9 @@ import Map from "./components/Map/Map";
 
 const Explorer = () => {
   return (
-    <>
+    <div id="explorer">
       <Map />
-    </>
+    </div>
   );
 };
 

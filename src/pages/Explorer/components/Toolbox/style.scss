@@ -1,6 +1,9 @@
 .toolbox {
   width: 25rem;
   user-select: none;
+  position: absolute; // or 'relative', depending on the parent container
+  left: 0;
+  top: 0;
 
   &-search {
     width: 100%;
@@ -93,6 +96,10 @@
       color: black;
       font-size: 0.8rem;
       margin-left: 0.5rem;
+    }
+
+    &.open {
+      background-color: #e8e8e8;  
     }
 
     &:hover {

@@ -6,7 +6,7 @@ import stacLayer from "stac-layer";
 import "./style.scss";
 
 const ToolboxItem = ({ item }) => {
-  const { state, setSelectedItem } = useContext(ExplorerContext);
+  const { state } = useContext(ExplorerContext);
 
   const addSTACLayerToMap = async (item) => {
     console.log('Adding STACLayer to map')
@@ -14,7 +14,6 @@ const ToolboxItem = ({ item }) => {
 
     // remove all layers from map except basemap
     map.eachLayer((layer) => {
-      console.log("Layer", layer);
       if (layer.options.className !== "basemap") {
         map.removeLayer(layer);
       }

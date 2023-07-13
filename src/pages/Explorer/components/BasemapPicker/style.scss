@@ -1,0 +1,52 @@
+.basemap {
+  &-picker {
+    position: absolute;
+    z-index: 9999;
+    height: 80px;
+    width: 80px;
+    bottom: 23px;
+    background-color: white;
+    right: 56px;
+    border-radius: 15%;
+    border: 3px solid #ffffff;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      border-radius: 15%;
+    }
+  }
+  &-popup {
+    position: absolute;
+    z-index: 9999; // Adjust accordingly to ensure the popup shows above other elements
+    margin-bottom: 10px; // Some margin to separate from the basemap-picker
+    border: 1px solid #cccccc28; // Optional
+    border-radius: 5px; // Optional
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); // Optional
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 250px;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    justify-content: space-around;
+    bottom: 100px;
+    right: 56px;
+    background-color: rgba(255, 255, 255, 0.609);
+
+    div {
+      width: 75px;
+      height: 75px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px; // Optional
+        cursor: pointer;
+        border: 1px solid #cecece; // Optional
+      }
+    }
+  }
+}

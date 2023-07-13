@@ -37,6 +37,7 @@ const GeoJSONParser = () => {
           ...state.collectionSearchFilters,
           geoJSON: contents,
         });
+        handleGeoJsonInput(e);
       };
       reader.readAsText(file);
     }

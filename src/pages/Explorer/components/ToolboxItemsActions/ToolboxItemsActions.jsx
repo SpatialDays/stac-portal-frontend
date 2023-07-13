@@ -7,7 +7,6 @@ import ToolboxItemModal from "../ToolboxItemModal/ToolboxItemModal";
 
 import { ExplorerContext } from "pages/Explorer/ExplorerContext";
 
-
 const ToolboxItemsActions = ({ item, addSTACLayerToMap }) => {
   const { state, setSelectedItem } = useContext(ExplorerContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -20,8 +19,6 @@ const ToolboxItemsActions = ({ item, addSTACLayerToMap }) => {
     }
     setIsOpen(false);
   };
-
-
 
   useEffect(() => {
     if (isOpen) {
@@ -45,7 +42,13 @@ const ToolboxItemsActions = ({ item, addSTACLayerToMap }) => {
           addSTACLayerToMap(item);
         }}
       />
-      <MoreHorizIcon onClick={() => setIsOpen(!isOpen)} />
+      <MoreHorizIcon
+        onClick={(e) => {
+          e.stopPropagation();
+          
+          setIsOpen(!isOpen);
+        }}
+      />
       {isOpen && (
         <div className="dropdown-actions">
           <p onClick={() => window.open(item.stac_href, "_blank")}>View STAC</p>
